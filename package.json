@@ -1,0 +1,27 @@
+{
+  "name": "asw",
+  "version": "1.0.0",
+  "description": "ASW lab project",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jolicost/ASW.git"
+  },
+  "keywords": [
+    "asw",
+    "lab",
+    "hackernews"
+  ],
+  "author": "jolicost",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jolicost/ASW/issues"
+  },
+  "homepage": "https://github.com/Jolicost/ASW#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
