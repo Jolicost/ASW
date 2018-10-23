@@ -31,8 +31,8 @@ app.use(bodyParser.json());
 //app.listen(port);
 
 express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
+  .use(express.static(path.join(__dirname, 'app/public')))
+  .set('views', path.join(__dirname, 'app/views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/hkn'))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
