@@ -34,7 +34,7 @@ express()
   .use(express.static(path.join(__dirname, 'public')))
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
+  .get('/', (req, res) => res.render('pages/hkn'))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 console.log('Grandapp RESTful API server started on: ' + port);
