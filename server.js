@@ -5,7 +5,9 @@ var express = require('express'),
     app = express(),
     port = PORT,
     mongoose = require('mongoose'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    Contribution = require('./app/models/contribution'),
+    User = require('./app/models/user');
 
 const path = require('path');
 
