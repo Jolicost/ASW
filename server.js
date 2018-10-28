@@ -32,11 +32,30 @@ app.use(bodyParser.json());
 
 //app.listen(port);
 
+// API REST Routing
+var contributionRoutes = require('./app/routes/contributionRoutes');
+var userRoutes = require('./app/routes/userRoutes');
+var mainRoutes = require('./app/routes/mainRoutes');
+
+// Register the routes
+contributionRoutes(app);
+userRoutes(app);
+mainRoutes(app);
+
+app.use(express.static(path.join(__dirname, 'app/public')));
+app.set('views', path.join(__dirname, 'app/views'));
+app.set('view engine', 'ejs');
+
+/*
 express()
   .use(express.static(path.join(__dirname, 'app/public')))
   .set('views', path.join(__dirname, 'app/views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
+  .get('/testModel', (req,res) => res.render('pages/testModel'))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+*/
 
-console.log('Grandapp RESTful API server started on: ' + port);
+app.listen(port);
+
+console.log('Practica ASW started on port: ' + port);

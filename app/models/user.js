@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// _id is implicid
+// _id is implicit
 var UserSchema = new Schema({
     username: {
         type: String,
@@ -14,4 +14,4 @@ var UserSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Users', UserSchema);

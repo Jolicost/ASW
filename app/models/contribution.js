@@ -3,8 +3,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ContributionSchema = new Schema({
-    // activity title
-
     title: {
         type: String,
         default: ""
