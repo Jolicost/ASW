@@ -1,0 +1,8 @@
+{
+	"db": {
+		"host":"mongodb://localhost/ASWTest",
+	 },
+	 "server": {
+	 	"port":3000
+	 }
+}

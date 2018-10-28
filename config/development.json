@@ -1,0 +1,8 @@
+{
+	"db": {
+		"host":"mongodb://localhost/ASW"
+	 },
+	 "server": {
+	 	"port":3000
+	 }
+}

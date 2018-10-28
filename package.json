@@ -9,10 +9,11 @@
   "scripts": {
     "oldstart": "node index.js",
     "start": "node server.js",
-    "test": "node test.js",
+    "test": "NODE_ENV=test node server.js",
     "debug": "nodemon node server.js"
   },
   "dependencies": {
+    "convict": "^4.4.0",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "mongoose": "^5.3.6",

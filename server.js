@@ -14,6 +14,10 @@ const path = require('path');
 
 /* Deployment settings */
 mongoose.Promise = global.Promise;
+
+const config = require('./config/config.js');
+console.log(config.get('db.host')) // server1.dev.test
+
 var production = 'mongodb://heroku_ftmpcjnq:o0c10b0j0dd5nae1bviv19bbl9@ds139883.mlab.com:39883/heroku_ftmpcjnq'
 var local = 'mongodb://localhost/ASW';
 var dbURL = production;
