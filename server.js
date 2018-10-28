@@ -1,6 +1,12 @@
-
-const PORT = process.env.PORT || 3000;
-
+// Everything starts with something
+console.log('Reading configuration files...');
+const config = require('./config/config.js');
+// Read the configuration variables
+var PORT  = config.get('server.port');
+var DB = config.get('db.host');
+// Print some of them just for information
+console.log('Read PORT from config: ' + PORT);
+console.log('Read Database host DB from config: ' + DB);
 /* express routing dependency. Add all your modules here */
 var express = require('express'),
     app = express(),
@@ -15,26 +21,8 @@ const path = require('path');
 /* Deployment settings */
 mongoose.Promise = global.Promise;
 
-const config = require('./config/config.js');
-console.log(config.get('db.host')) // server1.dev.test
-
-var production = 'mongodb://heroku_ftmpcjnq:o0c10b0j0dd5nae1bviv19bbl9@ds139883.mlab.com:39883/heroku_ftmpcjnq'
-var local = 'mongodb://localhost/ASW';
-var dbURL = production;
-
-/* 
-Change port depending on environment
-Local/Development:  3000
-Deployment: Inherit
-*/
-const environment = process.env.NODE_ENV || 'development';
-
-if (environment === 'development' ) {
-    dbURL = local;
-}
-
 /* Connect mongoose object mapper to the database (mongoDB must be running) */
-mongoose.connect(dbURL,{ 
+mongoose.connect(DB,{ 
     useNewUrlParser: true 
 });
 
@@ -60,7 +48,8 @@ app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'ejs');
 
 // Start the application
-app.listen(port);
+app.listen(PORT);
 
 // All good!
-console.log('Practica ASW started on port: ' + port);
+console.log('Practica ASW started on port: ' + PORT);
+// And ends sometime
