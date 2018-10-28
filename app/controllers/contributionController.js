@@ -1,7 +1,8 @@
 'use strict';
 /* Author: Joan Oliva
-* Basic API rest for users model */
+* Basic API rest for contributions model */
 var mongoose = require('mongoose'),
+// dependencies seprated by commas. Be aware
 Contribution = mongoose.model('Contributions');
 
 exports.list = function(req,res) {

@@ -2,7 +2,7 @@
 module.exports = function(app) {
     var contribution = require('../controllers/contributionController');
 
-    // contribution Routes
+    // Contribution API Routes
     app.route('/contributions')
         .get(contribution.list)
         .post(contribution.create)

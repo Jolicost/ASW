@@ -1,6 +1,6 @@
 'use strict';
-
 var mongoose = require('mongoose'),
+// dependencies seprated by commas. Be aware
 Contribution = mongoose.model('Contributions'),
 User = mongoose.model('Users');
 

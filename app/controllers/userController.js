@@ -2,6 +2,7 @@
 /* Author: Joan Oliva
 * Basic API rest for users model */
 var mongoose = require('mongoose'),
+// dependencies seprated by commas. Be aware
 User = mongoose.model('Users');
 
 exports.list = function(req,res) {

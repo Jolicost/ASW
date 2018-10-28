@@ -2,7 +2,7 @@
 module.exports = function(app) {
     var user = require('../controllers/userController');
 
-    // user Routes
+    // User API Routes
     app.route('/users')
         .get(user.list)
         .post(user.create)
