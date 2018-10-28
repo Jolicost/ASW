@@ -1,5 +1,6 @@
 'use strict';
-
+/* Author: Joan Oliva
+* Basic API rest for users model */
 var mongoose = require('mongoose'),
 User = mongoose.model('Users');
 

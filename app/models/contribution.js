@@ -29,7 +29,7 @@ var ContributionSchema = new Schema({
         ref: 'Users'
     },
 
-    contributionsType: {
+    contributionType: {
         type: String,
         enum: 
             [
