@@ -1,3 +1,4 @@
+/*Parts comunes a tot tipus de pantalles*/
 *{
   margin: 0;
   padding: 0;
@@ -5,38 +6,67 @@
 }
 
 header, main, footer{
-  width: 80%;
+  width: 100%;
   background-color: #f6f6ef;
-  margin: auto;
 }
 
-nav{
+#header-links{
   width: 100%;
-  height: 24px;
   background-color: #ff6600;
   color: black;
+  font-size: 12pt;
 }
 
-nav>img{
+#header-links>img{
   width: 18px;
   height: 18px;
-  padding: 2px;
   border: 1px solid white;
-  
+  cursor: pointer;
 }
 
-nav>h1{
-  display: inline-block;
-  font-size: 1em;
-  margin-top: 0px;
-}
-
-nav>a{
+#header-links>a{
   color: black;
+  font-size: 12pt;
   text-decoration: none;
+}
+
+#header-links>a:first-child{
+  font-weight: bold; 
 }
 
 #login-link{
   float: right;
 }
+
+footer>hr{
+  color: #ff6600;
+  background-color: #ff6600;
+  border-color: #ff6600;
+  border-style: solid;
+}
+
+footer>p{
+  text-align: center;
+}
+ /* Pantalles petites desde 750 px*/
+@media (min-width: 750px) {
+  header, main, footer{
+    width: 80%;
+    margin: auto;
+  }
+  
+  #header-links{
+    padding: 2px;
+    font-size: 10pt;
+  }
+
+  #header-links>a{
+    padding: 0px;
+    font-size: 10pt;
+  }
+
+}
+
+
+
 
