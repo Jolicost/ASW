@@ -7,6 +7,9 @@ var DB = config.get('db.host');
 // Print some of them just for information
 console.log('Read PORT from config: ' + PORT);
 console.log('Read Database host DB from config: ' + DB);
+/* Models */
+let user = require('./app/models/user');
+
 /* express routing dependency. Add all your modules here */
 var express = require('express'),
     app = express(),
@@ -14,7 +17,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
     Contribution = require('./app/models/contribution'),
-    User = require('./app/models/user');
+    User = user
 
 const path = require('path');
 
@@ -53,3 +56,4 @@ app.listen(PORT);
 // All good!
 console.log('Practica ASW started on port: ' + PORT);
 // And ends sometime
+module.exports = app

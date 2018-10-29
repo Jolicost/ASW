@@ -8,7 +8,10 @@ An user can have multiple contributions, post in contributions and do other stuf
 */
 var UserSchema = new Schema({
 	//_id is implicit
-	
+	_id: { 
+		type: Schema.ObjectId, 
+		auto: true 
+	}
 	// Username
     username: {
         type: String,
