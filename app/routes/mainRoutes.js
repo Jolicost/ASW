@@ -11,11 +11,11 @@ module.exports = function (app) {
 
     
     app.get('/newest', (req, res) => { //https://scotch.io/tutorials/use-ejs-to-template-your-node-application
-            contribution.createFake();
-            contribution.createFake();
-            var result_query = contribution.list();
-            /* if (result_query == undefined) {
-                result_query =  [
+            //contribution.createFake();
+            //contribution.createFake();
+            var contributions_query;// = contribution.list();
+            if (contributions_query == undefined) {
+                contributions_query =  [
                     { 
                         title: "hola"
                      },
@@ -26,9 +26,9 @@ module.exports = function (app) {
                         title: "hola3" 
                     }
                 ]
-            } */
+            } 
             res.render('pages/newest', {
-                contributions: result_query
+                contributions: contributions_query
             })
         }
     );
