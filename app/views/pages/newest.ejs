@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../partials/header.ejs %>
+</head>
+
+<body>
+    <header>
+        <% include ../partials/nav.ejs %>
+    </header>
+    <main>
+        <% var counter = 0; %>
+        <table>
+            <tbody>
+                <% contributions.forEach((contribution) => { %>
+                    <tr>
+                    <td> <% counter += 1 %>  </td>
+                    <td class="votelink">
+                        <a id="" href="">
+                            <div class="votearrow" title="upvote"></div>
+                        </a>
+                    </td>
+                    <td class="title"><%= contribution.title %> <br></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </main>
+    <% include ../partials/footer.ejs %>
+</body>
+
+</html>
