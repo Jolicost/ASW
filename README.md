@@ -24,3 +24,6 @@ Available scripts:
 1. npm run test: starts tests
 1. npm run api: starts API and fills the database
 1. npm run clearApi: clears the whole model
+
+Useful resources:
+https://www.npmjs.com/package/ejs-blocks

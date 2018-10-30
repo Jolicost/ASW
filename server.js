@@ -16,6 +16,7 @@ var express = require('express'),
     port = PORT,
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
+    engine = require('ejs-blocks'),
     Contribution = require('./app/models/contribution'),
     User = user
 

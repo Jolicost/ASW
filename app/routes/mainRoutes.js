@@ -7,38 +7,11 @@ module.exports = function (app) {
 
     // Main routes of the application
     app.route('/')
-        .get((req, res) => res.render('pages/index'));
+        .get(main.main);
 
     
     app.route('/newest')
         .get(main.newest);
-    /*
-    app.get('/newest', (req, res) => { 
-
-            contribution.
-            //https://scotch.io/tutorials/use-ejs-to-template-your-node-application
-            //contribution.createFake();
-            //contribution.createFake();
-            var contributions_query;// = contribution.list();
-            if (contributions_query == undefined) {
-                contributions_query =  [
-                    { 
-                        title: "hola"
-                     },
-                    { 
-                        title: "hola2" 
-                    },
-                    { 
-                        title: "hola3" 
-                    }
-                ]
-            } 
-            res.render('pages/newest', {
-                contributions: contributions_query
-            })
-        }
-    );
-    */
 
     // Testing route for MVC example 
     app.route('/testModel')

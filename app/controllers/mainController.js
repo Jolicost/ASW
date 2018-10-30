@@ -10,6 +10,7 @@ exports.main = function(req,res) {
     Contribution
         /* Finds all contributions */
         .find({})
+        .sort({ points: -1 })
         /* 
         Populate creates the JOIN path of the document
         on this specific case we are interested in joining user to the contribution */
@@ -18,7 +19,7 @@ exports.main = function(req,res) {
         })
         /* Executes the query object and renders the appropiate page */
         .exec(function(err,ctrs) {
-            res.render('pages/testModel',{contributions: ctrs});
+            res.render('pages/index',{contributions: ctrs});
         });
     
 };

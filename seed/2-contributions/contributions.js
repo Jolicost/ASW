@@ -47,8 +47,10 @@ const contributions = [
         contributionType: 'url',
         user: getObjectId('Armstrong'),
         upvoted: [
-            getObjectId('Trump')
-        ]
+            getObjectId('Trump'),
+            getObjectId('Napoleon')
+        ],
+        points: 2
     },
     {
         _id: getObjectId('Spam'),
@@ -59,7 +61,8 @@ const contributions = [
         user: getObjectId('Gerard'),
         upvoted: [
             getObjectId('Gerard')
-        ]
+        ],
+        points: 1
     },
     {
         _id: getObjectId('Idiota'),
@@ -67,7 +70,8 @@ const contributions = [
         content: 'Ha visto alguien a mi churri?',
         publishDate: '1936-10-05',
         contributionType: 'ask',
-        user: getObjectId('Federico')
+        user: getObjectId('Federico'),
+        points: 0,
     },
     {
         _id: getObjectId('Territorio'),
@@ -75,7 +79,8 @@ const contributions = [
         content: 'Sabe alguien como puedo conquistar Prusia?',
         publishDate: '1806-03-12',
         contributionType: 'ask',
-        user: getObjectId('Napoleon')
+        user: getObjectId('Napoleon'),
+        points: 0,
     },
     {
         _id: getObjectId('Politica'),
@@ -83,7 +88,8 @@ const contributions = [
         content: 'Los inmigrantes, porque no pueden levantar su propio pais?',
         publishDate: '2016-11-20',
         contributionType: 'ask',
-        user: getObjectId('Trump')
+        user: getObjectId('Trump'),
+        points: 0
     },
     {
         _id: getObjectId('Visado'),
@@ -91,7 +97,8 @@ const contributions = [
         content: 'Alguien sabe como denegar un visado?',
         publishDate: '2017-01-01',
         contributionType: 'ask',
-        user: getObjectId('Trump')
+        user: getObjectId('Trump'),
+        points: 0
     },
 
 ];
