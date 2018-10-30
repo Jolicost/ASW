@@ -1,6 +1,6 @@
 /*Parts comunes a tot tipus de pantalles*/
 *{
-  margin: 0;
+  margin: 10;
   padding: 0;
   box-sizing: content-box;
 }
@@ -8,13 +8,34 @@
 header, main, footer{
   width: 100%;
   background-color: #f6f6ef;
+  font-family: Verdana, Geneva, sans-serif;
 }
+
+.header-nav {
+  font-weight: bold;
+}
+
+/*
+new:active {
+  .header-nav {
+    color: white;
+  }
+}
+.new-nav {
+  color: white;
+}
+[href$="/new"] {
+  .new-nav {
+    color: white;
+  }
+}
+*/
 
 #header-links{
   width: 100%;
   background-color: #ff6600;
   color: black;
-  font-size: 12pt;
+  font-size: 10pt;
 }
 
 #header-links>img{
@@ -30,10 +51,6 @@ header, main, footer{
   text-decoration: none;
 }
 
-#header-links>a:first-child{
-  font-weight: bold; 
-}
-
 #login-link{
   float: right;
 }
@@ -47,10 +64,23 @@ footer>hr{
 
 footer>p{
   text-align: center;
+  font-size: 10pt;
+}
+
+.athing {
+  font-size: 10pt;
+  color:#000000;
+}
+
+.count {
+  font-size: 10pt;
+  color:#828282;
 }
 
 .subtext span{
   font-size: 7pt;
+  color:#828282;
+
 }
 /* Pantalles petites desde 750 px*/
 @media (min-width: 750px) {
@@ -66,11 +96,7 @@ footer>p{
 
   #header-links>a{
     padding: 0px;
-    font-size: 10pt;
+    font-size: 11pt;
   }
 
 }
-
-
-
-

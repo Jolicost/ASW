@@ -16,6 +16,9 @@
                 <% contributions.forEach((contribution) => { %>
                     <tr>
                         <td> <% counter += 1 %>  </td>
+                        <td class="count">
+                            <%= counter + "." %>
+                        </td>
                         <td class="votelink">
                             <a id="" href="#">
                                 <img src="https://news.ycombinator.com/grayarrow.gif" class="votearrow" title="upvote"></img>
@@ -26,6 +29,7 @@
                         </td>
                     </tr>
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td class="subtext">
