@@ -100,6 +100,16 @@ const contributions = [
         user: getObjectId('Trump'),
         points: 0
     },
+    // Comments and replies
+    {
+        _id: getObjectId('CommentFakeNews1'),
+        content: "Me Gusta",
+        publishDate: '2016-03-03',
+        contributionType: 'comment',
+        user: getObjectId('Rajoy'),
+        parent: getObjectId('FakeNews'),
+        topParent: getObjectId('FakeNews')
+    }
 
 ];
 
