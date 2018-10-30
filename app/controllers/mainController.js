@@ -14,7 +14,7 @@ exports.main = function(req,res) {
         .populate({
             path: 'user'
         })
-        /* Executes the queyr object and renders the appropiate page */
+        /* Executes the query object and renders the appropiate page */
         .exec(function(err,ctrs) {
             res.render('pages/testModel',{contributions: ctrs});
         });

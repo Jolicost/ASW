@@ -5,7 +5,7 @@
 * Oliva Costas, Joan
 * Burguera Burguera, Joan Francesc
 * González García, Alejandro
-* Fuster Turpín, Aldo
+* Fuster Turpin, Aldo
 
 ## Deployment URL
 https://fibasw.herokuapp.com/
