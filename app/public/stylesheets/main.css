@@ -48,7 +48,11 @@ footer>hr{
 footer>p{
   text-align: center;
 }
- /* Pantalles petites desde 750 px*/
+
+.subtext span{
+  font-size: 7pt;
+}
+/* Pantalles petites desde 750 px*/
 @media (min-width: 750px) {
   header, main, footer{
     width: 80%;

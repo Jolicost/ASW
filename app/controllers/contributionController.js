@@ -26,8 +26,10 @@ exports.sortByDate = function(req,res) {
     .find({})
     .sort({ publishDate: -1 })
     .exec((err,contributions) => {
-        if (err) res.send(err);
-        else res.send(contributions);
+        if (err) 
+            res.send(err);
+        else
+            res.send(contributions);
     });
 };
 

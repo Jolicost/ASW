@@ -41,6 +41,7 @@ const contributions = [
     // Top contributions
     {
         _id: getObjectId('FakeNews'),
+        title: 'Apollo 11 was a hoax',
         content: 'https://www.express.co.uk/news/weird/963446/Moon-landing-fake-NASA-hoax-Apollo-11-conspiracy-theory-David-Meade',
         publishDate: '1969-05-05',
         contributionType: 'url',
@@ -51,6 +52,7 @@ const contributions = [
     },
     {
         _id: getObjectId('Spam'),
+        title: 'This video changed my life',
         content: 'https://www.youtube.com/watch?v=mnP_z3qXDCQ',
         publishDate: '2018-01-01',
         contributionType: 'url',

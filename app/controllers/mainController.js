@@ -4,6 +4,8 @@ var mongoose = require('mongoose'),
 Contribution = mongoose.model('Contributions'),
 User = mongoose.model('Users');
 
+var ContributionController = require('./contributionController');
+
 exports.main = function(req,res) {
     Contribution
         /* Finds all contributions */
@@ -25,3 +27,15 @@ exports.main = function(req,res) {
 exports.submit = function(req,res) {
     res.render('pages/submit');
 };
+
+exports.newest = function(req,res) {
+    Contribution
+    .find({})
+    .sort({ publishDate: -1 })
+    .populate({
+        path: 'user'
+    })
+    .exec((err,contributions) => {
+        res.render('pages/newest',{contributions: contributions});
+    });
+}
