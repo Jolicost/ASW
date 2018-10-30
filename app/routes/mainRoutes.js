@@ -13,5 +13,7 @@ module.exports = function(app) {
     app.route('/testModel')
         .get(main.main);
 
+    app.route('/submit')
+        .get(main.submit);
 
 }

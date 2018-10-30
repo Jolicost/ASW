@@ -20,3 +20,8 @@ exports.main = function(req,res) {
         });
     
 };
+
+
+exports.submit = function(req,res) {
+    res.render('pages/submit');
+};

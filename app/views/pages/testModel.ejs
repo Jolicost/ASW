@@ -10,10 +10,16 @@
 
 <div class="container">
 <h2>Retrieved contributions</h2>
-
+<br>
+<br>
 <ul>
     <% contributions.forEach(function(r) { %>
-        <li><%= r.title %> - <%= r.user.username %></li>
+    	<% if(r.contributionType == 'ask') { %>
+        	<li><p><%= r.title %>: <%= r.content %>. By: <%= r.user.username %></p></li>
+        <% } else { %>
+        	<li><a href="<%=r.content%>"><%=r.content%></a>By <%= r.user.username %></li>
+        <% } %>
+        <br>
     <% }); %>
 </ul>
 
