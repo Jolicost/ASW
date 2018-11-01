@@ -24,7 +24,7 @@
                             </a>
                         </td>
                         <td class="athing">
-                            <%= contribution.title %>
+                            <%= contribution.title %> | <%= contribution.shortUrl %>
                         </td>
                     </tr>
                     <tr>
@@ -32,7 +32,7 @@
                         <td></td>
                         <td></td>
                         <td class="subtext">
-                            <span><%= contribution.upvoted.length %> Points by <%= contribution.user.username %></span>
+                            <span><%= contribution.upvoted.length %> Points by <%= contribution.user.username %> | published <%= contribution.since %> ago | <%= contribution.nComments %> comment/s</span>
                         </td>
                     </tr>
                 <% }); %>

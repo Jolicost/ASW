@@ -7,15 +7,40 @@ User = mongoose.model('Users');
 var ContributionController = require('./contributionController');
 var async = require("async");
 
-
-function populateContributions(contributions)
-{
-    for (var i = 0; i < contributions.length; i++) {
-        var n = ContributionController.numberOfComments(contributions[i]._id);
-        contributions[i].numberOfComments = n;
-    }
+/* Returns the domain from an url */
+function getShortUrl(url) {
+    var matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+    var domain = matches && matches[1];
+    return domain;
 }
 
+/* Returns the "x time ago" date format from a date */
+function getSince(date) {
+  var seconds = Math.floor((new Date() - new Date(date)) / 1000);
+
+  var interval = Math.floor(seconds / 31536000);
+
+  if (interval > 1) {
+    return interval + " years";
+  }
+  interval = Math.floor(seconds / 2592000);
+  if (interval > 1) {
+    return interval + " months";
+  }
+  interval = Math.floor(seconds / 86400);
+  if (interval > 1) {
+    return interval + " days";
+  }
+  interval = Math.floor(seconds / 3600);
+  if (interval > 1) {
+    return interval + " hours";
+  }
+  interval = Math.floor(seconds / 60);
+  if (interval > 1) {
+    return interval + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
 
 
 exports.main = function(req,res) {
@@ -38,6 +63,8 @@ exports.main = function(req,res) {
             //do stuff
             Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
                 contribution['nComments'] = n;
+                contribution['since'] = getSince(contribution.publishDate);
+                contribution['shortUrl'] = getShortUrl(contribution.content);
                 callback();
             });
             
