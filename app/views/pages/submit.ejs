@@ -9,6 +9,11 @@
     <% include ../partials/nav.ejs %>
   </header>
   <main>
+  	<% if(typeof errors !== 'undefined' && errors) { %>
+  		<% errors.forEach(function(error) { %>
+  			<span><%= error %></span>
+  		<% }); %>
+  	<% } %>
     <!-- EL CODI DE LA PAGINA-->
     <% include ../partials/submit_form.html %> 
   </main>

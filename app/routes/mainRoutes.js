@@ -18,6 +18,7 @@ module.exports = function (app) {
         .get(main.main);
 
     app.route('/submit')
-        .get(main.submit);
+        .get(main.submit)
+        .post(main.submitForm);
 
 }

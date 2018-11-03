@@ -7,6 +7,8 @@ User = mongoose.model('Users');
 var ContributionController = require('./contributionController');
 var async = require("async");
 
+var bothError = "Submissions can't have both urls and text, so you need to pick one. If you keep the url, you can always post your text as a comment in the thread.";
+
 /* Returns the domain from an url */
 function getShortUrl(url) {
     var matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
@@ -77,6 +79,15 @@ exports.main = function(req,res) {
 
 exports.submit = function(req,res) {
     res.render('pages/submit');
+};
+
+exports.submitForm = function(req,res) {
+    var title = req.body.title;
+    var url = req.body.url;
+    var text = req.body.text;
+    
+    res.render('pages/submit',{errors:[bothError]})
+
 };
 
 exports.newest = function(req,res) {
