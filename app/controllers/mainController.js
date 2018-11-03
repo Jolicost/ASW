@@ -29,6 +29,26 @@ exports.submit = function(req,res) {
     res.render('pages/submit');
 };
 
+exports.login = function(req,res) {
+    let goto = req.query.goto;
+    if (req.method === 'POST'){
+        let new_username = req.body.new_username;
+        let new_password = req.body.new_password;
+        console.log(new_username+'|'+new_password);
+        res.render('pages/login');
+    }
+    else if(req.method === 'GET'){
+        if (goto != undefined){
+            console.log('Esto paso por el goto');
+            res.render('pages/login', {goto: goto});
+        }
+        else{
+            res.render('pages/login');
+        }
+    } 
+    
+};
+
 exports.newest = function(req,res) {
     Contribution
     .find({})

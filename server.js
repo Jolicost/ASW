@@ -20,6 +20,11 @@ var express = require('express'),
     Contribution = require('./app/models/contribution'),
     User = user
 
+// support parsing of application/json type post data
+app.use(bodyParser.json());
+
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ extended: true }));
 const path = require('path');
 
 /* Deployment settings */

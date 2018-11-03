@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+  <header>
+    <% include ../partials/nav.ejs %>
+  </header>
+  <main>
+    
+    <fieldset>
+      <form action="">
+        <legend>Login</legend>
+        <div>
+          <label for="username">username: </label>
+          <input type="text" id="username">
+        </div>
+        <div>
+          <label for="password">password: </label>
+          <input type="password" id="password">
+        </div>
+        <button type="submit">login</button>
+        <a href="#">Forgot your password?</a>
+      </form>
+    </fieldset>
+    <fieldset>
+      <form action="login" method="POST">
+        <legend>Create account</legend>
+        <div>
+            <label for="new_username">username: </label>
+            <input type="text" name="new_username" id="new_username">
+          </div>
+          <div>
+            <label for="new_password">password: </label>
+            <input type="password" name="new_password" id="new_password">
+          </div>
+          <button type="submit">create account</button>
+      </form>
+      
+    </fieldset>
+  </main>
+  <% include ../partials/footer.ejs %>
+</body>
+</html>
