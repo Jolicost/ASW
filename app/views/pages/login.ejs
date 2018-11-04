@@ -11,15 +11,16 @@
   <main>
     
     <fieldset>
-      <form action="">
+        <form action="login" method="POST">
         <legend>Login</legend>
+        <input type="text" hidden name="goto" value="<%=goto%>">
         <div>
           <label for="username">username: </label>
-          <input type="text" id="username">
+          <input type="text" name="username" id="username">
         </div>
         <div>
           <label for="password">password: </label>
-          <input type="password" id="password">
+          <input type="password" name="password" id="password">
         </div>
         <button type="submit">login</button>
         <a href="#">Forgot your password?</a>
@@ -28,13 +29,14 @@
     <fieldset>
       <form action="login" method="POST">
         <legend>Create account</legend>
+        <input type="text" hidden name="goto" value="<%=goto%>">
         <div>
-            <label for="new_username">username: </label>
-            <input type="text" name="new_username" id="new_username">
+            <label for="username">username: </label>
+            <input type="text" name="username" id="username">
           </div>
           <div>
-            <label for="new_password">password: </label>
-            <input type="password" name="new_password" id="new_password">
+            <label for="password">password: </label>
+            <input type="password" name="password" id="password">
           </div>
           <button type="submit">create account</button>
       </form>

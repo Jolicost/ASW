@@ -24,4 +24,6 @@ module.exports = function (app) {
         .get(main.login)
         .post(main.login);
 
+    app.route('/logout')
+        .get(main.logout)
 }

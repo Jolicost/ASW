@@ -39,6 +39,19 @@ mongoose.connect(DB,{
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+//session
+var session = require('express-session');
+app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true, cookie: {}, user: undefined}));
+app.use(function(req, res, next) {
+    res.locals.path = req.path;
+    if (req.session != undefined){
+        res.locals.user = req.session.user;
+    }
+    else{
+        res.locals.user = undefined;
+    }
+    next();
+  });
 
 // API REST Routing
 var contributionRoutes = require('./app/routes/contributionRoutes');

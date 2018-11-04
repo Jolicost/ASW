@@ -30,6 +30,10 @@ header, main, footer{
   text-decoration: none;
 }
 
+#header-links>a.active-link{
+  color: white;
+}
+
 #header-links>a:first-child{
   font-weight: bold; 
 }
