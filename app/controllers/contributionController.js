@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 // dependencies seprated by commas. Be aware
 Contribution = mongoose.model('Contributions');
 
-//for newest view
+// Unused
+//for newest view. 
 exports.sortByDate = function(req,res) {
     Contribution
     .find({})
