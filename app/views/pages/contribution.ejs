@@ -9,12 +9,12 @@
     <% include ../partials/nav.ejs %>
   </header>
   <main>
-    <% var counter = 0; %>
         <table>
             <tbody>
-                <% contributions.forEach((contribution) => { %>
-                    <% include ../partials/singleContribution.ejs %>
-                <% }); %>
+                <% include ../partials/singleContribution.ejs %>
+                <% if (contribution.contributionType == 'ask') { %>
+                    <tr><td></td><td class="athing"><%= contribution.content %></td></tr>
+                <% } %>
             </tbody>
         </table>
   </main>

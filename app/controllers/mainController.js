@@ -8,6 +8,14 @@ var ContributionController = require('./contributionController');
 var async = require("async");
 
 var bothError = "Submissions can't have both urls and text, so you need to pick one. If you keep the url, you can always post your text as a comment in the thread.";
+var noTitle = "Please try again";
+var urlExists = "The URL already exists";
+var invalidURL = "Invalid URL";
+var emptyError = "Content is emtpy!";
+
+var validUrl = require('valid-url');
+
+const { getObjectId } = require('../../seed/index');
 
 /* Returns the domain from an url */
 function getShortUrl(url) {
@@ -82,11 +90,58 @@ exports.submit = function(req,res) {
 };
 
 exports.submitForm = function(req,res) {
-    var title = req.body.title;
-    var url = req.body.url;
-    var text = req.body.text;
+    var title = req.body.title.trim();
+    var url = req.body.url.trim();
+    var text = req.body.text.trim();
+
+
+    if (!title) {
+        return res.render('pages/submit', {errors: [noTitle]});
+    }
+
+    if (url && text) {
+        return res.render('pages/submit', {errors: [bothError]});
+    }
+
+    if (!url && !text) {
+        return res.render('pages/submit', {errors: [emptyError]});
+    }
+
+    if (url && !validUrl.isUri(url)) {
+        return res.render('pages/submit', {errors: [invalidURL]});
+    }
     
-    res.render('pages/submit',{errors:[bothError]})
+    if (url) {
+        Contribution.findOne({
+            contributionType: 'url',
+            content: url
+        })
+        .exec(function(err,result) {
+            if (result != null) {
+                // redirect to page
+                return res.redirect('item?id=' + result._id);
+            }
+            else {
+                let ctr = new Contribution({
+                    title: title,
+                    content: url
+                });
+                ctr.save(function(error) {
+                    return res.redirect('item?id=' + ctr._id);
+                });
+            }
+        });
+    }
+    else if (text) {
+        let ctr = new Contribution({
+            title: title,
+            content: text,
+        });
+        ctr.save(function(error) {
+            // render contriubtion page
+            return res.redirect('item?id=' + ctr._id);
+        })
+    }
 
 };
 
@@ -103,7 +158,69 @@ exports.newest = function(req,res) {
         path: 'user'
     })
     .exec((err,contributions) => {
-        res.render('pages/newest',{contributions: contributions});
+        async.forEach(contributions, function(contribution, callback) {
+            //do stuff
+            Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
+                contribution['nComments'] = n;
+                contribution['since'] = getSince(contribution.publishDate);
+
+                if (contribution['contributionType'] == 'url')
+                    contribution['shortUrl'] = getShortUrl(contribution.content);
+                callback();
+            });
+            
+        }, function (err) {
+            res.render('pages/newest',{contributions: contributions});
+        });
     });
 }
 
+exports.ask = function(req,res) {
+    Contribution
+    .find({
+        contributionType:'ask'
+    })
+    .sort({ publishDate: -1 })
+    .populate({
+        path: 'user'
+    })
+    .exec((err,contributions) => {
+        async.forEach(contributions, function(contribution, callback) {
+            //do stuff
+            Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
+                contribution['nComments'] = n;
+                contribution['since'] = getSince(contribution.publishDate);
+                callback();
+            });
+            
+        }, function (err) {
+            res.render('pages/ask',{contributions: contributions});
+        });
+    });
+}
+
+exports.contribution = function(req,res) {
+    var id = req.query.id;
+    Contribution
+    .findById(id)
+    .populate({
+        path: 'user'
+    })
+    .exec(function(err,contribution) {
+        if (err)
+            res.send(err);
+        else {
+            Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
+                contribution['nComments'] = n;
+                contribution['since'] = getSince(contribution.publishDate);
+                res.render('pages/contribution',{contribution: contribution});
+            });     
+        }
+    });
+    
+}
+
+
+function miscInfo(req,res) {
+
+}
