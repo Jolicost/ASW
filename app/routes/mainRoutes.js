@@ -21,4 +21,10 @@ module.exports = function (app) {
         .get(main.submit)
         .post(main.submitForm);
 
+    app.route('/item')
+        .get(main.contribution);
+
+    app.route('/ask')
+        .get(main.ask);
+
 }
