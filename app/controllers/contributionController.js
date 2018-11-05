@@ -5,21 +5,6 @@ var mongoose = require('mongoose'),
 // dependencies seprated by commas. Be aware
 Contribution = mongoose.model('Contributions');
 
-
-////////////////just for testing ////////////////////////
-var count = 0;
-exports.createFake = function(req,res) {
-    var new_Contribution = new Contribution({
-        title: "title" +  (++count)
-    });
-    
-    new_Contribution.save((err,contribution) => {
-        if (err) res.send(err);
-        else res.json(contribution);
-    });
-};
-////////////////////////////////////////////////////
-
 //for newest view
 exports.sortByDate = function(req,res) {
     Contribution
