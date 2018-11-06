@@ -58,11 +58,14 @@ var contributionRoutes = require('./app/routes/contributionRoutes');
 var userRoutes = require('./app/routes/userRoutes');
 // MVC Routing
 var mainRoutes = require('./app/routes/mainRoutes');
+// Session Routing
+var sessionRoutes = require('./app/routes/sessionRoutes');
 
 // Register the routes
 contributionRoutes(app);
 userRoutes(app);
 mainRoutes(app);
+sessionRoutes(app);
 
 // Register static resources, views folder and view engine
 app.use(express.static(path.join(__dirname, 'app/public')));

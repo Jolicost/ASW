@@ -19,11 +19,4 @@ module.exports = function (app) {
 
     app.route('/submit')
         .get(main.submit);
-
-    app.route('/login')
-        .get(main.login)
-        .post(main.login);
-
-    app.route('/logout')
-        .get(main.logout)
 }
