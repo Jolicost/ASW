@@ -18,6 +18,10 @@ var UserSchema = new Schema({
         type: String,
         default: ""
     },
+    email: {
+        type: String,
+        default: ""
+    },
     // creation date
     createdAt: {
         type: Date,
@@ -34,6 +38,9 @@ var UserSchema = new Schema({
         default: ""
     },
     token: {
+        type: String
+    },
+    googleId: {
         type: String
     }
 });

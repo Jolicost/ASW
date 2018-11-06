@@ -23,7 +23,14 @@ var config = convict({
       format: '*',
       default: defaultPort
     }  
-  } 
+  },
+  configAuth : {
+    google : {
+        clientID      : '902980117589-ic7v2n0kood4nu7c99j3lsnnsip4870b.apps.googleusercontent.com',
+        clientSecret  : 'xZvK7EAA8Ev4BZM564QSjkwN',
+        callbackURL   : 'http://localhost:3000/auth/google/callback'
+    }
+  }
 });
 
 // Load environment dependent configuration

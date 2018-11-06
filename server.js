@@ -59,13 +59,15 @@ var userRoutes = require('./app/routes/userRoutes');
 // MVC Routing
 var mainRoutes = require('./app/routes/mainRoutes');
 // Session Routing
+var passport = require('passport');
+require('./config/passport')(passport);
 var sessionRoutes = require('./app/routes/sessionRoutes');
 
 // Register the routes
 contributionRoutes(app);
 userRoutes(app);
 mainRoutes(app);
-sessionRoutes(app);
+sessionRoutes(app,passport);
 
 // Register static resources, views folder and view engine
 app.use(express.static(path.join(__dirname, 'app/public')));
