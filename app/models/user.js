@@ -17,6 +17,24 @@ var UserSchema = new Schema({
     password: {
         type: String,
         default: ""
+    },
+    // creation date
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    },
+    // Derived information (needs to be choosen how)
+    karma: {
+        type: Number,
+        default: 0
+    },
+    // user about (plain text)
+    about: {
+        type: String,
+        default: ""
+    },
+    token: {
+        type: String
     }
 });
 
