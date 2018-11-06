@@ -51,6 +51,15 @@ new:active {
   text-decoration: none;
 }
 
+
+#header-links>a.active-link{
+  color: white;
+}
+
+#header-links>a:first-child{
+  font-weight: bold; 
+}
+
 #login-link{
   float: right;
 }
@@ -81,6 +90,29 @@ footer>p{
   font-size: 7pt;
   color:#828282;
 
+}
+
+fieldset{
+  border: none;
+  margin: 5px;
+  margin-left: 15px;
+}
+
+legend{
+  font-weight: bolder;
+  margin-left: -10px;
+}
+
+button{
+  display: block;
+}
+
+fieldset div {
+  display: block;
+}
+
+fieldset div > * {
+  margin: 5px;
 }
 /* Pantalles petites desde 750 px*/
 @media (min-width: 750px) {

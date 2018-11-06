@@ -26,5 +26,4 @@ module.exports = function (app) {
 
     app.route('/ask')
         .get(main.ask);
-
 }

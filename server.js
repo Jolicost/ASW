@@ -20,6 +20,11 @@ var express = require('express'),
     Contribution = require('./app/models/contribution'),
     User = user
 
+// support parsing of application/json type post data
+app.use(bodyParser.json());
+
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ extended: true }));
 const path = require('path');
 
 /* Deployment settings */
@@ -34,17 +39,33 @@ mongoose.connect(DB,{
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+//session
+var session = require('express-session');
+app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true, cookie: {}, user: undefined}));
+app.use(function(req, res, next) {
+    res.locals.path = req.path;
+    if (req.session != undefined){
+        res.locals.user = req.session.user;
+    }
+    else{
+        res.locals.user = undefined;
+    }
+    next();
+  });
 
 // API REST Routing
 var contributionRoutes = require('./app/routes/contributionRoutes');
 var userRoutes = require('./app/routes/userRoutes');
 // MVC Routing
 var mainRoutes = require('./app/routes/mainRoutes');
+// Session Routing
+var sessionRoutes = require('./app/routes/sessionRoutes');
 
 // Register the routes
 contributionRoutes(app);
 userRoutes(app);
 mainRoutes(app);
+sessionRoutes(app);
 
 // Register static resources, views folder and view engine
 app.use(express.static(path.join(__dirname, 'app/public')));

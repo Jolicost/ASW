@@ -222,8 +222,3 @@ exports.contribution = function(req,res) {
     });
     
 }
-
-
-function miscInfo(req,res) {
-
-}
