@@ -8,11 +8,11 @@
     <a href="/ask" <%= (locals.path == "/ask") ? "class=active-link" : ""%>>ask</a>|
     <a href="/jobs" <%= (locals.path == "/jobs") ? "class=active-link" : ""%>>jobs</a>|
     <a href="/submit" <%= (locals.path == "/submit") ? "class=active-link" : ""%>>submit</a>
-    <%if (locals.user == undefined){%>
+    <%if (locals.sessionUser == undefined){%>
         <a id="login-link" href="/login?goto=<%=locals.path%>">login</a>
     <%} else {%>
         <a id="login-link" href="/logout?goto=<%=locals.path%>">logout</a>
-        <a id="login-link" href="/user"><%= locals.user %>|</a>
+        <a id="login-link" href="/user"><%= locals.sessionUser %>|</a>
     <%}%>
 </nav>
 

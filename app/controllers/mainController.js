@@ -25,7 +25,7 @@ function getShortUrl(url) {
 }
 
 /* Returns the "x time ago" date format from a date */
-function getSince(date) {
+exports.getSince =  function(date) {
     var seconds = Math.floor((new Date() - new Date(date)) / 1000);
 
     var interval = Math.floor(seconds / 31536000);
@@ -73,7 +73,7 @@ exports.main = function (req, res) {
                 //do stuff
                 Contribution.countDocuments({ topParent: contribution._id }).exec(function (err, n) {
                     contribution['nComments'] = n;
-                    contribution['since'] = getSince(contribution.publishDate);
+                    contribution['since'] = module.exports.getSince(contribution.publishDate);
                     contribution['shortUrl'] = getShortUrl(contribution.content);
                     callback();
                 });
@@ -165,7 +165,7 @@ exports.newest = function(req,res) {
             //do stuff
             Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
                 contribution['nComments'] = n;
-                contribution['since'] = getSince(contribution.publishDate);
+                contribution['since'] = module.exports.getSince(contribution.publishDate);
 
                 if (contribution['contributionType'] == 'url')
                     contribution['shortUrl'] = getShortUrl(contribution.content);
@@ -192,7 +192,7 @@ exports.ask = function(req,res) {
             //do stuff
             Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
                 contribution['nComments'] = n;
-                contribution['since'] = getSince(contribution.publishDate);
+                contribution['since'] = module.exports.getSince(contribution.publishDate);
                 callback();
             });
             
@@ -215,7 +215,7 @@ exports.contribution = function(req,res) {
         else {
             Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
                 contribution['nComments'] = n;
-                contribution['since'] = getSince(contribution.publishDate);
+                contribution['since'] = module.exports.getSince(contribution.publishDate);
                 res.render('pages/contribution',{contribution: contribution});
             });     
         }

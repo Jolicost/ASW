@@ -4,6 +4,7 @@
 var mongoose = require('mongoose'),
 // dependencies seprated by commas. Be aware
 User = mongoose.model('Users');
+var main = require('./mainController');
 
 exports.list = function(req,res) {
     User.find({}, function(err,users) {
@@ -61,3 +62,14 @@ exports.deleteAll = function(req, res) {
             res.json({message: 'All users deleted'});
     });
 };
+
+exports.view = function(req, res){
+    User.findById(req.query.id, function(err,user) {
+        if (err)
+            res.send('No such user.');
+        else{
+            var logged = user.username == req.session.sessionUser || user._id == req.session.sessionUser;
+            res.render('pages/users', {user: user, createdAt: main.getSince(user.createdAt), logged: logged});
+        }            
+    });
+}

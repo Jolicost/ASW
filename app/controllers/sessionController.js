@@ -4,7 +4,7 @@ exports.login = function(req,res) {
         let new_username = req.body.username;
         let new_password = req.body.password;
         let goto = req.body.goto;
-        req.session.user = new_username;
+        req.session.sessionUser = new_username;
         res.redirect(goto);
     }
     else if(req.method === 'GET'){
@@ -20,7 +20,7 @@ exports.login = function(req,res) {
 
 exports.logout = function(req,res) {
     let goto = req.query.goto;
-    req.session.user = undefined;
+    req.session.sessionUser = undefined;
     res.redirect(goto);
     
     
