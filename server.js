@@ -62,6 +62,10 @@ var mainRoutes = require('./app/routes/mainRoutes');
 // Session Routing
 var passport = require('passport');
 require('./config/passport')(passport);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 var sessionRoutes = require('./app/routes/sessionRoutes');
 
 // Register the routes

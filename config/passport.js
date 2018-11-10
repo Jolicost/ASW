@@ -6,6 +6,7 @@ var User       = require('../app/models/user');
 const config = require('./config.js');
 // Read the configuration variables
 var configAuth  = config.get('configAuth.google');
+var configAuthGithub = config.get('configAuth.github');
 
 
 module.exports = function(passport) {
@@ -73,5 +74,38 @@ module.exports = function(passport) {
         });
 
     }));
+
+
+    /// GITHUB
+    var GitHubStrategy = require('passport-github').Strategy;
+
+    passport.use(new GitHubStrategy({
+        clientID: configAuthGithub.clientID,
+        clientSecret: configAuthGithub.clientSecret,
+        callbackURL: configAuthGithub.callbackURL
+      },
+      function(accessToken, refreshToken, profile, cb) {
+        console.log(profile);
+
+        User.findOne({ 'auth.github.id': profile.id }, function(err, user){
+            if (err) return cb(err);
+
+            if (user) {
+                return cb(null,user);
+            } else {
+                let u = new User();
+
+                u.auth.github.id = profile.id;
+                u.username = profile.login;
+
+                u.save(function(err){
+                    console.log(u);
+                    if (err) throw err;
+                    return cb(null,u);
+                });
+            }
+        });
+      }
+    ));
 
 };

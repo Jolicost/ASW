@@ -40,8 +40,12 @@ var UserSchema = new Schema({
     token: {
         type: String
     },
-    googleId: {
-        type: String
+    auth: {
+        github: {
+            id: {
+                type: String
+            },
+        }
     }
 });
 

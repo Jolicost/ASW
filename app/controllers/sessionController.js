@@ -1,3 +1,4 @@
+
 exports.login = function(req,res) {
     let goto = req.query.goto;
     if (req.method === 'POST'){
@@ -9,7 +10,7 @@ exports.login = function(req,res) {
     }
     else if(req.method === 'GET'){
         if (goto != undefined){
-            res.render('pages/login', {goto: goto});
+            res.render('pages/login', {goto: goto, githubUrl: '/auth/github'});
         }
         else{
             res.render('pages/login');
