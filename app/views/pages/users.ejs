@@ -10,20 +10,32 @@
   </header>
   <main>
     <%if (logged){%>
-      <table>
-        <tr>
-          <td>user:</td><td><input type="text" value="<%=user.username%>"></td>
-        </tr>
-        <tr>
-          <td>created:</td><td><input type="text" value="<%=createdAt%>"></td>
-        </tr>
-        <tr>
-          <td>karma:</td><td><input type="text" value="<%=user.karma%>"></td>
-        </tr>
-        <tr>
-          <td>about:</td><td><input type="text" value="<%=user.about%>"></td>
-        </tr>
-      </table>
+      <form action="/updateuser/<%=user._id%>" method="POST">
+        <table>
+          <tr>
+            <td>user:</td><td><%=user.username%></td>
+          </tr>
+          <tr>
+            <td>created:</td><td><%=createdAt%></td>
+          </tr>
+          <tr>
+            <td>karma:</td><td><%=user.karma%></td>
+          </tr>
+          <tr>
+            <td><label for="about">about:</label></td><td><textarea type="text" name="about" id="about" cols="60" rows="5"><%=user.about%></textarea></td>
+          </tr>
+          <tr>
+            <td></td><td><a href="submitted?id=<%=user._id%>">submissions</a></td>
+          </tr>
+          <tr>
+            <td></td><td><a href="threads?id=<%=user._id%>">comments</a></td>
+          </tr>
+          <tr>
+            <td></td><td><a href="/upvoted?id=<%=user._id%>">upvoted submissions</a>/<a href="/upvoted?id=<%=user._id%>&comments=t">comments</a></td>
+          </tr>
+        </table>
+        <button type="submit">update</button>
+      </form>
     <%} else{%>
       <table>
         <tr>
@@ -38,6 +50,12 @@
         <tr>
           <td>about:</td><td><%=user.about%></td>
         </tr>
+        <tr>
+            <td></td><td><a href="submitted?id=<%=user._id%>">submissions</a></td>
+          </tr>
+          <tr>
+            <td></td><td><a href="threads?id=<%=user._id%>">comments</a></td>
+          </tr>
       </table>
     <%}%>
   </main>

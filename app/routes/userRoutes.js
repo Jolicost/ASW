@@ -15,4 +15,7 @@ module.exports = function(app) {
         
     app.route('/user')
         .get(user.view);
+
+    app.route('/updateuser/:userId')
+        .post(user.updateFromView);
 }

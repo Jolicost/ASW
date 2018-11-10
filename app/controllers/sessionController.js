@@ -1,5 +1,5 @@
 exports.login = function(req,res) {
-    let goto = req.query.goto;
+    let goto = req.query.goto == undefined ? '/' : req.query.goto;
     if (req.method === 'POST'){
         let new_username = req.body.username;
         let new_password = req.body.password;
@@ -8,12 +8,12 @@ exports.login = function(req,res) {
         res.redirect(goto);
     }
     else if(req.method === 'GET'){
-        if (goto != undefined){
-            res.render('pages/login', {goto: goto});
+        if (req.session.sessionUser != undefined){
+            res.redirect(goto);
         }
         else{
-            res.render('pages/login');
-        }
+            res.render('pages/login', {goto: goto});
+        }    
     } 
     
 };

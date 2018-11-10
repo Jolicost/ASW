@@ -64,12 +64,29 @@ exports.deleteAll = function(req, res) {
 };
 
 exports.view = function(req, res){
-    User.findById(req.query.id, function(err,user) {
+    let userId = req.query.id;
+    if (userId == undefined){
+        res.send('No such user.');
+    }
+    else{
+        User.findById(userId, function(err,user) {
+            if (err)
+                res.send('No such user.');
+            else{
+                var logged = user.username == req.session.sessionUser || user._id == req.session.sessionUser;
+                res.render('pages/users', {user: user, createdAt: main.getSince(user.createdAt), logged: logged});
+            }            
+        });
+    }
+};
+
+exports.updateFromView = function(req, res){
+    console.log(req.body);
+    User.findOneAndUpdate({_id: req.params.userId}, req.body, {},function(err,user){
         if (err)
-            res.send('No such user.');
+            res.send(err);
         else{
-            var logged = user.username == req.session.sessionUser || user._id == req.session.sessionUser;
-            res.render('pages/users', {user: user, createdAt: main.getSince(user.createdAt), logged: logged});
-        }            
+            res.redirect('/user?id='+req.params.userId);
+        }
     });
 }
