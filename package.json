@@ -24,6 +24,7 @@
     "index.js": "0.0.3",
     "mongoose": "^5.3.6",
     "nodemon": "^1.18.5",
+    "passport-github": "^1.1.0",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
