@@ -4,6 +4,7 @@
 var mongoose = require('mongoose'),
 // dependencies seprated by commas. Be aware
 User = mongoose.model('Users');
+var main = require('./mainController');
 
 exports.list = function(req,res) {
     User.find({}, function(err,users) {
@@ -61,3 +62,31 @@ exports.deleteAll = function(req, res) {
             res.json({message: 'All users deleted'});
     });
 };
+
+exports.view = function(req, res){
+    let userId = req.query.id;
+    if (userId == undefined){
+        res.send('No such user.');
+    }
+    else{
+        User.findById(userId, function(err,user) {
+            if (err)
+                res.send('No such user.');
+            else{
+                var logged = user.username == req.session.sessionUser || user._id == req.session.sessionUser;
+                res.render('pages/users', {user: user, createdAt: main.getSince(user.createdAt), logged: logged});
+            }            
+        });
+    }
+};
+
+exports.updateFromView = function(req, res){
+    console.log(req.body);
+    User.findOneAndUpdate({_id: req.params.userId}, req.body, {},function(err,user){
+        if (err)
+            res.send(err);
+        else{
+            res.redirect('/user?id='+req.params.userId);
+        }
+    });
+}
