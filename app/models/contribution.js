@@ -77,6 +77,14 @@ var ContributionSchema = new Schema({
         type: Schema.Types.ObjectId, 
         ref: 'Contributions'
     }
+
+    /* Child contribution references. contributions are double referenced */
+    childs: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Contributions'
+        }
+    ]
 });
 
 /* Make the model visible across mongoose */
