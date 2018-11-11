@@ -15,10 +15,11 @@
                 <% if (contribution.contributionType == 'ask') { %>
                     <tr><td></td><td class="athing"><%= contribution.content %></td></tr>
                 <% } %>
-                    <tr>
-                      <td></td>
-                      <td><% include ../partials/comment.ejs %></td>
-                    </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+              <%- include("../partials/comment.ejs",{contribution: contribution,level: 0}); %>
             </tbody>
         </table>
   </main>

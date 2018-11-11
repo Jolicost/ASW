@@ -187,6 +187,7 @@ const contributions = [
         user: getObjectId('JulioCesar'),
         parent: getObjectId('Territorio'),
         topParent: getObjectId('Territorio'),
+        upvoted: [],
         child: [
             getObjectId('CommentTerritorio2')
         ]
@@ -199,6 +200,7 @@ const contributions = [
         user: getObjectId('Napoleon'),
         parent: getObjectId('CommentTerritorio1'),
         topParent: getObjectId('Territorio'),
+        upvoted: [],
         child: [
             getObjectId('CommentTerritorio3')
         ]
@@ -210,7 +212,8 @@ const contributions = [
         contributionType: 'comment',
         user: getObjectId('JulioCesar'),
         parent: getObjectId('CommentTerritorio2'),
-        topParent: getObjectId('Territorio')
+        topParent: getObjectId('Territorio'),
+        upvoted: []
     },
 
     // Coments Visado
@@ -223,6 +226,7 @@ const contributions = [
         user: getObjectId('Rajoy'),
         parent: getObjectId('Visado'),
         topParent: getObjectId('Visado'),
+        upvoted: [],
         child: [
             getObjectId('CommentVisado2')
         ]
@@ -235,6 +239,7 @@ const contributions = [
         user: getObjectId('Llarena'),
         parent: getObjectId('CommentVisado1'),
         topParent: getObjectId('Visado'),
+        upvoted: [],
         child: [
             getObjectId('CommentVisado3')
         ]
@@ -247,6 +252,7 @@ const contributions = [
         user: getObjectId('Trump'),
         parent: getObjectId('CommentVisado2'),
         topParent: getObjectId('Visado'),
+        upvoted: [],
         child: [
             getObjectId('CommentVisado4')
         ]    
@@ -258,7 +264,8 @@ const contributions = [
         contributionType: 'comment',
         user: getObjectId('Rajoy'),
         parent: getObjectId('CommentVisado3'),
-        topParent: getObjectId('Visado')
+        topParent: getObjectId('Visado'),
+        upvoted: []
     }
 
 ];

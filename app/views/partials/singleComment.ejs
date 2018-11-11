@@ -1,0 +1,23 @@
+<tr>
+<td>
+    <table>
+    <tbody>
+    <tr>
+    <td><img style="width: <%= level * 20 %>px" src="https://news.ycombinator.com/s.gif"/></td>
+    <td class="votelink">
+        <a id="" href="#">
+            <img src="https://news.ycombinator.com/grayarrow.gif" class="votearrow" title="upvote"></img>
+        </a>
+    </td>
+    <td class="subtext">
+        <span><%= typeof contribution.user === "undefined"?'Undefined user':contribution.user %> <a href="item?id=<%= contribution._id %>"><%= contribution.since %> ago</a></span>
+        <div class="athing">
+        <%= contribution.content %>
+        </div>
+        <span><a href="/item?id=<%= contribution._id %>">reply</a></span>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+</td>
+</tr>

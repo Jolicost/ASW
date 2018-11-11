@@ -218,13 +218,9 @@ exports.contribution = function(req,res) {
     var id = req.query.id;
     Contribution
     .findById(id)
-    .populate(
-        'user'
-    )
-    .populate(
-        'child'
-    )
-    .lean()
+    .populate({
+        path: 'user'
+    })
     .exec(function(err,contribution) {
         if (err)
             res.send(err);
@@ -248,6 +244,7 @@ exports.contribution = function(req,res) {
                 let contribution = results[0];
                 let node = results[1];
                 contribution['comments'] = node;
+                            console.log(contribution);
                 res.render('pages/contribution',{contribution: contribution});
             });
                 
@@ -257,7 +254,11 @@ exports.contribution = function(req,res) {
 }
 
 function getAllComments(contribution,callback) {
-    Contribution.find({topParent: contribution._id} , function(err, contributions) {
+    Contribution
+    .find(
+        {topParent: contribution._id}
+    )
+    .exec(function(err, contributions) {
         let res = getNode(contribution,contributions);
         callback(null,res);
     });    
@@ -269,8 +270,9 @@ function getNode(root,contributions) {
         if (contribution.parent._id.equals(root._id)) {
             ret.push({
                 content: contribution.content,
-                id: contribution._id,
+                _id: contribution._id,
                 since: getSince(contribution.publishDate),
+                user: contribution.user.username,
                 comments: getNode(contribution,contributions)
             });
         }
