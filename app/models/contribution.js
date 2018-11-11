@@ -76,10 +76,10 @@ var ContributionSchema = new Schema({
     topParent: {
         type: Schema.Types.ObjectId, 
         ref: 'Contributions'
-    }
+    },
 
     /* Child contribution references. contributions are double referenced */
-    childs: [
+    child: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Contributions'
