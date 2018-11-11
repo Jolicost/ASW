@@ -18,6 +18,10 @@ var UserSchema = new Schema({
         type: String,
         default: ""
     },
+    email: {
+        type: String,
+        default: ""
+    },
     // creation date
     createdAt: {
         type: Date,
@@ -35,6 +39,13 @@ var UserSchema = new Schema({
     },
     token: {
         type: String
+    },
+    auth: {
+        github: {
+            id: {
+                type: String
+            }
+        }
     }
 });
 

@@ -22,6 +22,7 @@ var express = require('express'),
 
 // support parsing of application/json type post data
 app.use(bodyParser.json());
+app.use(bodyParser.text());
 
 //support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -59,13 +60,19 @@ var userRoutes = require('./app/routes/userRoutes');
 // MVC Routing
 var mainRoutes = require('./app/routes/mainRoutes');
 // Session Routing
+var passport = require('passport');
+require('./config/passport')(passport);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 var sessionRoutes = require('./app/routes/sessionRoutes');
 
 // Register the routes
 contributionRoutes(app);
 userRoutes(app);
 mainRoutes(app);
-sessionRoutes(app);
+sessionRoutes(app,passport);
 
 // Register static resources, views folder and view engine
 app.use(express.static(path.join(__dirname, 'app/public')));

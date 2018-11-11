@@ -1,5 +1,12 @@
 {
 	"db": {
 		"host":"mongodb://heroku_ftmpcjnq:o0c10b0j0dd5nae1bviv19bbl9@ds139883.mlab.com:39883/heroku_ftmpcjnq",
+	 },
+	 "configAuth": {
+	 	"github": {
+	 		"clientID": "ef33e99c1dacba6c3004",
+        	"clientSecret": "1ee55ecf0883e177fe94241c55fbf5dfa7c97b29",
+	 		"callbackURL": "http://fibasw.herokuapp.com/auth/github/callback"
+	 	}
 	 }
 }

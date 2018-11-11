@@ -29,7 +29,9 @@
     <fieldset>
       <form action="login" method="POST">
         <legend>Create account</legend>
+        <% if (typeof goto !== 'undefined') { %>
         <input type="text" hidden name="goto" value="<%=goto%>">
+        <% } %>
         <div>
             <label for="username">username: </label>
             <input type="text" name="username" id="username">
@@ -40,6 +42,7 @@
           </div>
           <button type="submit">create account</button>
       </form>
+      <a href="<%= githubUrl %>">Login with Github</a>
       
     </fieldset>
   </main>
