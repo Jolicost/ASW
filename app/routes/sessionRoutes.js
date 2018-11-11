@@ -14,32 +14,13 @@ module.exports = function (app, passport) {
     app.route('/logout')
         .get(session.logout)
 
-
-    // =====================================
-    // GOOGLE ROUTES =======================
-    // =====================================
-    // send to google to do the authentication
-    // profile gets us their basic information including their name
-    // email gets their emails
-    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-
-    // the callback after google has authenticated the user
-    app.get('/auth/google/callback',
-            passport.authenticate('google', {
-                    successRedirect : '/',
-                    failureRedirect : '/'
-            }), function(req, res){
-            	console.log(res.body);
-
-            });
-
     app.get('/auth/github',
-  	passport.authenticate('github'));
+  		passport.authenticate('github'));
 
 	app.get('/auth/github/callback', 
 	  passport.authenticate('github', { failureRedirect: '/login' }),
-	  function(req, res) {
-	    // Successful authentication, redirect home.
+	  function(req, res, info) {
+	  	req.session.user = req.user.username;
 	    res.redirect('/');
 	  });
 }

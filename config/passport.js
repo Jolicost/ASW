@@ -85,7 +85,6 @@ module.exports = function(passport) {
         callbackURL: configAuthGithub.callbackURL
       },
       function(accessToken, refreshToken, profile, cb) {
-        console.log(profile);
 
         User.findOne({ 'auth.github.id': profile.id }, function(err, user){
             if (err) return cb(err);
@@ -96,10 +95,10 @@ module.exports = function(passport) {
                 let u = new User();
 
                 u.auth.github.id = profile.id;
-                u.username = profile.login;
+                console.log(profile.username);
+                u.username = profile.username;
 
                 u.save(function(err){
-                    console.log(u);
                     if (err) throw err;
                     return cb(null,u);
                 });
