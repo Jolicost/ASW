@@ -4,6 +4,8 @@
 	 },
 	 "configAuth": {
 	 	"github": {
+	 		"clientID": "ef33e99c1dacba6c3004",
+        	"clientSecret": "1ee55ecf0883e177fe94241c55fbf5dfa7c97b29",
 	 		"callbackURL": "http://fibasw.herokuapp.com/auth/github/callback"
 	 	}
 	 }
