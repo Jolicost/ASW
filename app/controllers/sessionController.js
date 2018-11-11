@@ -1,3 +1,6 @@
+var mongoose = require('mongoose'),
+User = mongoose.model('Users');
+
 
 exports.login = function(req,res) {
     let goto = req.query.goto;
@@ -5,16 +8,31 @@ exports.login = function(req,res) {
         let new_username = req.body.username;
         let new_password = req.body.password;
         let goto = req.body.goto;
-        req.session.user = new_username;
-        res.redirect(goto);
+        User.findOne({
+            username: new_username,
+            password: new_password
+        }, function(err, user){
+            if (err) return res.status(500).send(err);
+            if (!user) {
+                let u = new User({
+                    username: new_username,
+                    password: new_password
+                });
+                u.save(function(err) {
+                    if (err) return res.status(500).send(err);
+                    console.log("created new user");
+                    req.session.user = new_username;
+                    return res.redirect(goto);
+                });
+            } else {
+                
+                req.session.user = new_username;
+                res.redirect(goto);
+            }
+        });
     }
     else if(req.method === 'GET'){
-        if (goto != undefined){
-            res.render('pages/login', {goto: goto, githubUrl: '/auth/github'});
-        }
-        else{
-            res.render('pages/login');
-        }
+        res.render('pages/login', {goto: goto, githubUrl: '/auth/github'});
     } 
     
 };
@@ -22,7 +40,5 @@ exports.login = function(req,res) {
 exports.logout = function(req,res) {
     let goto = req.query.goto;
     req.session.user = undefined;
-    res.redirect(goto);
-    
-    
+    res.redirect(goto);  
 };

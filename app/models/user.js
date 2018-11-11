@@ -44,7 +44,7 @@ var UserSchema = new Schema({
         github: {
             id: {
                 type: String
-            },
+            }
         }
     }
 });
