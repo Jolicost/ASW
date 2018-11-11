@@ -28,5 +28,5 @@ module.exports = function (app) {
         .get(main.ask);
 
     app.route('/submitted')
-        .get(user.submissions);
+        .get(contribution.submissions);
 }
