@@ -110,41 +110,51 @@ exports.submitForm = function(req,res) {
     if (url && !validUrl.isUri(url)) {
         return res.render('pages/submit', {errors: [invalidURL]});
     }
+
+    User.findOne({username: req.session.user}, function(err, user) {
+        if (err) return res.status(500).send("Internal server error");
+
+        if (!user) return res.redirect('login?goto=submit');
+
+        if (url) {
+            Contribution.findOne({
+                contributionType: 'url',
+                content: url
+            })
+            .exec(function(err,result) {
+                if (result != null) {
+                    // redirect to page
+                    return res.redirect('item?id=' + result._id);
+                }
+                else {
+                    let ctr = new Contribution({
+                        title: title,
+                        content: url,
+                        user: user,
+                        contributionType: 'url'
+                    });
+                    ctr.save(function(error) {
+                        return res.redirect('item?id=' + ctr._id);
+                    });
+                }
+            });
+        }
+        else if (text) {
+            let ctr = new Contribution({
+                title: title,
+                content: text,
+                user: user,
+                contributionType: 'ask'
+            });
+            ctr.save(function(error) {
+                // render contriubtion page
+                return res.redirect('item?id=' + ctr._id);
+            })
+        }
+
+    });
     
-    if (url) {
-        console.log("not here")
-        Contribution.findOne({
-            contributionType: 'url',
-            content: url
-        })
-        .exec(function(err,result) {
-            if (result != null) {
-                // redirect to page
-                return res.redirect('item?id=' + result._id);
-            }
-            else {
-                let ctr = new Contribution({
-                    title: title,
-                    content: url,
-                    contributionType: 'url'
-                });
-                ctr.save(function(error) {
-                    return res.redirect('item?id=' + ctr._id);
-                });
-            }
-        });
-    }
-    else if (text) {
-        let ctr = new Contribution({
-            title: title,
-            content: text,
-            contributionType: 'ask'
-        });
-        ctr.save(function(error) {
-            // render contriubtion page
-            return res.redirect('item?id=' + ctr._id);
-        })
-    }
+    
 
 };
 
