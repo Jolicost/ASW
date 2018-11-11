@@ -114,6 +114,14 @@ fieldset div {
 fieldset div > * {
   margin: 5px;
 }
+
+.voted{
+  display: none;
+}
+
+.unvoted{
+  display: none;
+}
 /* Pantalles petites desde 750 px*/
 @media (min-width: 750px) {
   header, main, footer{

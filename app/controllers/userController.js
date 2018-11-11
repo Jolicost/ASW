@@ -73,7 +73,7 @@ exports.view = function(req, res){
             if (err)
                 res.send('No such user.');
             else{
-                var logged = user.username == req.session.sessionUser || user._id == req.session.sessionUser;
+                var logged = req.session.user == undefined ? false : user._id == req.session.user._id;
                 res.render('pages/users', {user: user, createdAt: main.getSince(user.createdAt), logged: logged});
             }            
         });
@@ -81,7 +81,6 @@ exports.view = function(req, res){
 };
 
 exports.updateFromView = function(req, res){
-    console.log(req.body);
     User.findOneAndUpdate({_id: req.params.userId}, req.body, {},function(err,user){
         if (err)
             res.send(err);

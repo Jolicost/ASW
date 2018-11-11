@@ -1,4 +1,5 @@
 <tr>
+    <% var userId = locals.user == undefined ? undefined : locals.user._id;%>
     <% if(!typeof counter === 'undefined')  { %>
     <td> <% counter += 1 %>  </td>
     <td class="count">
@@ -6,9 +7,10 @@
     </td>
     <% } %>
     <td class="votelink">
-        <a id="" href="#">
-            <img src="https://news.ycombinator.com/grayarrow.gif" class="votearrow" title="upvote"></img>
-        </a>
+        <img src="https://news.ycombinator.com/grayarrow.gif" 
+            class="votearrow <%= contribution.upvoted.toString().includes(userId) ? 'voted' : '' %>" 
+            alt="upvote" id="vote_<%= contribution._id %>" 
+            onclick="vote('<%= contribution._id %>')">
     </td>
     <td class="athing">
         <% if (contribution.contributionType == 'url') { %>
@@ -25,12 +27,79 @@
     <% } %>
     <td></td>
     <td class="subtext">
-        <span><%= contribution.upvoted.length %> Points by 
+        <span><span id="votes_<%= contribution._id %>"><%= contribution.upvoted.length %></span> Points by 
             <%if(typeof contribution.user === "undefined"){%>
                 Undefined user
             <%}else{%>
                 <a href="/user?id=<%=contribution.user._id%>"><%=contribution.user.username%></a> 
             <%}%> 
-            <a href="item?id=<%= contribution._id %>"><%= contribution.since %> ago</a> | <a href="item?id=<%= contribution._id %>"><%= contribution.nComments %> comment/s</a></span>
+            <a href="item?id=<%= contribution._id %>"><%= contribution.since %> ago</a> | 
+            <span onclick="unvote('<%= contribution._id %>')" 
+                id="unvote_<%= contribution._id %>"
+                class="<%= contribution.upvoted.toString().includes(userId) ? '' : 'unvoted' %>" ><a href="#"> unvote</a>|</span> 
+            <a href="item?id=<%= contribution._id %>"><%= contribution.nComments %> comment/s</a></span>
     </td>
 </tr>
+
+<script>
+    function vote(contributionId){
+        var userId = '<%=userId%>';
+        if (userId !== ''){
+            buttonHTML = document.getElementById('vote_'+contributionId);
+            buttonHTML.className = buttonHTML.className + ' voted';
+            unvoteHTML = document.getElementById('unvote_'+contributionId);
+            unvoteHTML.className = '';
+            var json = {
+                $addToSet: {
+                    upvoted: userId
+                },
+                $inc: {
+                    points: 1
+                }
+            };
+            sendVote(contributionId, json);
+            votesHTML = document.getElementById('votes_'+contributionId);
+            votesHTML.innerText = parseInt(votesHTML.innerText) + 1;
+        }
+        else{
+            window.location = '/login?goto=<%=locals.path%>';
+        }
+    }
+
+    function unvote(contributionId){
+        var userId = '<%=userId%>';
+        if (userId !== ''){
+            buttonHTML = document.getElementById('vote_'+contributionId);
+            buttonHTML.className = buttonHTML.className.substring(0,buttonHTML.className.length - 6);
+            unvoteHTML = document.getElementById('unvote_'+contributionId);
+            unvoteHTML.className = 'unvoted';
+            var json = {
+                $pull: {
+                    upvoted: userId
+                },
+                $inc: {
+                    points: -1
+                }
+            };
+            sendVote(contributionId, json);
+            votesHTML = document.getElementById('votes_'+contributionId);
+            votesHTML.innerText = parseInt(votesHTML.innerText) - 1;
+        }
+        else{
+            window.location = '/login?goto=<%=locals.path%>';
+        }
+    }
+
+    function sendVote(contributionId, json){
+        var xhr = new XMLHttpRequest();
+        xhr.open('PUT', '/contributions/'+contributionId);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+            }
+        };
+        console.log(json);
+        xhr.send(JSON.stringify(json));     
+    }
+</script>
