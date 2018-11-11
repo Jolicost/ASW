@@ -15,9 +15,10 @@
                 <% if (contribution.contributionType == 'ask') { %>
                     <tr><td></td><td class="athing"><%= contribution.content %></td></tr>
                 <% } %>
-                <% contribution.child.forEach((child) => { %>
-                    <p><%= child.content %></p>
-                <% }); %>
+                    <tr>
+                      <td></td>
+                      <td><% include ../partials/comment.ejs %></td>
+                    </tr>
             </tbody>
         </table>
   </main>

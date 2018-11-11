@@ -1,0 +1,6 @@
+<ul>
+<% contribution.comments.forEach((child) => { %>
+	<li><%= child.content %></li>
+    <%- include('../partials/comment.ejs', {contribution: child}) %>
+<% }); %>
+</ul>

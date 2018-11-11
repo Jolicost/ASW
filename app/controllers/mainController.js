@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     Contribution = mongoose.model('Contributions'),
     User = mongoose.model('Users');
 
+
 var ContributionController = require('./contributionController');
 var async = require("async");
 
@@ -212,28 +213,67 @@ exports.ask = function(req,res) {
     });
 }
 
+
 exports.contribution = function(req,res) {
     var id = req.query.id;
     Contribution
     .findById(id)
-    .populate({
-        path: 'user'
-    })
-    .populate({
-        path: 'child'
-    })
+    .populate(
+        'user'
+    )
+    .populate(
+        'child'
+    )
+    .lean()
     .exec(function(err,contribution) {
         if (err)
             res.send(err);
         else {
-            console.log(contribution);
-            Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
-                contribution['nComments'] = n;
-                contribution['since'] = getSince(contribution.publishDate);
-                console.log(contribution['since']);
+            async.parallel([
+                function(callback) {
+                    Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
+                        contribution['nComments'] = n;
+                        contribution['since'] = getSince(contribution.publishDate);
+                        callback(null, contribution);                       
+                    }); 
+                },
+                function(callback) {
+                    getAllComments(contribution,callback);
+                }
+            ],
+            // optional callback
+            function(err, results) {
+                // the results array will equal ['one','two'] even though
+                // the second function had a shorter timeout.
+                let contribution = results[0];
+                let node = results[1];
+                contribution['comments'] = node;
                 res.render('pages/contribution',{contribution: contribution});
-            });     
+            });
+                
         }
     });
     
+}
+
+function getAllComments(contribution,callback) {
+    Contribution.find({topParent: contribution._id} , function(err, contributions) {
+        let res = getNode(contribution,contributions);
+        callback(null,res);
+    });    
+}
+
+function getNode(root,contributions) {
+    let ret = [];
+    contributions.forEach(function(contribution) {
+        if (contribution.parent._id.equals(root._id)) {
+            ret.push({
+                content: contribution.content,
+                id: contribution._id,
+                since: getSince(contribution.publishDate),
+                comments: getNode(contribution,contributions)
+            });
+        }
+    });
+    return ret;
 }
