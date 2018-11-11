@@ -1,5 +1,10 @@
 {
 	"db": {
 		"host":"mongodb://heroku_ftmpcjnq:o0c10b0j0dd5nae1bviv19bbl9@ds139883.mlab.com:39883/heroku_ftmpcjnq",
+	 },
+	 "configAuth": {
+	 	"github": {
+	 		"callbackURL": "http://fibasw.herokuapp.com/auth/github/callback"
+	 	}
 	 }
 }
