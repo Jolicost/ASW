@@ -3,8 +3,9 @@
 * Basic API rest for users model */
 var mongoose = require('mongoose'),
 // dependencies seprated by commas. Be aware
-User = mongoose.model('Users');
-var main = require('./mainController');
+    User = mongoose.model('Users'),
+    main = require('./mainController'),
+    async = require("async");
 
 exports.list = function(req,res) {
     User.find({}, function(err,users) {
@@ -117,35 +118,6 @@ exports.newest = function(req,res) {
             
         }, function (err) {
             res.render('pages/newest',{contributions: contributions});
-        });
-    });
-}
-
-exports.submissions = function(req,res) {
-    var id = req.query.id;
-    Contribution
-    .find({
-        _id: id,
-        $or:[ 
-                {contributionType:"url"}, 
-                {contributionType:"ask"}
-            ]
-    })
-    .sort({ publishDate: -1 })
-    .exec((err,contributions) => {
-        async.forEach(contributions, function(contribution, callback) {
-            //do stuff
-            Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
-                contribution['nComments'] = n;
-                contribution['since'] = module.exports.getSince(contribution.publishDate);
-
-                if (contribution['contributionType'] == 'url')
-                    contribution['shortUrl'] = getShortUrl(contribution.content);
-                callback();
-            });
-            
-        }, function (err) {
-            res.render('pages/index',{contributions: contributions});
         });
     });
 }
