@@ -15,6 +15,9 @@
                 <% if (contribution.contributionType == 'ask') { %>
                     <tr><td></td><td class="athing"><%= contribution.content %></td></tr>
                 <% } %>
+                <% contribution.child.forEach((child) => { %>
+                    <p><%= child.content %></p>
+                <% }); %>
             </tbody>
         </table>
   </main>

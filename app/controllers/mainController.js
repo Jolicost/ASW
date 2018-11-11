@@ -219,13 +219,18 @@ exports.contribution = function(req,res) {
     .populate({
         path: 'user'
     })
+    .populate({
+        path: 'child'
+    })
     .exec(function(err,contribution) {
         if (err)
             res.send(err);
         else {
+            console.log(contribution);
             Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
                 contribution['nComments'] = n;
                 contribution['since'] = getSince(contribution.publishDate);
+                console.log(contribution['since']);
                 res.render('pages/contribution',{contribution: contribution});
             });     
         }
