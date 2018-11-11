@@ -71,6 +71,9 @@ const contributions = [
         publishDate: '1936-10-05',
         contributionType: 'ask',
         user: getObjectId('Federico'),
+        upvoted: [
+            getObjectId('Gerard')
+        ],
         points: 0,
     },
     {
@@ -80,6 +83,9 @@ const contributions = [
         publishDate: '1806-03-12',
         contributionType: 'ask',
         user: getObjectId('Napoleon'),
+        upvoted: [
+            getObjectId('Gerard')
+        ],
         points: 0,
     },
     {
@@ -89,6 +95,12 @@ const contributions = [
         publishDate: '2016-11-20',
         contributionType: 'ask',
         user: getObjectId('Trump'),
+        upvoted: [
+            getObjectId('Gerard'),
+            getObjectId('Llarena'),
+            getObjectId('Rajoy'),
+            getObjectId('Trump')
+        ],
         points: 0
     },
     {
@@ -98,6 +110,9 @@ const contributions = [
         publishDate: '2017-01-01',
         contributionType: 'ask',
         user: getObjectId('Trump'),
+        upvoted: [
+            getObjectId('Gerard')
+        ],
         points: 0
     },
     // Comments and replies
@@ -107,10 +122,109 @@ const contributions = [
         publishDate: '2016-03-03',
         contributionType: 'comment',
         user: getObjectId('Rajoy'),
+        upvoted: [
+            getObjectId('Gerard')
+        ],
         parent: getObjectId('FakeNews'),
         topParent: getObjectId('FakeNews')
+    },
+
+    // Comments 'Idiota'
+    {
+        _id: getObjectId('CommentIdiota1'),
+        content: "Puede que parezca un idiota [...]",
+        publishDate: '2016-03-04',
+        contributionType: 'comment',
+        user: getObjectId('Groucho'),
+        upvoted: [
+            getObjectId('Rajoy')
+        ],
+        parent: getObjectId('Idiota'),
+        topParent: getObjectId('Idiota')
+    },
+    {
+        _id: getObjectId('CommentIdiota2'),
+        content: "Y a mi que me importa",
+        publishDate: '2016-03-05',
+        contributionType: 'comment',
+        user: getObjectId('Federico'),
+        upvoted: [
+            getObjectId('Freddy')
+        ],
+        parent: getObjectId('CommentIdiota1'),
+        topParent: getObjectId('Idiota')
+    },
+
+    // Comments 'Territorio'
+    {
+        _id: getObjectId('CommentTerritorio1'),
+        content: 'url',
+        publishDate: '1806-03-16',
+        contributionType: 'comment',
+        user: getObjectId('JulioCesar'),
+        parent: getObjectId('Territorio'),
+        topParent: getObjectId('Territorio')
+    },
+    {
+        _id: getObjectId('CommentTerritorio2'),
+        content: 'Merci',
+        publishDate: '1806-03-17',
+        contributionType: 'comment',
+        user: getObjectId('Napoleon'),
+        parent: getObjectId('CommentTerritorio1'),
+        topParent: getObjectId('Territorio')
+    },
+    {
+        _id: getObjectId('CommentTerritorio3'),
+        content: 'Ave cesar emperatus romanus',
+        publishDate: '1806-03-17',
+        contributionType: 'comment',
+        user: getObjectId('JulioCesar'),
+        parent: getObjectId('CommentTerritorio2'),
+        topParent: getObjectId('Territorio')
+    },
+
+    // Coments Visado
+
+    {
+        _id: getObjectId('CommentVisado1'),
+        content: 'Pues no lo se',
+        publishDate: '2017-01-02',
+        contributionType: 'comment',
+        user: getObjectId('Rajoy'),
+        parent: getObjectId('Visado'),
+        topParent: getObjectId('Visado')
+    },
+    {
+        _id: getObjectId('CommentVisado2'),
+        content: 'En todo caso, siempre puedes extraditar',
+        publishDate: '2017-01-03',
+        contributionType: 'comment',
+        user: getObjectId('Llarena'),
+        parent: getObjectId('CommentVisado1'),
+        topParent: getObjectId('Visado')
+    },
+    {
+        _id: getObjectId('CommentVisado3'),
+        content: 'Great idea. America First',
+        publishDate: '2017-01-04',
+        contributionType: 'comment',
+        user: getObjectId('Trump'),
+        parent: getObjectId('CommentVisado2'),
+        topParent: getObjectId('Visado')
+    },
+    {
+        _id: getObjectId('CommentVisado4'),
+        content: 'Viva el vino',
+        publishDate: '2017-01-05',
+        contributionType: 'comment',
+        user: getObjectId('Rajoy'),
+        parent: getObjectId('CommentVisado3'),
+        topParent: getObjectId('Visado')
     }
 
 ];
+
+
 
 module.exports = contributions;
