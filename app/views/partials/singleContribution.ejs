@@ -25,6 +25,12 @@
     <% } %>
     <td></td>
     <td class="subtext">
-        <span><%= contribution.upvoted.length %> Points by <%= typeof contribution.user === "undefined"?'Undefined user':contribution.user.username %> <a href="item?id=<%= contribution._id %>"><%= contribution.since %> ago</a> | <a href="item?id=<%= contribution._id %>"><%= contribution.nComments %> comment/s</a></span>
+        <span><%= contribution.upvoted.length %> Points by 
+            <%if(typeof contribution.user === "undefined"){%>
+                Undefined user
+            <%}else{%>
+                <a href="/user?id=<%=contribution.user._id%>"><%=contribution.user.username%></a> 
+            <%}%> 
+            <a href="item?id=<%= contribution._id %>"><%= contribution.since %> ago</a> | <a href="item?id=<%= contribution._id %>"><%= contribution.nComments %> comment/s</a></span>
     </td>
 </tr>

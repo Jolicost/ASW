@@ -75,3 +75,15 @@ exports.deleteAll = function(req, res) {
             res.json({message: 'All contributions deleted'});
     });
 };
+
+exports.upvoted = function(req, res){
+    let user = req.query.id;
+    let comments = req.query.comments == 't';
+    console.log('El user: '+user+' pidio comments? '+comments);
+    Contribution.find({upvoted:user}, function(err,contributions) {
+        if (err)
+            res.send(err);
+        else
+            res.json(contributions);
+    });
+};

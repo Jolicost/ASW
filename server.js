@@ -42,14 +42,24 @@ app.use(bodyParser.json());
 
 //session
 var session = require('express-session');
-app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true, cookie: {}, user: undefined}));
+app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true, cookie: {}}));
 app.use(function(req, res, next) {
-    res.locals.path = req.path;
-    if (req.session != undefined){
-        res.locals.user = req.session.user;
+    if (req.query != undefined){
+        var params = '?';
+        Object.keys(req.query).map(function(objectKey, index) {
+            var value = req.query[objectKey];
+            params = params + objectKey + '='+value.replace(' ', '%20');
+        });
     }
     else{
-        res.locals.user = undefined;
+        var params = '';
+    }
+    res.locals.path = req.path+params;
+    if (req.session != undefined){
+        res.locals.sessionUser = req.session.sessionUser;
+    }
+    else{
+        res.locals.sessionUser = undefined;
     }
     next();
   });

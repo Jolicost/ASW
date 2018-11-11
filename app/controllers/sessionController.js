@@ -3,7 +3,7 @@ User = mongoose.model('Users');
 
 
 exports.login = function(req,res) {
-    let goto = req.query.goto;
+    let goto = req.query.goto == undefined ? '/' : req.query.goto;
     if (req.method === 'POST'){
         let new_username = req.body.username;
         let new_password = req.body.password;
