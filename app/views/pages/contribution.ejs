@@ -15,6 +15,30 @@
                 <% if (contribution.contributionType == 'ask') { %>
                     <tr><td></td><td class="athing"><%= contribution.content %></td></tr>
                 <% } %>
+                <tr>
+                  <td>
+                    <% if (contribution.contributionType == 'ask' || contribution.contributionType == 'url') { %>
+                    <form method="POST" action="comment">
+                      <input type="hidden" name="contribution" value="<%= contribution._id %>"/>
+                      <input type="hidden" name="top" value="<%= contribution.topParent %>"/>
+                      <tr>
+                          <td>
+                          </td>
+                          <td>
+                              <textarea name="text" rows="4" cols="49"></textarea>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                          </td>
+                          <td>
+                              <button type="submit">Comment</button>
+                          </td>
+                      </tr>
+                  </form>
+                  <% } %>
+                </td>
+              </tr>
             </tbody>
         </table>
         <table>

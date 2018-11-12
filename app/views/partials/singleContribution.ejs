@@ -43,6 +43,7 @@
             <a href="item?id=<%= contribution._id %>"><%= contribution.nComments %> comment/s</a></span>
     </td>
 </tr>
+<% if (contribution.contributionType == 'comment' || contribution.contributionType == 'reply') { %>
 <form method="POST" action="comment">
     <input type="hidden" name="contribution" value="<%= contribution._id %>"/>
     <input type="hidden" name="top" value="<%= contribution.topParent %>"/>
@@ -57,7 +58,8 @@
         <td>
         </td>
         <td>
-            <button type="submit"><%= contribution.contributionType == 'url' || contribution.contributionType == 'ask' ? "Comment":"Reply"%></button>
+            <button type="submit">Reply</button>
         </td>
     </tr>
 </form>
+<% } %>

@@ -1,0 +1,18 @@
+<form method="POST" action="comment">
+    <input type="hidden" name="contribution" value="<%= contribution._id %>"/>
+    <input type="hidden" name="top" value="<%= contribution.topParent %>"/>
+    <tr>
+        <td>
+        </td>
+        <td>
+            <textarea name="text" rows="4" cols="49"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+        <td>
+            <button type="submit"><%= contribution.contributionType == 'ask || contribution.contributionType == 'url' ? "Comment":"Reply" %></button>
+        </td>
+    </tr>
+</form>
