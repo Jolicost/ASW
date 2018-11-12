@@ -1,9 +1,10 @@
+<% var userId = locals.user != undefined ? locals.user._id : undefined;%>
 <nav id="header-links">
     <img src="/img/logo.gif" alt="hacker news logo" onclick="window.location='/'">
     <a href="/">Hacker News</a>   
     <a href="/newest" <%= (locals.path == "/newest") ? "class='active-link'" : ""%>>new</a>|
     <%if (locals.user != undefined){%>
-        <a href="/threads?id=<%= locals.user._id %>" <%= (locals.path == "/threads") ? "class='active-link'" : ""%>>threads</a>|
+        <a href="/threads?id=<%= userId %>" <%= (locals.path == "/threads") ? "class='active-link'" : ""%>>threads</a>|
     <%}%>
     <!--<a href="/newcomments" <%= (locals.path == "/newcomments") ? "class='active-link'" : ""%>>comments</a>|-->
     <!--<a href="/show" <%= (locals.path == "/show") ? "class='active-link'" : ""%>>show</a>|-->
@@ -13,10 +14,8 @@
     <%if (locals.path.substr(0, 10) == "/submitted"){%>
         | <span class='active-link'><%=locals.username%>'s submissions</span>
     <%}%>
-    <%if (locals.user != undefined){%>
-        <%if (locals.path.substr(0, 8) == "/threads" && locals.path !== "/threads?id="+locals.user._id){%>
-            | <span class='active-link'><%=locals.username%>'s comments</span>
-        <%}%>
+    <%if (locals.path.substr(0, 8) == "/threads" && locals.path !== "/threads?id="+userId){%>
+        | <span class='active-link'><%=locals.username%>'s comments</span>
     <%}%>
     <%if (locals.path.substr(0, 8) == "/upvoted"){%>
         | <span class='active-link'>upvoted</span>
@@ -25,7 +24,7 @@
         <a class="login-link" href="/login?goto=<%=locals.path%>">login</a>
     <%} else {%>
         <a class="login-link" href="/logout?goto=<%=locals.path%>">logout</a>
-        <a class="login-link" href="/user?id=<%=locals.user._id%>"><%= locals.user.username %>|</a>
+        <a class="login-link" href="/user?id=<%=userId%>"><%= locals.user.username %>|</a>
     <%}%>
 </nav>
 

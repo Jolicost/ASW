@@ -107,14 +107,23 @@ exports.upvoted = function(req, res){
                     callback();
                 });
             }, function (err) {
-                res.render('pages/index', { contributions: ctrs });
+                if (comments){
+                    res.render('pages/threads', { contributions: ctrs });
+                }
+                else{
+                    res.render('pages/threads', { contributions: ctrs });
+                }
+                
             });
         });
 };
 
 exports.threads = function(req, res){
-    let user = req.query.id;
-    var finds = {user:user, contributionType: "comment"};
+    var userId = req.query.id;
+    var uname = User.findById(userId, function(err, user) {
+        uname = user.username;
+    });
+    var finds = {user:userId, contributionType: "comment"};
     Contribution
         .find(finds)
         .sort({ points: -1 })
@@ -136,7 +145,8 @@ exports.threads = function(req, res){
                     callback();
                 });
             }, function (err) {
-                res.render('pages/threads', { contributions: ctrs });
+                if (ctrs == undefined) ctrs = [];
+                res.render('pages/threads', { contributions: ctrs, username:  uname.username});
             });
         }); 
 }
