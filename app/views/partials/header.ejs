@@ -1,3 +1,65 @@
 <title>Hacker News</title>
 <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
 <link rel="shortcut icon" href="/img/logo.gif">
+<script>
+    function vote(contributionId){
+    var userId = '<%=userId%>';
+    if (userId !== ''){
+        buttonHTML = document.getElementById('vote_'+contributionId);
+        buttonHTML.className = buttonHTML.className + ' voted';
+        unvoteHTML = document.getElementById('unvote_'+contributionId);
+        unvoteHTML.className = '';
+        var json = {
+            $addToSet: {
+                upvoted: userId
+            },
+            $inc: {
+                points: 1
+            }
+        };
+        sendVote(contributionId, json);
+        votesHTML = document.getElementById('votes_'+contributionId);
+        votesHTML.innerText = parseInt(votesHTML.innerText) + 1;
+    }
+    else{
+        window.location = '/login?goto=<%=locals.path%>';
+    }
+}
+
+function unvote(contributionId){
+    var userId = '<%=userId%>';
+    if (userId !== ''){
+        buttonHTML = document.getElementById('vote_'+contributionId);
+        buttonHTML.className = buttonHTML.className.substring(0,buttonHTML.className.length - 6);
+        unvoteHTML = document.getElementById('unvote_'+contributionId);
+        unvoteHTML.className = 'unvoted';
+        var json = {
+            $pull: {
+                upvoted: userId
+            },
+            $inc: {
+                points: -1
+            }
+        };
+        sendVote(contributionId, json);
+        votesHTML = document.getElementById('votes_'+contributionId);
+        votesHTML.innerText = parseInt(votesHTML.innerText) - 1;
+    }
+    else{
+        window.location = '/login?goto=<%=locals.path%>';
+    }
+}
+
+function sendVote(contributionId, json){
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT', '/contributions/'+contributionId);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    console.log(json);
+    xhr.send(JSON.stringify(json));     
+}
+</script>

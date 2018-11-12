@@ -55,11 +55,13 @@ app.use(function(req, res, next) {
         var params = '';
     }
     res.locals.path = req.path+params;
-    if (req.session != undefined){
+    if (req.session.user != undefined){
         res.locals.user = req.session.user;
+        res.locals.userId = req.session.user._id;
     }
     else{
         res.locals.user = undefined;
+        res.locals.userId = undefined;
     }
     next();
   });

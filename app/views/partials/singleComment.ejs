@@ -6,14 +6,19 @@
     <td><img style="width: <%= level * 20 %>px" src="https://news.ycombinator.com/s.gif"/></td>
     <td class="votelink">
         <a id="" href="#">
-            <img src="https://news.ycombinator.com/grayarrow.gif" class="votearrow" title="upvote"></img>
+            <img src="https://news.ycombinator.com/grayarrow.gif" class="votearrow <%= contribution.upvoted.toString().includes(userId) ? 'voted' : '' %>" 
+            alt="upvote" id="vote_<%= contribution._id %>" 
+            onclick="vote('<%= contribution._id %>')"></img>
         </a>
     </td>
     <td class="subtext">
-        <span><%= typeof contribution.user === "undefined"?'Undefined user':contribution.user %> <a href="item?id=<%= contribution._id %>"><%= contribution.since %> ago</a></span>
+        <span><span id="votes_<%= contribution._id %>"><%= contribution.upvoted.length %></span> Points by <%= contribution.user %> <a href="item?id=<%= contribution._id %>"><%= contribution.since %> ago</a></span>
         <div class="athing">
         <%= contribution.content %>
         </div>
+        <span onclick="unvote('<%= contribution._id %>')" 
+                id="unvote_<%= contribution._id %>"
+                class="<%= contribution.upvoted.toString().includes(userId) ? '' : 'unvoted' %>" ><a href="#"> unvote</a>| </span> 
         <span><a href="/item?id=<%= contribution._id %>">reply</a></span>
     </td>
     </tr>

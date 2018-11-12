@@ -215,6 +215,44 @@ exports.ask = function(req,res) {
     });
 }
 
+exports.upvote = function(req,res) {
+    let username = req.session.user;
+    if (!username) return res.redirect('login');
+
+    let c_id = req.query.id;
+    User.findOne({username: username}, function(err, user) {
+        Contribution.findByIdAndUpdate(c_id, {
+            $addToSet: {votes: user}
+        }, function(err) {
+            if(err) {
+                return res.code(500).send("Server error");
+            } else {            
+                return res.code(200).send("Success");
+            }
+        });
+    });
+    Contribution.find({_id: c_id})
+}
+
+exports.unvote = function(req,res) {
+    let username = req.session.user;
+    if (!username) return res.redirect('login');
+
+    let c_id = req.query.id;
+    User.findOne({username: username}, function(err, user) {
+        Contribution.findByIdAndUpdate(c_id, {
+            $pull: {votes: user}
+        }, function(err) {
+            if(err) {
+                return res.code(500).send("Server error");
+            } else {            
+                return res.code(200).send("Success");
+            }
+        });
+    });
+    Contribution.find({_id: c_id})
+}
+
 
 exports.contribution = function(req,res) {
     var id = req.query.id;
@@ -259,6 +297,7 @@ function getAllComments(contribution,callback) {
     .find(
         {topParent: contribution._id}
     )
+    .populate('user')
     .exec(function(err, contributions) {
         let res = getNode(contribution,contributions);
         callback(null,res);
@@ -274,9 +313,12 @@ function getNode(root,contributions) {
                 _id: contribution._id,
                 since: _this.getSince(contribution.publishDate),
                 user: contribution.user.username,
-                comments: getNode(contribution,contributions)
+                comments: getNode(contribution,contributions),
+                upvoted: contribution.upvoted
             });
         }
     });
     return ret;
 }
+
+

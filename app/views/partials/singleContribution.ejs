@@ -1,5 +1,4 @@
 <tr>
-    <% var userId = locals.user == undefined ? undefined : locals.user._id;%>
     <% if(!typeof counter === 'undefined')  { %>
     <td> <% counter += 1 %>  </td>
     <td class="count">
@@ -40,7 +39,7 @@
             <a href="item?id=<%= contribution._id %>"><%= contribution.since %> ago</a> | 
             <span onclick="unvote('<%= contribution._id %>')" 
                 id="unvote_<%= contribution._id %>"
-                class="<%= contribution.upvoted.toString().includes(userId) ? '' : 'unvoted' %>" ><a href="#"> unvote</a>|</span> 
+                class="<%= contribution.upvoted.toString().includes(userId) ? '' : 'unvoted' %>" ><a href="#"> unvote </a>| </span> 
             <a href="item?id=<%= contribution._id %>"><%= contribution.nComments %> comment/s</a></span>
     </td>
 </tr>
@@ -62,65 +61,3 @@
     </tr>
 </form>
 <% } %>
-<script>
-    function vote(contributionId){
-        var userId = '<%=userId%>';
-        if (userId !== ''){
-            buttonHTML = document.getElementById('vote_'+contributionId);
-            buttonHTML.className = buttonHTML.className + ' voted';
-            unvoteHTML = document.getElementById('unvote_'+contributionId);
-            unvoteHTML.className = '';
-            var json = {
-                $addToSet: {
-                    upvoted: userId
-                },
-                $inc: {
-                    points: 1
-                }
-            };
-            sendVote(contributionId, json);
-            votesHTML = document.getElementById('votes_'+contributionId);
-            votesHTML.innerText = parseInt(votesHTML.innerText) + 1;
-        }
-        else{
-            window.location = '/login?goto=<%=locals.path%>';
-        }
-    }
-
-    function unvote(contributionId){
-        var userId = '<%=userId%>';
-        if (userId !== ''){
-            buttonHTML = document.getElementById('vote_'+contributionId);
-            buttonHTML.className = buttonHTML.className.substring(0,buttonHTML.className.length - 6);
-            unvoteHTML = document.getElementById('unvote_'+contributionId);
-            unvoteHTML.className = 'unvoted';
-            var json = {
-                $pull: {
-                    upvoted: userId
-                },
-                $inc: {
-                    points: -1
-                }
-            };
-            sendVote(contributionId, json);
-            votesHTML = document.getElementById('votes_'+contributionId);
-            votesHTML.innerText = parseInt(votesHTML.innerText) - 1;
-        }
-        else{
-            window.location = '/login?goto=<%=locals.path%>';
-        }
-    }
-
-    function sendVote(contributionId, json){
-        var xhr = new XMLHttpRequest();
-        xhr.open('PUT', '/contributions/'+contributionId);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log(xhr.responseText);
-            }
-        };
-        console.log(json);
-        xhr.send(JSON.stringify(json));     
-    }
-</script>

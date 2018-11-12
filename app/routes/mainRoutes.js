@@ -29,4 +29,10 @@ module.exports = function (app) {
 
     app.route('/submitted')
         .get(contribution.submissions);
+
+    app.route('/upvote')
+        .get(main.upvote);
+
+    app.route('/unvote')
+        .get(main.unvote);
 }

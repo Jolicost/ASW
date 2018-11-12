@@ -20,12 +20,12 @@ exports.login = function(req,res) {
                 });
                 u.save(function(err) {
                     if (err) return res.status(500).send(err);
-                    req.session.user = new_username;
+                    req.session.user = user;
                     return res.redirect(goto);
                 });
             } else {
                 
-                req.session.user = new_username;
+                req.session.user = user;
                 res.redirect(goto);
             }
         });
