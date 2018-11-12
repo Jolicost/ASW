@@ -3,8 +3,10 @@
 * Basic API rest for users model */
 var mongoose = require('mongoose'),
 // dependencies seprated by commas. Be aware
-User = mongoose.model('Users');
+    User = mongoose.model('Users');
+
 var main = require('./mainController');
+var async = require("async");
 
 exports.list = function(req,res) {
     User.find({}, function(err,users) {
@@ -120,31 +122,31 @@ exports.newest = function(req,res) {
     });
 }
 
-exports.submissions = function(req,res) {
-    var id = req.query.id;
-    Contribution
-    .find({
-        _id: id,
-        $or:[ 
-                {contributionType:"url"}, 
-                {contributionType:"ask"}
-            ]
-    })
-    .sort({ publishDate: -1 })
-    .exec((err,contributions) => {
-        async.forEach(contributions, function(contribution, callback) {
-            //do stuff
-            Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
-                contribution['nComments'] = n;
-                contribution['since'] = module.exports.getSince(contribution.publishDate);
 
-                if (contribution['contributionType'] == 'url')
-                    contribution['shortUrl'] = getShortUrl(contribution.content);
-                callback();
-            });
-            
-        }, function (err) {
-            res.render('pages/index',{contributions: contributions});
-        });
-    });
+/* Returns the "x time ago" date format from a date */
+function getSince(date) {
+    var seconds = Math.floor((new Date() - new Date(date)) / 1000);
+
+    var interval = Math.floor(seconds / 31536000);
+
+    if (interval > 1) {
+        return interval + " years";
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+        return interval + " months";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+        return interval + " days";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+        return interval + " hours";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+        return interval + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
 }

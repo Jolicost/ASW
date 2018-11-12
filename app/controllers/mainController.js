@@ -18,6 +18,8 @@ var validUrl = require('valid-url');
 
 const { getObjectId } = require('../../seed/index');
 
+var _this = this;
+
 /* Returns the domain from an url */
 function getShortUrl(url) {
     var matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
@@ -26,7 +28,7 @@ function getShortUrl(url) {
 }
 
 /* Returns the "x time ago" date format from a date */
-function getSince(date) {
+exports.getSince = function(date) {
     var seconds = Math.floor((new Date() - new Date(date)) / 1000);
 
     var interval = Math.floor(seconds / 31536000);
@@ -74,7 +76,7 @@ exports.main = function (req, res) {
                 //do stuff
                 Contribution.countDocuments({ topParent: contribution._id }).exec(function (err, n) {
                     contribution['nComments'] = n;
-                    contribution['since'] = getSince(contribution.publishDate);
+                    contribution['since'] = _this.getSince(contribution.publishDate);
                     contribution['shortUrl'] = getShortUrl(contribution.content);
                     callback();
                 });
@@ -176,7 +178,7 @@ exports.newest = function(req,res) {
             //do stuff
             Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
                 contribution['nComments'] = n;
-                contribution['since'] = getSince(contribution.publishDate);
+                contribution['since'] = _this.getSince(contribution.publishDate);
 
                 if (contribution['contributionType'] == 'url')
                     contribution['shortUrl'] = getShortUrl(contribution.content);
@@ -203,7 +205,7 @@ exports.ask = function(req,res) {
             //do stuff
             Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
                 contribution['nComments'] = n;
-                contribution['since'] = getSince(contribution.publishDate);
+                contribution['since'] = _this.getSince(contribution.publishDate);
                 callback();
             });
             
@@ -229,7 +231,7 @@ exports.contribution = function(req,res) {
                 function(callback) {
                     Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
                         contribution['nComments'] = n;
-                        contribution['since'] = getSince(contribution.publishDate);
+                        contribution['since'] = _this.getSince(contribution.publishDate);
                         callback(null, contribution);                       
                     }); 
                 },
@@ -270,7 +272,7 @@ function getNode(root,contributions) {
             ret.push({
                 content: contribution.content,
                 _id: contribution._id,
-                since: getSince(contribution.publishDate),
+                since: _this.getSince(contribution.publishDate),
                 user: contribution.user.username,
                 comments: getNode(contribution,contributions)
             });
