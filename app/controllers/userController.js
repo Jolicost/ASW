@@ -4,6 +4,7 @@
 var mongoose = require('mongoose'),
 // dependencies seprated by commas. Be aware
 User = mongoose.model('Users');
+var main = require('./mainController');
 
 exports.list = function(req,res) {
     User.find({}, function(err,users) {
@@ -61,3 +62,89 @@ exports.deleteAll = function(req, res) {
             res.json({message: 'All users deleted'});
     });
 };
+
+exports.view = function(req, res){
+    let userId = req.query.id;
+    if (userId == undefined){
+        res.send('No such user.');
+    }
+    else{
+        User.findById(userId, function(err,user) {
+            if (err)
+                res.send('No such user.');
+            else{
+                var logged = req.session.user == undefined ? false : user._id == req.session.user._id;
+                res.render('pages/users', {user: user, createdAt: main.getSince(user.createdAt), logged: logged});
+            }            
+        });
+    }
+};
+
+exports.updateFromView = function(req, res){
+    User.findOneAndUpdate({_id: req.params.userId}, req.body, {},function(err,user){
+        if (err)
+            res.send(err);
+        else{
+            res.redirect('/user?id='+req.params.userId);
+        }
+    });
+}
+
+exports.newest = function(req,res) {
+    Contribution
+    .find({
+        $or:[ 
+                {contributionType:"url"}, 
+                {contributionType:"ask"}
+            ]
+    })
+    .sort({ publishDate: -1 })
+    .populate({
+        path: 'user'
+    })
+    .exec((err,contributions) => {
+        async.forEach(contributions, function(contribution, callback) {
+            //do stuff
+            Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
+                contribution['nComments'] = n;
+                contribution['since'] = module.exports.getSince(contribution.publishDate);
+
+                if (contribution['contributionType'] == 'url')
+                    contribution['shortUrl'] = getShortUrl(contribution.content);
+                callback();
+            });
+            
+        }, function (err) {
+            res.render('pages/newest',{contributions: contributions});
+        });
+    });
+}
+
+exports.submissions = function(req,res) {
+    var id = req.query.id;
+    Contribution
+    .find({
+        _id: id,
+        $or:[ 
+                {contributionType:"url"}, 
+                {contributionType:"ask"}
+            ]
+    })
+    .sort({ publishDate: -1 })
+    .exec((err,contributions) => {
+        async.forEach(contributions, function(contribution, callback) {
+            //do stuff
+            Contribution.countDocuments({topParent: contribution._id}).exec(function(err,n) {
+                contribution['nComments'] = n;
+                contribution['since'] = module.exports.getSince(contribution.publishDate);
+
+                if (contribution['contributionType'] == 'url')
+                    contribution['shortUrl'] = getShortUrl(contribution.content);
+                callback();
+            });
+            
+        }, function (err) {
+            res.render('pages/index',{contributions: contributions});
+        });
+    });
+}

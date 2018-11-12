@@ -44,7 +44,17 @@ app.use(bodyParser.json());
 var session = require('express-session');
 app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true, cookie: {}, user: undefined}));
 app.use(function(req, res, next) {
-    res.locals.path = req.path;
+    if (req.query != undefined){
+        var params = '?';
+        Object.keys(req.query).map(function(objectKey, index) {
+            var value = req.query[objectKey];
+            params = params + objectKey + '='+value.replace(' ', '%20');
+        });
+    }
+    else{
+        var params = '';
+    }
+    res.locals.path = req.path+params;
     if (req.session != undefined){
         res.locals.user = req.session.user;
     }

@@ -39,5 +39,5 @@ exports.login = function(req,res) {
 exports.logout = function(req,res) {
     let goto = req.query.goto;
     req.session.user = undefined;
-    res.redirect(goto);  
+    res.redirect(goto);
 };

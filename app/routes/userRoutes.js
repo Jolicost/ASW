@@ -11,5 +11,11 @@ module.exports = function(app) {
     app.route('/users/:userId')
         .get(user.read)
         .put(user.update)
-        .delete(user.delete);      
+        .delete(user.delete);  
+        
+    app.route('/user')
+        .get(user.view);
+
+    app.route('/updateuser/:userId')
+        .post(user.updateFromView);
 }

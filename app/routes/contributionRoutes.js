@@ -11,5 +11,8 @@ module.exports = function(app) {
     app.route('/contributions/:contributionId')
         .get(contribution.read)
         .put(contribution.update)
-        .delete(contribution.delete);      
+        .delete(contribution.delete);     
+    
+    app.route('/upvoted')
+        .get(contribution.upvoted);
 }
