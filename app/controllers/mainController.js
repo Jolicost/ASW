@@ -114,7 +114,7 @@ exports.submitForm = function(req,res) {
         return res.render('pages/submit', {errors: [invalidURL]});
     }
 
-    User.findOne({username: req.session.user}, function(err, user) {
+    User.findOne({_id: req.session.user._id}, function(err, user) {
         if (err) return res.status(500).send("Internal server error");
 
         if (!user) return res.redirect('login?goto=submit');
@@ -253,6 +253,71 @@ exports.unvote = function(req,res) {
     Contribution.find({_id: c_id})
 }
 
+exports.comment = function(req, res) {
+    let user = req.session.user;
+    if (!user) return res.redirect('login');
+
+    /* 
+        text: comment or reply text
+        ctr: parent contribution id
+        top: top parent id
+    */
+
+    let text = req.body.text;
+    let ctr = req.body.contribution;
+    let top = req.body.top;
+
+    // make it so if no top parent is defined then use the immediate one 
+    if (!top) top = ctr;
+    
+    async.parallel([
+        function(callback) {
+            Contribution.findOne({_id: ctr }, function(err, contribution) {
+                if (err) callback(err,null);
+                else if (!contribution) callback(new Error('contribution not found'),null);
+                else callback(null,contribution);
+            });
+        },
+        function(callback) {
+            Contribution.findOne({_id: top }, function(err, contribution) {
+                if (err) callback(err,null);
+                else if (!contribution) callback(new Error('contribution not found'),null);
+                else callback(null,contribution);
+            });
+        },
+        function(callback) {
+            User.findOne({_id: user._id}, function(err, user) {
+                if (err) callback(err,null);
+                else if (!user) callback(new Error('invalid user'),null);
+                else callback(null,user);
+            });
+        }
+    ],
+    // optional callback
+    function(err, results) {
+        if (err) return res.status(500).send("Internal server error");
+
+        let parent = results[0];
+        let topParent = results[1];
+        let user = results[2];
+        let t = parent.contributionType;
+        let newType = 'reply'
+        if (t == 'ask' || t == 'url') newType = 'comment';
+
+        let c = new Contribution({
+            parent: parent,
+            topParent: topParent,
+            contributionType: newType,
+            user: user,
+            content: text
+        });
+
+        c.save(function(err) {
+            res.redirect('/item?id=' + topParent._id);
+        });
+        
+    });
+}
 
 exports.contribution = function(req,res) {
     var id = req.query.id;
@@ -284,6 +349,7 @@ exports.contribution = function(req,res) {
                 let contribution = results[0];
                 let node = results[1];
                 contribution['comments'] = node;
+                console.log(contribution);
                 res.render('pages/contribution',{contribution: contribution});
             });
                 
@@ -297,7 +363,6 @@ function getAllComments(contribution,callback) {
     .find(
         {topParent: contribution._id}
     )
-    .populate('user')
     .exec(function(err, contributions) {
         let res = getNode(contribution,contributions);
         callback(null,res);
@@ -307,6 +372,7 @@ function getAllComments(contribution,callback) {
 function getNode(root,contributions) {
     let ret = [];
     contributions.forEach(function(contribution) {
+        console.log(contribution);
         if (contribution.parent._id.equals(root._id)) {
             ret.push({
                 content: contribution.content,
@@ -314,7 +380,9 @@ function getNode(root,contributions) {
                 since: _this.getSince(contribution.publishDate),
                 user: contribution.user.username,
                 comments: getNode(contribution,contributions),
-                upvoted: contribution.upvoted
+                upvoted: contribution.upvoted,
+                contributionType: contribution.contributionType,
+                topParent: contribution.topParent._id
             });
         }
     });

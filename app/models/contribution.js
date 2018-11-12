@@ -36,7 +36,7 @@ var ContributionSchema = new Schema({
     */   
     points: {
         type: Number,
-        defaut: 0
+        default: 0
     },
 
     /* Collection of users that upvoted this contribution */

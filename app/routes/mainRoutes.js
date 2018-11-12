@@ -35,4 +35,7 @@ module.exports = function (app) {
 
     app.route('/unvote')
         .get(main.unvote);
+
+    app.route('/comment')
+        .post(main.comment);
 }
