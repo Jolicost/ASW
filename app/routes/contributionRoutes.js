@@ -15,4 +15,7 @@ module.exports = function(app) {
     
     app.route('/upvoted')
         .get(contribution.upvoted);
+
+    app.route('/threads')
+        .get(contribution.threads);
 }

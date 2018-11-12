@@ -1,0 +1,4 @@
+<% contribution.child.forEach((child) => { %>
+	<%- include('../partials/singleComment.ejs', {contribution: child}) %>
+    <%- include('../partials/comment.ejs', {contribution: child, level: level+1}) %>
+<% }); %>

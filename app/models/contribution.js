@@ -40,12 +40,15 @@ var ContributionSchema = new Schema({
     },
 
     /* Collection of users that upvoted this contribution */
-    upvoted: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Users'
-        }
-    ],
+    upvoted: {
+        type: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Users'
+            }
+        ], 
+        default: []
+    },
 
     /* Creation user */
     user: {
@@ -79,12 +82,15 @@ var ContributionSchema = new Schema({
     },
 
     /* Child contribution references. contributions are double referenced */
-    child: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Contributions'
-        }
-    ]
+    child: {
+        type: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Contributions'
+            }
+        ], 
+        default: []
+    }
 });
 
 /* Make the model visible across mongoose */

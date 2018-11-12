@@ -110,16 +110,36 @@ exports.upvoted = function(req, res){
                 res.render('pages/index', { contributions: ctrs });
             });
         });
-        /*
-    console.log('El user: '+user+' pidio comments? '+comments);
-    Contribution.find({upvoted:user}, function(err,contributions) {
-        if (err)
-            res.send(err);
-        else
-            res.json(contributions);
-    });
-    */
 };
+
+exports.threads = function(req, res){
+    let user = req.query.id;
+    var finds = {user:user, contributionType: "comment"};
+    Contribution
+        .find(finds)
+        .sort({ points: -1 })
+        .lean()
+        /* 
+        Populate creates the JOIN path of the document
+        on this specific case we are interested in joining user to the contribution */
+        .populate({
+            path: 'user'
+        })
+        /* Executes the query object and renders the appropiate page */
+        .exec(function (err, ctrs) {
+            async.forEach(ctrs, function (contribution, callback) {
+                //do stuff
+                Contribution.countDocuments({ topParent: contribution._id }).exec(function (err, n) {
+                    contribution['nComments'] = n;
+                    /*contribution['since'] = module.exports.getSince(contribution.publishDate);*/
+                    /*contribution['shortUrl'] = getShortUrl(contribution.content);*/
+                    callback();
+                });
+            }, function (err) {
+                res.render('pages/threads', { contributions: ctrs });
+            });
+        }); 
+}
 
 exports.submissions = async function(req,res) {
     var userId = req.query.id;
