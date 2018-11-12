@@ -244,7 +244,6 @@ exports.contribution = function(req,res) {
                 let contribution = results[0];
                 let node = results[1];
                 contribution['comments'] = node;
-                            console.log(contribution);
                 res.render('pages/contribution',{contribution: contribution});
             });
                 

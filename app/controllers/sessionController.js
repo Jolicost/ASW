@@ -20,7 +20,6 @@ exports.login = function(req,res) {
                 });
                 u.save(function(err) {
                     if (err) return res.status(500).send(err);
-                    console.log("created new user");
                     req.session.user = new_username;
                     return res.redirect(goto);
                 });
