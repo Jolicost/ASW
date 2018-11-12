@@ -3,7 +3,8 @@
 * Basic API rest for contributions model */
 var mongoose = require('mongoose'),
 // dependencies seprated by commas. Be aware
-Contribution = mongoose.model('Contributions');
+Contribution = mongoose.model('Contributions'),
+User  = mongoose.model('Users');
 var async = require("async");
 
 var main = require('./mainController');
@@ -120,13 +121,15 @@ exports.upvoted = function(req, res){
     */
 };
 
-
-exports.submissions = function(req,res) {
+exports.submissions = async function(req,res) {
     var userId = req.query.id;
     if (userId == undefined) 
         res.send('No such user.');
     
     else {
+        var uname = await User.findById(userId, function(err, user) {
+            uname = user.username
+        });
         Contribution
         .find({
             user: userId,
@@ -149,7 +152,8 @@ exports.submissions = function(req,res) {
                 });
                 
             }, function (err) {
-                res.render('pages/index',{contributions: contributions});
+                res.render('pages/user_submissions',{contributions: contributions, username: uname.username
+                });
             });
         });
     }
