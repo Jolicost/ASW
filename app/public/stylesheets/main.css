@@ -52,15 +52,16 @@ new:active {
 }
 
 
-#header-links>a.active-link{
+.active-link{
   color: white;
+  font-size: 12pt;
 }
 
 #header-links>a:first-child{
   font-weight: bold; 
 }
 
-#login-link{
+.login-link{
   float: right;
 }
 
@@ -136,6 +137,11 @@ fieldset div > * {
 
   #header-links>a{
     padding: 0px;
+    font-size: 11pt;
+  }
+
+  .active-link{
+    color: white;
     font-size: 11pt;
   }
 

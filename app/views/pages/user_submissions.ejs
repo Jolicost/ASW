@@ -5,27 +5,9 @@
 </head>
 
 <body>
-  <header>
-    <nav id="header-links">
-      <img src="/img/logo.gif" alt="hacker news logo" onclick="window.location='/'">
-      <a href="/">Hacker News</a>   
-      <a href="/newest" <%= (locals.path == "/newest") ? "class=active-link" : ""%>>new</a>|
-      <a href="/newcomments" <%= (locals.path == "/newcomments") ? "class=active-link" : ""%>>comments</a>|
-      <a href="/show" <%= (locals.path == "/show") ? "class=active-link" : ""%>>show</a>|
-      <a href="/ask" <%= (locals.path == "/ask") ? "class=active-link" : ""%>>ask</a>|
-      <!--<a href="/jobs" <%= (locals.path == "/jobs") ? "class=active-link" : ""%>>jobs</a>|-->
-      <a href="/submit" <%= (locals.path == "/submit") ? "class=active-link" : ""%>>submit</a>
-      <%if (username != undefined) {%>
-        |<span style="color:white;"><%= username%>'s submissions></span>
-      <%}%>
-      <%if (locals.user == undefined){%>
-          <a id="login-link" href="/login?goto=<%=locals.path%>">login</a>
-      <%} else {%>
-          <a id="login-link" href="/logout?goto=<%=locals.path%>">logout</a>
-          <a id="login-link" href="/user?id=<%=locals.user._id%>"><%= locals.user.username %>|</a>
-      <%}%>
-  </nav>
-  </header>
+    <header>
+        <% include ../partials/nav.ejs %>
+    </header>
   <main>
     <% var counter = 0; %>
         <table>

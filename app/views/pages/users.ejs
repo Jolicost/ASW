@@ -10,28 +10,28 @@
   </header>
   <main>
     <%if (logged){%>
-      <form action="/updateuser/<%=user._id%>" method="POST">
+      <form action="/updateuser/<%=userPage._id%>" method="POST">
         <table>
           <tr>
-            <td>user:</td><td><%=user.username%></td>
+            <td>user:</td><td><%=userPage.username%></td>
           </tr>
           <tr>
             <td>created:</td><td><%=createdAt%></td>
           </tr>
           <tr>
-            <td>karma:</td><td><%=user.karma%></td>
+            <td>karma:</td><td><%=userPage.karma%></td>
           </tr>
           <tr>
             <td><label for="about">about:</label></td><td><textarea type="text" name="about" id="about" cols="60" rows="5"><%=user.about%></textarea></td>
           </tr>
           <tr>
-            <td></td><td><a href="submitted?id=<%=user._id%>">submissions</a></td>
+            <td></td><td><a href="submitted?id=<%=userPage._id%>">submissions</a></td>
           </tr>
           <tr>
-            <td></td><td><a href="threads?id=<%=user._id%>">comments</a></td>
+            <td></td><td><a href="threads?id=<%=userPage._id%>">comments</a></td>
           </tr>
           <tr>
-            <td></td><td><a href="/upvoted?id=<%=user._id%>">upvoted submissions</a>/<a href="/upvoted?id=<%=user._id%>&comments=t">comments</a></td>
+            <td></td><td><a href="/upvoted?id=<%=userPage._id%>">upvoted submissions</a>/<a href="/upvoted?id=<%=user._id%>&comments=t">comments</a></td>
           </tr>
         </table>
         <button type="submit">update</button>
@@ -39,22 +39,22 @@
     <%} else{%>
       <table>
         <tr>
-          <td>user:</td><td><%=user.username%></td>
+          <td>user:</td><td><%=userPage.username%></td>
         </tr>
         <tr>
           <td>created:</td><td><%=createdAt%></td>
         </tr>
         <tr>
-          <td>karma:</td><td><%=user.karma%></td>
+          <td>karma:</td><td><%=userPage.karma%></td>
         </tr>
         <tr>
-          <td>about:</td><td><%=user.about%></td>
+          <td>about:</td><td><%=userPage.about%></td>
         </tr>
         <tr>
-            <td></td><td><a href="submitted?id=<%=user._id%>">submissions</a></td>
+            <td></td><td><a href="submitted?id=<%=userPage._id%>">submissions</a></td>
           </tr>
           <tr>
-            <td></td><td><a href="threads?id=<%=user._id%>">comments</a></td>
+            <td></td><td><a href="threads?id=<%=userPage._id%>">comments</a></td>
           </tr>
       </table>
     <%}%>
