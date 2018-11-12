@@ -2,9 +2,6 @@
     <img src="/img/logo.gif" alt="hacker news logo" onclick="window.location='/'">
     <a href="/">Hacker News</a>   
     <a href="/newest" <%= (locals.path == "/newest") ? "class='active-link'" : ""%>>new</a>|
-    <%if (locals.user !== "undefined"){%>
-        <a href="/threads?id=<%= locals.user._id %>" <%= (locals.path == "/ask") ? "class='active-link'" : ""%></a>>threads</a>|
-    <%} else {%>
     <!--<a href="/newcomments" <%= (locals.path == "/newcomments") ? "class='active-link'" : ""%>>comments</a>|-->
     <!--<a href="/show" <%= (locals.path == "/show") ? "class='active-link'" : ""%>>show</a>|-->
     <a href="/ask" <%= (locals.path == "/ask") ? "class='active-link'" : ""%>>ask</a>|
@@ -12,9 +9,6 @@
     <a href="/submit" <%= (locals.path == "/submit") ? "class='active-link'" : ""%>>submit</a>
     <%if (locals.path.substr(0, 10) == "/submitted"){%>
         | <span class='active-link'><%=locals.username%>'s submissions</span>
-    <%}%>
-    <%if (locals.path.substr(0, 8) == "/threads" and locals.path !== "/threads"+locals.user._id){%>
-        | <span class='active-link'><%=locals.username%>'s comments</span>
     <%}%>
     <%if (locals.path.substr(0, 8) == "/upvoted"){%>
         | <span class='active-link'>upvoted</span>
