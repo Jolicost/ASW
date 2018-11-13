@@ -10,6 +10,17 @@
 ## Deployment URL
 https://fibasw.herokuapp.com/
 
+## Open API Documentation
+https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
+
+## Open API Web editor (Open API 2.0) 
+http://editor.swagger.io/
+
+## How to edit the API specification
+1. Pull the latest file from **documentation/swagger.yaml**
+1. Edit this file as you wish with online editors or local editors
+1. Push the file when you are done
+
 ### You will need at least:
 
 1. Node.js

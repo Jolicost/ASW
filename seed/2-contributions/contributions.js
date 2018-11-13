@@ -104,7 +104,7 @@ const contributions = [
     {
         _id: getObjectId('Politica'),
         title: 'We need to ask something great',
-        content: 'Los inmigrantes, porque no pueden levantar su propio pais?',
+        content: 'Porque china nos esta superando?',
         publishDate: '2016-11-20',
         contributionType: 'ask',
         user: getObjectId('Trump'),

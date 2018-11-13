@@ -36,6 +36,10 @@ mongoose.connect(DB,{
     useNewUrlParser: true 
 });
 
+// CORS
+var cors = require('cors');
+app.use(cors());
+
 // Register some dependencies needed for the API
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
