@@ -375,9 +375,13 @@ exports.threads = function(req, res){
     var uname = User.findById(userId, function(err, user) {
         uname = user.username;
     });
+    /* HN difference: we show comments and replies. If an user replies to its own thread line it will be repeated */
     var finds = {
         user:userId, 
-        contributionType:"comment"
+        $or:[ 
+            {contributionType:"comment"}, 
+            {contributionType:"reply"}
+        ]
     };
     Contribution
         .find(finds)
