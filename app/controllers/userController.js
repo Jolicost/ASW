@@ -76,7 +76,12 @@ exports.view = function(req, res){
                 res.send('No such user.');
             else{
                 var logged = req.session.user == undefined ? false : userPage._id == req.session.user._id;
-                res.render('pages/users', {userPage: userPage, createdAt: main.getSince(userPage.createdAt), logged: logged});
+                res.render('pages/users', {
+                    userPage: userPage,
+                    createdAt: main.getSince(userPage.createdAt), 
+                    logged: logged,
+                    about: userPage.about
+                });
             }            
         });
     }

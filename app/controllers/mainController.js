@@ -134,7 +134,8 @@ exports.submitForm = function(req,res) {
                         title: title,
                         content: url,
                         user: user,
-                        contributionType: 'url'
+                        contributionType: 'url',
+                        publishDate: Date.now()
                     });
                     ctr.save(function(error) {
                         return res.redirect('item?id=' + ctr._id);
@@ -147,7 +148,8 @@ exports.submitForm = function(req,res) {
                 title: title,
                 content: text,
                 user: user,
-                contributionType: 'ask'
+                contributionType: 'ask',
+                publishDate: Date.now()
             });
             ctr.save(function(error) {
                 // render contriubtion page
@@ -309,7 +311,13 @@ exports.comment = function(req, res) {
             topParent: topParent,
             contributionType: newType,
             user: user,
-            content: text
+            content: text,
+            publishDate: Date.now()
+        });
+
+        let karma = user.karma + 1;
+        User.findOneAndUpdate({_id: user._id},{karma: karma}, function(err,user){
+            // Nothing really
         });
 
         c.save(function(err) {
