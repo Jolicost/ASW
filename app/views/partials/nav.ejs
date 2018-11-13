@@ -17,7 +17,7 @@
     <%if (locals.path.substr(0, 8) == "/threads" && locals.path !== "/threads?id="+userId){%>
         | <span class='active-link'><%=locals.username%>'s comments</span>
     <%}%>
-    <%if (locals.path.substr(0, 8) == "/upvoted"){%>
+    <%if (locals.path.substr(0, 8) == "/upvotedContributions"){%>
         | <span class='active-link'>upvoted</span>
     <%}%>
     <%if (locals.user == undefined){%>

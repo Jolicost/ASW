@@ -13,8 +13,8 @@ module.exports = function(app) {
         .put(contribution.update)
         .delete(contribution.delete);     
     
-    app.route('/upvoted')
-        .get(contribution.upvoted);
+    app.route('/upvotedContributions')
+        .get(contribution.upvotedContributions);
 
 
 }

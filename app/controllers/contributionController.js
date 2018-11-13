@@ -81,13 +81,16 @@ exports.deleteAll = function(req, res) {
     });
 };
 
-exports.upvoted = function(req, res){
+exports.upvotedContributions = function(req, res){
     let user = req.query.id;
-    let comments = req.query.comments == 't';
-    var ctrType = comments ? {$eq: 'comment'} : {$ne: 'comment'};
-    var finds = {upvoted:user, contributionType: ctrType};
     Contribution
-        .find(finds)
+        .find({
+            $or:[ 
+                    {contributionType:"url"}, 
+                    {contributionType:"ask"}
+                ],
+            upvoted: { "$in" : [user]}
+        })
         .sort({ points: -1 })
         .lean()
         /* 
@@ -107,13 +110,7 @@ exports.upvoted = function(req, res){
                     callback();
                 });
             }, function (err) {
-                if (comments){
-                    res.render('pages/threads', { contributions: ctrs });
-                }
-                else{
-                    res.render('pages/threads', { contributions: ctrs });
-                }
-                
+                res.render('pages/contributionsPlain', { contributions: ctrs });
             });
         });
 };
