@@ -11,15 +11,17 @@
     <a href="/ask" <%= (locals.path == "/ask") ? "class='active-link'" : ""%>>ask</a>|
     <!--<a href="/jobs" <%= (locals.path == "/jobs") ? "class=active-link" : ""%>>jobs</a>|-->
     <a href="/submit" <%= (locals.path == "/submit") ? "class='active-link'" : ""%>>submit</a>
+    <!--
     <%if (locals.path.substr(0, 10) == "/submitted"){%>
         | <span class='active-link'><%=locals.username%>'s submissions</span>
     <%}%>
     <%if (locals.path.substr(0, 8) == "/threads" && locals.path !== "/threads?id="+userId){%>
         | <span class='active-link'><%=locals.username%>'s comments</span>
     <%}%>
-    <%if (locals.path.substr(0, 8) == "/upvotedContributions"){%>
-        | <span class='active-link'>upvoted</span>
+    <%if (locals.path.substr(0, 21) == "/upvotedContributions"){%>
+        | <span class='active-link'><%= locals.username %>'s upvoted contributions</span>
     <%}%>
+    -->
     <%if (locals.user == undefined){%>
         <a class="login-link" href="/login?goto=<%=locals.path%>">login</a>
     <%} else {%>

@@ -22,7 +22,7 @@
             <td>karma:</td><td><%=userPage.karma%></td>
           </tr>
           <tr>
-            <td><label for="about">about:</label></td><td><textarea type="text" name="about" id="about" cols="60" rows="5"><%=user.about%></textarea></td>
+            <td><label for="about">about:</label></td><td><textarea type="text" name="about" value="<%= userPage.about %>" id="about" cols="60" rows="5"><%=userPage.about%></textarea></td>
           </tr>
           <tr>
             <td></td><td><a href="submitted?id=<%=userPage._id%>">submissions</a></td>

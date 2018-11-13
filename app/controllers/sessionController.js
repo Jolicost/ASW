@@ -7,6 +7,10 @@ exports.login = function(req,res) {
     if (req.method === 'POST'){
         let new_username = req.body.username;
         let new_password = req.body.password;
+
+        if (!new_username || !new_password) {
+            return res.redirect('/login');
+        }
         let goto = req.body.goto;
         User.findOne({
             username: new_username,

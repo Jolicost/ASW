@@ -269,6 +269,11 @@ exports.comment = function(req, res) {
     let ctr = req.body.contribution;
     let top = req.body.top;
 
+
+    if (!text) {
+        return res.redirect('/item?id=' + ctr);
+    }
+
     // make it so if no top parent is defined then use the immediate one 
     if (!top) top = ctr;
     

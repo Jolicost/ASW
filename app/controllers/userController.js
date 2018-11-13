@@ -88,12 +88,14 @@ exports.view = function(req, res){
 };
 
 exports.updateFromView = function(req, res){
-    User.findOneAndUpdate({_id: req.params.userId}, req.body, {},function(err,user){
-        if (err)
-            res.send(err);
-        else{
-            res.redirect('/user?id='+req.params.userId);
-        }
+
+    User.findOne({
+        _id: req.params.userId
+    }, function(err, user) {
+        user.about = req.body.about;
+        user.save(function(err) {
+            res.redirect('/user?id=' + req.params.userId);
+        });
     });
 }
 
