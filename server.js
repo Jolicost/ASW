@@ -73,6 +73,9 @@ app.use(function(req, res, next) {
 // API REST Routing
 var contributionRoutes = require('./app/routes/contributionRoutes');
 var userRoutes = require('./app/routes/userRoutes');
+
+// API implementation routes
+var apiContributionRoutes = require('./app/routes/apiRoutes');
 // MVC Routing
 var mainRoutes = require('./app/routes/mainRoutes');
 // Session Routing
@@ -88,6 +91,7 @@ var sessionRoutes = require('./app/routes/sessionRoutes');
 contributionRoutes(app);
 userRoutes(app);
 mainRoutes(app);
+apiContributionRoutes(app);
 sessionRoutes(app,passport);
 
 // Register static resources, views folder and view engine
