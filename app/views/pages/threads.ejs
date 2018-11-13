@@ -11,10 +11,9 @@
   <main>
         <table>
             <tbody>
-                <% console.log(contributions);%>
                 <% contributions.forEach((contribution) => { %>
                     <%- include('../partials/singleComment.ejs', {contribution: contribution, level: 0}) %>
-                    <%- include('../partials/threadComments.ejs', {contribution: contribution, level: 1}) %>
+                    <%- include("../partials/comment.ejs",{contribution: contribution,level: 1}); %>
                 <% }); %>
             </tbody>
         </table>

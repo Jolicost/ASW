@@ -118,38 +118,7 @@ exports.upvoted = function(req, res){
         });
 };
 
-exports.threads = function(req, res){
-    var userId = req.query.id;
-    var uname = User.findById(userId, function(err, user) {
-        uname = user.username;
-    });
-    var finds = {user:userId, contributionType: "comment"};
-    Contribution
-        .find(finds)
-        .sort({ points: -1 })
-        .lean()
-        /* 
-        Populate creates the JOIN path of the document
-        on this specific case we are interested in joining user to the contribution */
-        .populate({
-            path: 'user'
-        })
-        /* Executes the query object and renders the appropiate page */
-        .exec(function (err, ctrs) {
-            async.forEach(ctrs, function (contribution, callback) {
-                //do stuff
-                Contribution.countDocuments({ topParent: contribution._id }).exec(function (err, n) {
-                    contribution['nComments'] = n;
-                    /*contribution['since'] = module.exports.getSince(contribution.publishDate);*/
-                    /*contribution['shortUrl'] = getShortUrl(contribution.content);*/
-                    callback();
-                });
-            }, function (err) {
-                if (ctrs == undefined) ctrs = [];
-                res.render('pages/threads', { contributions: ctrs, username:  uname.username});
-            });
-        }); 
-}
+
 
 exports.submissions = async function(req,res) {
     var userId = req.query.id;

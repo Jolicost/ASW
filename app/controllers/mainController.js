@@ -349,7 +349,6 @@ exports.contribution = function(req,res) {
                 let contribution = results[0];
                 let node = results[1];
                 contribution['comments'] = node;
-                console.log(contribution);
                 res.render('pages/contribution',{contribution: contribution});
             });
                 
@@ -358,13 +357,65 @@ exports.contribution = function(req,res) {
     
 }
 
+exports.threads = function(req, res){
+    var userId = req.query.id;
+    var uname = User.findById(userId, function(err, user) {
+        uname = user.username;
+    });
+    var finds = {
+        user:userId, 
+        contributionType:"comment"
+    };
+    Contribution
+        .find(finds)
+        .sort({ points: -1 })
+        .lean()
+        /* 
+        Populate creates the JOIN path of the document
+        on this specific case we are interested in joining user to the contribution */
+        .populate({
+            path: 'user'
+        })
+        /* Executes the query object and renders the appropiate page */
+        .exec(function (err, ctrs) {
+            async.forEach(ctrs, function (contribution, callback) {
+                contribution['since'] = _this.getSince(contribution.publishDate);
+                getAllReplies(contribution,callback);                        
+            }, function (err) {
+                if (ctrs == undefined) ctrs = [];
+                res.render('pages/threads', { contributions: ctrs, username:  uname.username});
+            });
+        }); 
+}
+
+
+
 function getAllComments(contribution,callback) {
     Contribution
     .find(
         {topParent: contribution._id}
     )
+    .populate({
+        path: 'user'
+    })
     .exec(function(err, contributions) {
         let res = getNode(contribution,contributions);
+        contribution['comments'] = res;
+        callback(null,res);
+    });    
+}
+
+function getAllReplies(contribution,callback) {
+    Contribution
+    .find(
+        {parent: contribution._id}
+    )
+    .populate({
+        path: 'user'
+    })
+    .exec(function(err, contributions) {
+        let res = getNode(contribution,contributions);
+        contribution['comments'] = res;
         callback(null,res);
     });    
 }
@@ -372,13 +423,12 @@ function getAllComments(contribution,callback) {
 function getNode(root,contributions) {
     let ret = [];
     contributions.forEach(function(contribution) {
-        console.log(contribution);
         if (contribution.parent._id.equals(root._id)) {
             ret.push({
                 content: contribution.content,
                 _id: contribution._id,
                 since: _this.getSince(contribution.publishDate),
-                user: contribution.user.username,
+                user: contribution.user,
                 comments: getNode(contribution,contributions),
                 upvoted: contribution.upvoted,
                 contributionType: contribution.contributionType,

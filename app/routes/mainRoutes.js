@@ -38,4 +38,7 @@ module.exports = function (app) {
 
     app.route('/comment')
         .post(main.comment);
+        
+    app.route('/threads')
+        .get(main.threads);
 }
