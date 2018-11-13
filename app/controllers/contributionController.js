@@ -115,6 +115,39 @@ exports.upvotedContributions = function(req, res){
         });
 };
 
+exports.upvotedComments = function(req, res){
+    let user = req.query.id;
+    Contribution
+        .find({
+            $or:[ 
+                    {contributionType:"comment"}, 
+                    {contributionType:"reply"}
+                ],
+            upvoted: { "$in" : [user]}
+        })
+        .sort({ points: -1 })
+        .lean()
+        /* 
+        Populate creates the JOIN path of the document
+        on this specific case we are interested in joining user to the contribution */
+        .populate({
+            path: 'user'
+        })
+        /* Executes the query object and renders the appropiate page */
+        .exec(function (err, ctrs) {
+            async.forEach(ctrs, function (contribution, callback) {
+                //do stuff
+                Contribution.countDocuments({ topParent: contribution._id }).exec(function (err, n) {
+                    contribution['since'] = main.getSince(contribution.publishDate);
+                    callback();
+                });
+            }, function (err) {
+                res.render('pages/commentsPlain', { contributions: ctrs });
+            });
+           
+        });
+};
+
 
 
 exports.submissions = async function(req,res) {

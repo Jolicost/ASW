@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+  <header>
+    <% include ../partials/nav.ejs %>
+  </header>
+  <main>
+        <table>
+            <tbody>
+                <% contributions.forEach((contribution) => { %>
+                    <%- include('../partials/singleComment.ejs', {contribution: contribution, level: 0}) %>
+                <% }); %>
+            </tbody>
+        </table>
+  </main>
+  <% include ../partials/footer.ejs %>
+</body>
+</html>

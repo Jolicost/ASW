@@ -16,5 +16,7 @@ module.exports = function(app) {
     app.route('/upvotedContributions')
         .get(contribution.upvotedContributions);
 
+    app.route('/upvotedComments')
+        .get(contribution.upvotedComments);
 
 }
