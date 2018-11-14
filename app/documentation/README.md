@@ -13,7 +13,7 @@ https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
 1. El token surt al perfil del teu usuari. Es pot copiar facilment
 1. Per a fer proves o bé verificar l'identitat d'un usuari, es pot utilitzar la ruta **/verify**
     * Heu d'incloure un HEADER HTTP anomenat
-        * key: x-access-token 
+        * key: **x-access-token**
         * value: el valor del token que tingueu al vostre perfil
     * Podeu fer una petició de prova amb POSTman a aquesta url i incorporant el token adequat
     * Si tot és correcte el servidor us retornarà les dades del vostre usuari
