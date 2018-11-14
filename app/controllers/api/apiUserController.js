@@ -5,6 +5,8 @@ var mongoose = require('mongoose'),
 // dependencies seprated by commas. Be aware
 User = mongoose.model('Users');
 
+var config = require('../../../config/config.js');
+
 exports.list = function(req,res) {
     User.find({}, function(err,users) {
         if (err)
