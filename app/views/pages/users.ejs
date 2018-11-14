@@ -33,6 +33,9 @@
           <tr>
             <td></td><td><a href="/upvotedContributions?id=<%=userPage._id%>">upvoted submissions</a>/<a href="/upvotedComments?id=<%=user._id%>&comments=t">comments</a></td>
           </tr>
+          <tr>
+            <td><label for="token">token:</label></td><td><textarea type="text" name="faketoken" value="<%= userPage.token %>" id="token" cols="60" rows="5"><%=userPage.token %></textarea></td>
+          </tr>
         </table>
         <button type="submit">update</button>
       </form>

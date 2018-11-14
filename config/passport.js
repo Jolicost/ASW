@@ -8,6 +8,8 @@ const config = require('./config.js');
 var configAuth  = config.get('configAuth.google');
 var configAuthGithub = config.get('configAuth.github');
 
+var session = require('../app/controllers/sessionController');
+
 
 module.exports = function(passport) {
 
@@ -90,17 +92,20 @@ module.exports = function(passport) {
             if (err) return cb(err);
 
             if (user) {
-                return cb(null,user);
+                session.signToken(user,function() {
+                    return cb(null,user);
+                }); 
             } else {
                 let u = new User();
 
                 u.auth.github.id = profile.id;
-                console.log(profile.username);
                 u.username = profile.username;
 
-                u.save(function(err){
+                u.save(function(err, user){
                     if (err) throw err;
-                    return cb(null,u);
+                    session.signToken(user, function() {
+                        return cb(null,u);
+                    });                     
                 });
             }
         });

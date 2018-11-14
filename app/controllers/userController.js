@@ -79,6 +79,7 @@ exports.view = function(req, res){
                 res.render('pages/users', {
                     userPage: userPage,
                     createdAt: main.getSince(userPage.createdAt), 
+                    token: userPage.token || null,
                     logged: logged,
                     about: userPage.about
                 });

@@ -14,6 +14,9 @@ module.exports = function (app, passport) {
     app.route('/logout')
         .get(session.logout)
 
+    app.route('/verify')
+        .get(session.testAuthorization);
+
     app.get('/auth/github',
   		passport.authenticate('github'));
 
