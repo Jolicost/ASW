@@ -30,6 +30,7 @@ const path = require('path');
 
 /* Deployment settings */
 mongoose.Promise = global.Promise;
+mongoose.set('useFindAndModify', false);
 
 /* Connect mongoose object mapper to the database (mongoDB must be running) */
 mongoose.connect(DB,{ 

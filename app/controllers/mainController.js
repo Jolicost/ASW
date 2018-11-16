@@ -163,6 +163,7 @@ exports.submitForm = function(req,res) {
 
 };
 
+
 exports.newest = function(req,res) {
     Contribution
     .find({
@@ -324,6 +325,13 @@ exports.comment = function(req, res) {
         User.findOneAndUpdate({_id: user._id},{karma: karma}, function(err,user){
             // Nothing really
         });
+
+        Contribution.findOneAndUpdate({_id: parent},{
+            $push: { child: c }},
+            function(err, contribution) {
+                // Noting really
+            }
+        );
 
         c.save(function(err) {
             res.redirect('/item?id=' + topParent._id);
