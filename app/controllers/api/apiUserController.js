@@ -18,10 +18,28 @@ exports.list = function(req,res) {
 
 exports.read = function(req,res) {
     User.findById(req.params.userId, function(err,user) {
-        if (err)
-            res.send(err);
-        else
-            res.json(user);
+        if (err) res.status(500).send(err);
+        /* Check if the requesting user is the same or not */
+        let data = {}
+        if (req.userId === req.params.userId) {
+            data = {
+                username: user.username,
+                createdAt: user.createdAt,
+                karma: user.karma,
+                about: user.about,
+                token: user.token
+            }
+        }
+        else {
+            data = {
+                username: user.username,
+                createdAt: user.createdAt,
+                karma: user.karma,
+                about: user.about,
+            }
+        }
+
+        res.json(data);
     });
 };
 
@@ -63,3 +81,5 @@ exports.deleteAll = function(req, res) {
             res.json({message: 'All users deleted'});
     });
 };
+
+

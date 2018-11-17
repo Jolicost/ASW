@@ -2,12 +2,27 @@
 module.exports = function(app) {
     var contribution = require('../controllers/api/apiContributionController');
     var user = require('../controllers/api/apiUserController');
+    var middleware = require('../controllers/api/middleware');
+    const mung = require('express-mung');
 
     // Contribution API Routes
     app.route('/api/contributions')
             .get(contribution.list);
 
-    app.route('/api/users')
-            .get(user.list);
-
+    app.put(
+    	'/api/users/:userId',
+    	// Chain of middleware functions
+    	[
+			middleware.verifyToken,
+			middleware.userWritePermissions,
+			middleware.keepOnlyAbout
+		],
+		user.update
+	);
+    app.get('/api/users/:userId',
+    	[
+    		middleware.verifyToken,
+    	],
+    	user.read
+    );
 }
