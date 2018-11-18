@@ -71,6 +71,591 @@ const contributions = [
 
         ]
     },
+    // NOUS
+
+    // CATALUNYA I ELS SEUS COMENTARIS
+    {
+        _id: getObjectId('Catalunya'),
+        title: 'Catalunya te dret a la autodeterminacio',
+        content: 'https://www.vilaweb.cat',
+        publishDate: '2017-10-01',
+        contributionType: 'url',
+        user: getObjectId('Puigdemont'),
+        upvoted: [
+            getObjectId('Junqueras')
+        ],
+        points: 1,
+        child: [
+            getObjectId('CommentCatalunya1'),
+            getObjectId('CommentCatalunya2')
+        ]
+    },
+    {
+        _id: getObjectId('CommentCatalunya1'),
+        content: "Clar que si",
+        publishDate: '2018-03-04',
+        contributionType: 'comment',
+        user: getObjectId('Junqueras'),
+        upvoted: [
+            getObjectId('Puigdemont')
+        ],
+        parent: getObjectId('Catalunya'),
+        topParent: getObjectId('Catalunya'),
+    },
+    {
+        _id: getObjectId('CommentCatalunya2'),
+        content: "Soñad",
+        publishDate: '2018-03-05',
+        contributionType: 'comment',
+        user: getObjectId('Casado'),
+        upvoted: [
+            getObjectId('Aznar')
+        ],
+        parent: getObjectId('Catalunya'),
+        topParent: getObjectId('Catalunya'),
+        child: [
+            getObjectId('CommentCatalunya3')
+        ]
+    },
+    {
+        _id: getObjectId('CommentCatalunya3'),
+        content: "Clar que no",
+        publishDate: '2018-03-06',
+        contributionType: 'reply',
+        user: getObjectId('Casado'),
+        upvoted: [
+
+        ],
+        parent: getObjectId('CommentCatalunya2'),
+        topParent: getObjectId('Catalunya'),
+        child: [
+            getObjectId('CommentCatalunya4')
+        ]
+    },
+    {
+        _id: getObjectId('CommentCatalunya4'),
+        content: "Ns/nc",
+        publishDate: '2018-03-06',
+        contributionType: 'reply',
+        user: getObjectId('Sanchez'),
+        upvoted: [
+            getObjectId('Aznar')
+        ],
+        parent: getObjectId('CommentCatalunya3'),
+        topParent: getObjectId('Catalunya')
+    },
+
+    // PRESUPUESTOS I ELS SEUS COMENTARIS
+    {
+        _id: getObjectId('Presupuestos'),
+        title: 'Los presupuestos requieren mas debate',
+        content: 'https://www.elpais.com',
+        publishDate: '2018-10-30',
+        contributionType: 'url',
+        user: getObjectId('Sanchez'),
+        upvoted: [
+            getObjectId('Echenique')
+        ],
+        points: 31,
+        child: [
+            getObjectId('CommentPresupuestos1')
+        ]
+    },
+    {
+        _id: getObjectId('CommentPresupuestos1'),
+        content: "Y menos cachondeo",
+        publishDate: '2018-11-01',
+        contributionType: 'comment',
+        user: getObjectId('Echenique'),
+        upvoted: [
+            getObjectId('Puigdemont')
+        ],
+        parent: getObjectId('Presupuestos'),
+        topParent: getObjectId('Presupuestos')
+    },
+    {
+        _id: getObjectId('CommentPresupuestos2'),
+        content: "Y mas seriedad",
+        publishDate: '2018-11-03',
+        contributionType: 'reply',
+        user: getObjectId('Puidemont'),
+        upvoted: [
+            getObjectId('Echenique')
+        ],
+        parent: getObjectId('CommentPresupuestos1'),
+        topParent: getObjectId('Presupuestos'),
+        child: [
+            getObjectId('CommentPresupuestos3')
+        ]
+    },
+    {
+        _id: getObjectId('CommentPresupuestos3'),
+        content: "Y menos chorradas",
+        publishDate: '2018-11-03',
+        contributionType: 'reply',
+        user: getObjectId('Aznar'),
+        upvoted: [
+
+        ],
+        parent: getObjectId('CommentPresupuestos2'),
+        topParent: getObjectId('Presupuestos'),
+        child: [
+            getObjectId('CommentPresupuestos4')
+        ]
+    },
+    {
+        _id: getObjectId('CommentPresupuestos4'),
+        content: "Y mas reuniones",
+        publishDate: '2018-11-03',
+        contributionType: 'reply',
+        user: getObjectId('Junqueras'),
+        upvoted: [
+
+        ],
+        parent: getObjectId('CommentPresupuestos3'),
+        topParent: getObjectId('Presupuestos'),
+        child: [
+            getObjectId('CommentPresupuestos5')
+        ]
+    },
+    {
+        _id: getObjectId('CommentPresupuestos5'),
+        content: "Y menos comentarios",
+        publishDate: '2018-11-03',
+        contributionType: 'reply',
+        user: getObjectId('Sanchez'),
+        upvoted: [
+
+        ],
+        parent: getObjectId('CommentPresupuestos4'),
+        topParent: getObjectId('Presupuestos')
+    },
+
+
+    // EXILIO I ELS SEUS COMENTARIS
+    {
+        _id: getObjectId('Exilio'),
+        title: 'Los exilios no son propios de un estado democratico del siglo XXI',
+        content: 'https://www.twitter.com',
+        publishDate: '2018-05-30',
+        contributionType: 'url',
+        user: getObjectId('Valtonyc'),
+        upvoted: [
+            getObjectId('Puigdemont'),
+            getObjectId('Junqueras')
+        ],
+        points: 2,
+        child: [
+            getObjectId('CommentExilio1')
+        ]
+    },
+    {
+        _id: getObjectId('CommentExilio1'),
+        content: "Verdad",
+        publishDate: '2018-06-01',
+        contributionType: 'comment',
+        user: getObjectId('Echenique'),
+        upvoted: [
+            getObjectId('Valtonyc')
+        ],
+        parent: getObjectId('Exilio'),
+        topParent: getObjectId('Exilio'),
+        child: [
+            getObjectId('CommentExilio2'),
+            getObjectId('CommentExilio3')
+        ]
+    },
+    {
+        _id: getObjectId('CommentExilio2'),
+        content: "Mentira",
+        publishDate: '2018-06-01',
+        contributionType: 'reply',
+        user: getObjectId('Casado'),
+        upvoted: [
+
+        ],
+        parent: getObjectId('CommentExilio1'),
+        topParent: getObjectId('Exilio')
+    },
+    {
+        _id: getObjectId('CommentExilio3'),
+        content: "Relativo",
+        publishDate: '2018-06-01',
+        contributionType: 'reply',
+        user: getObjectId('Sanchez'),
+        upvoted: [
+            getObjectId('Rubalcaba')
+        ],
+        parent: getObjectId('CommentExilio1'),
+        topParent: getObjectId('Exilio'),
+        child: [
+            getObjectId('CommentExilio4')
+        ]
+
+    },
+    {
+        _id: getObjectId('CommentExilio4'),
+        content: "Puta logica",
+        publishDate: '2018-06-02',
+        contributionType: 'reply',
+        user: getObjectId('Echenique'),
+        upvoted: [
+            getObjectId('Sanchez')
+        ],
+        parent: getObjectId('CommentExilio3'),
+        topParent: getObjectId('Exilio')
+    },
+
+
+    // GREATTIMES I ELS SEUS COMENTARIS
+    {
+        _id: getObjectId('GreatTimes'),
+        title: 'La mejor época de España',
+        content: 'https://www.youtube.com/watch?v=mnP_z4tXDCQ',
+        publishDate: '2018-01-01',
+        contributionType: 'url',
+        user: getObjectId('Rivera'),
+        upvoted: [
+            getObjectId('Aznar')
+        ],
+        points: 33,
+        child: [
+            getObjectId('CommentGreatTimes1'),
+            getObjectId('CommentGreatTimes3')
+        ]
+    },
+    {
+        _id: getObjectId('CommentGreatTimes1'),
+        content: "Viva",
+        publishDate: '2018-06-02',
+        contributionType: 'comment',
+        user: getObjectId('Aznar'),
+        upvoted: [
+            getObjectId('Rajoy')
+        ],
+        parent: getObjectId('GreatTimes'),
+        topParent: getObjectId('GreatTimes'),
+        child: [
+            getObjectId('CommentGreatTimes2')
+        ]
+    },
+    {
+        _id: getObjectId('CommentGreatTimes2'),
+        content: "La mejor epoca va a ser exhumada, viva!",
+        publishDate: '2018-06-02',
+        contributionType: 'reply',
+        user: getObjectId('Sanchez'),
+        upvoted: [
+            getObjectId('Echenique')
+        ],
+        parent: getObjectId('CommentGreatTimes1'),
+        topParent: getObjectId('GreatTimes')
+    },
+    {
+        _id: getObjectId('CommentGreatTimes3'),
+        content: "Pfffffff",
+        publishDate: '2018-06-02',
+        contributionType: 'comment',
+        user: getObjectId('Valtonyc'),
+        upvoted: [
+            getObjectId('Junqueras')
+        ],
+        parent: getObjectId('GreatTimes'),
+        topParent: getObjectId('GreatTimes'),
+        child: [
+            getObjectId('CommentGreatTimes4')
+        ]
+    },
+    {
+        _id: getObjectId('CommentGreatTimes4'),
+        content: "Sr Valtonyc vuelva a España",
+        publishDate: '2018-06-02',
+        contributionType: 'reply',
+        user: getObjectId('Llarena'),
+        upvoted: [
+            getObjectId('Valtonyc')
+        ],
+        parent: getObjectId('CommentGreatTimes3'),
+        topParent: getObjectId('GreatTimes')
+    },
+
+
+    // INTERMEDIO I ELS SEUS COMENTARIS
+    {
+        _id: getObjectId('Intermedio'),
+        title: 'El mejor capitulo del intermedio',
+        content: 'https://www.lasexta.com',
+        publishDate: '2018-11-12',
+        contributionType: 'url',
+        user: getObjectId('Wyoming'),
+        upvoted: [
+            getObjectId('Echenique')
+        ],
+        points: 27,
+        child: [
+            getObjectId('CommentIntermedio1'),
+            getObjectId('CommentIntermedio2'),
+            getObjectId('CommentIntermedio3')        ]
+    },
+    {
+        _id: getObjectId('CommentIntermedio1'),
+        content: "Buen programa",
+        publishDate: '2018-11-13',
+        contributionType: 'comment',
+        user: getObjectId('Puigdemont'),
+        upvoted: [
+            getObjectId('Valtonyc')
+        ],
+        parent: getObjectId('Intermedio'),
+        topParent: getObjectId('Intermedio')
+    },
+    {
+        _id: getObjectId('CommentIntermedio2'),
+        content: "Si senyor",
+        publishDate: '2018-11-14',
+        contributionType: 'comment',
+        user: getObjectId('Junqueras'),
+        upvoted: [
+            getObjectId('Valtonyc')
+        ],
+        parent: getObjectId('Intermedio'),
+        topParent: getObjectId('Intermedio')
+    },
+    {
+        _id: getObjectId('CommentIntermedio3'),
+        content: "Grans",
+        publishDate: '2018-11-15',
+        contributionType: 'comment',
+        user: getObjectId('Junqueras'),
+        upvoted: [
+            getObjectId('Valtonyc')
+        ],
+        parent: getObjectId('Intermedio'),
+        topParent: getObjectId('Intermedio'),
+        child: [
+            getObjectId('CommentIntemedio4')
+        ]
+    },
+    {
+        _id: getObjectId('CommentIntermedio4'),
+        content: "Siempre",
+        publishDate: '2018-11-15',
+        contributionType: 'reply',
+        user: getObjectId('Wyoming'),
+        upvoted: [
+            getObjectId('Valtonyc')
+        ],
+        parent: getObjectId('CommentIntermedio3'),
+        topParent: getObjectId('Intermedio')
+    },
+
+
+    // NBA I ELS SEUS COMENTARIS
+    {
+        _id: getObjectId('NBA'),
+        title: 'El mejor taponador de la historia',
+        content: 'https://www.nba.com/news',
+        publishDate: '2016-01-15',
+        contributionType: 'url',
+        user: getObjectId('LeBron'),
+        upvoted: [
+            getObjectId('Westbrook')
+        ],
+        points: 23,
+        child: [
+            getObjectId('CommentNBA1')
+        ]
+    },
+    {
+        _id: getObjectId('CommentNBA1'),
+        content: "Que va",
+        publishDate: '2018-01-16',
+        contributionType: 'comment',
+        user: getObjectId('Westbrook'),
+        upvoted: [
+
+        ],
+        parent: getObjectId('NBA'),
+        topParent: getObjectId('NBA'),
+        child: [
+            getObjectId('CommentNBA2')
+        ]
+    },
+    {
+        _id: getObjectId('CommentNBA2'),
+        content: "Que si",
+        publishDate: '2018-01-16',
+        contributionType: 'reply',
+        user: getObjectId('Curry'),
+        upvoted: [
+            getObjectId('LeBron')
+        ],
+        parent: getObjectId('CommentNBA1'),
+        topParent: getObjectId('NBA'),
+        child: [
+            getObjectId('CommentNBA3')
+        ]
+    },
+    {
+        _id: getObjectId('CommentNBA3'),
+        content: "Creed a Curry",
+        publishDate: '2018-01-16',
+        contributionType: 'reply',
+        user: getObjectId('LeBron'),
+        upvoted: [
+            getObjectId('Curry')
+        ],
+        parent: getObjectId('CommentNBA2'),
+        topParent: getObjectId('NBA'),
+        child: [
+            getObjectId('CommentNBA4'),
+            getObjectId('CommentNBA5')
+        ]
+    },
+    {
+        _id: getObjectId('CommentNBA4'),
+        content: "Eso",
+        publishDate: '2018-01-16',
+        contributionType: 'comment',
+        user: getObjectId('Curry'),
+        upvoted: [
+
+        ],
+        parent: getObjectId('CommentNBA3'),
+        topParent: getObjectId('NBA')
+    },
+    {
+        _id: getObjectId('CommentNBA5'),
+        content: "No",
+        publishDate: '2018-01-16',
+        contributionType: 'comment',
+        user: getObjectId('Westbrook'),
+        upvoted: [
+
+        ],
+        parent: getObjectId('CommentNBA3'),
+        topParent: getObjectId('NBA'),
+        child: [
+            getObjectId('CommentNBA6')
+        ]
+    },
+    {
+        _id: getObjectId('CommentNBA6'),
+        content: "Nunca aprenderas",
+        publishDate: '2018-01-18',
+        contributionType: 'comment',
+        user: getObjectId('Curry'),
+        upvoted: [
+            getObjectId('LeBron')
+        ],
+        parent: getObjectId('CommentNBA5'),
+        topParent: getObjectId('NBA')
+    },
+
+
+    // TRIPLED I ELS SEUS COMENTARIS
+    {
+        _id: getObjectId('TripleD'),
+        title: 'Quien es el mejor jugador completo de la NBA?',
+        publishDate: '2018-10-28',
+        contributionType: 'ask',
+        user: getObjectId('Westbrook'),
+        upvoted: [
+            getObjectId('LeBron')
+        ],
+        points: 11,
+        child: [
+            getObjectId('CommentTripleD1'),
+            getObjectId('CommentTripleD4')
+        ]
+    },
+    {
+        _id: getObjectId('CommentTripleD1'),
+        content: "Yo",
+        publishDate: '2018-01-18',
+        contributionType: 'comment',
+        user: getObjectId('Curry'),
+        upvoted: [
+            getObjectId('LeBron')
+        ],
+        parent: getObjectId('TripleD'),
+        topParent: getObjectId('TripleD'),
+        child: [
+            getObjectId('CommentTripleD2')
+        ]
+    },
+    {
+        _id: getObjectId('CommentTripleD2'),
+        content: "soy",
+        publishDate: '2018-01-18',
+        contributionType: 'reply',
+        user: getObjectId('Curry'),
+        upvoted: [
+            getObjectId('Curry')
+        ],
+        parent: getObjectId('CommentTripleD1'),
+        topParent: getObjectId('TripleD'),
+        child: [
+            getObjectId('CommentTripleD3')
+        ]
+    },
+    {
+        _id: getObjectId('CommentTripleD3'),
+        content: "ese",
+        publishDate: '2018-01-18',
+        contributionType: 'reply',
+        user: getObjectId('Curry'),
+        upvoted: [
+            getObjectId('Westbrook')
+        ],
+        parent: getObjectId('CommentTripleD2'),
+        topParent: getObjectId('TripleD')
+    },
+    {
+        _id: getObjectId('CommentTripleD4'),
+        content: "No hay nadie más completo",
+        publishDate: '2018-01-18',
+        contributionType: 'comment',
+        user: getObjectId('LeBron'),
+        upvoted: [
+            getObjectId('LeBron')
+        ],
+        parent: getObjectId('TripleD'),
+        topParent: getObjectId('TripleD'),
+        child: [
+            getObjectId('CommentTripleD5')
+        ]
+    },
+    {
+        _id: getObjectId('CommentTripleD5'),
+        content: "que",
+        publishDate: '2018-01-18',
+        contributionType: 'reply',
+        user: getObjectId('LeBron'),
+        upvoted: [
+            getObjectId('Westbrook')
+        ],
+        parent: getObjectId('CommentTripleD4'),
+        topParent: getObjectId('TripleD'),
+        child: [
+            getObjectId('CommentTripleD6')
+        ]
+    },
+    {
+        _id: getObjectId('CommentTripleD6'),
+        content: "yo",
+        publishDate: '2018-01-20',
+        contributionType: 'reply',
+        user: getObjectId('LeBron'),
+        upvoted: [
+            getObjectId('Curry')
+        ],
+        parent: getObjectId('CommentTripleD5'),
+        topParent: getObjectId('TripleD')
+    },
+    // FI DELS NOUS
+
+
     {
         _id: getObjectId('Idiota'),
         title: 'Abro hilo',
@@ -135,7 +720,9 @@ const contributions = [
 
         ]
     },
+
     // Comments and replies
+
     {
         _id: getObjectId('CommentFakeNews1'),
         content: "Me Gusta",
@@ -179,6 +766,7 @@ const contributions = [
     },
 
     // Comments 'Territorio'
+
     {
         _id: getObjectId('CommentTerritorio1'),
         content: 'url',
