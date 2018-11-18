@@ -24,5 +24,18 @@ module.exports = function(app) {
     		middleware.verifyToken,
     	],
     	user.read
-    );
+	);
+	
+	app.put('/api/contributions/:contributionId/vote', 
+		[
+			middleware.verifyToken,
+		], 
+		contribution.vote);
+	
+	app.put('/api/contributions/:contributionId/unvote', 
+		[
+			middleware.verifyToken,
+		], 
+		contribution.unvote);
+
 }

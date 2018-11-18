@@ -8,6 +8,14 @@ User  = mongoose.model('Users');
 var config = require('../../../config/config.js');
 
 exports.list = function(req,res) {
+
+    /*Query parameters
+        user=userId
+        type=type
+        sort=sort
+        upvoted=userId
+        something more?
+    */
     Contribution.find({}, function(err,contributions) {
         if (err)
             res.send(err);
@@ -63,3 +71,37 @@ exports.deleteAll = function(req, res) {
             res.json({message: 'All contributions deleted'});
     });
 };
+
+exports.vote = function(req, res){
+    var data = {
+        $addToSet: {
+            upvoted: req.userId
+        },
+        $inc: {
+            points: 1
+        }
+    };
+    Contribution.findOneAndUpdate({_id: req.params.contributionId}, data, {new: true}, function(err,contribution){
+        if (err)
+            res.send(err);
+        else
+            res.json(contribution);
+    });
+}
+
+exports.unvote = function(req, res){
+    var data = {
+        $pull: {
+            upvoted: req.userId
+        },
+        $inc: {
+            points: -1
+        }
+    };
+    Contribution.findOneAndUpdate({_id: req.params.contributionId}, data, {new: true}, function(err,contribution){
+        if (err)
+            res.send(err);
+        else
+            res.json(contribution);
+    });
+}
