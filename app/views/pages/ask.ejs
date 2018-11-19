@@ -13,6 +13,7 @@
         <table>
             <tbody>
                 <% contributions.forEach((contribution) => { %>
+                                    <% console.log(contribution); %>
                     <% include ../partials/singleContribution.ejs %>
                 <% }); %>
             </tbody>

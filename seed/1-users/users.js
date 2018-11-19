@@ -38,6 +38,12 @@ const users = [
     createdAt: '2010-09-01'
   },
   {
+    _id: getObjectId('Napoleon'),
+    username: 'Napoleon',
+    password: 'alto',
+    createdAt: '1760-03-05'
+  },
+  {
     _id: getObjectId('Sebastian'),
     username: 'SebOfficial',
     password: 'naitsabes',

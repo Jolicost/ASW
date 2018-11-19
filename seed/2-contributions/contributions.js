@@ -99,6 +99,7 @@ const contributions = [
         upvoted: [
             getObjectId('Puigdemont')
         ],
+        points: 1,
         parent: getObjectId('Catalunya'),
         topParent: getObjectId('Catalunya'),
     },
@@ -111,6 +112,7 @@ const contributions = [
         upvoted: [
             getObjectId('Aznar')
         ],
+        points: 1,
         parent: getObjectId('Catalunya'),
         topParent: getObjectId('Catalunya'),
         child: [
@@ -141,6 +143,7 @@ const contributions = [
         upvoted: [
             getObjectId('Aznar')
         ],
+        points: 1,
         parent: getObjectId('CommentCatalunya3'),
         topParent: getObjectId('Catalunya')
     },
@@ -156,7 +159,7 @@ const contributions = [
         upvoted: [
             getObjectId('Echenique')
         ],
-        points: 31,
+        points: 1,
         child: [
             getObjectId('CommentPresupuestos1')
         ]
@@ -170,6 +173,7 @@ const contributions = [
         upvoted: [
             getObjectId('Puigdemont')
         ],
+        points: 1,
         parent: getObjectId('Presupuestos'),
         topParent: getObjectId('Presupuestos')
     },
@@ -182,6 +186,7 @@ const contributions = [
         upvoted: [
             getObjectId('Echenique')
         ],
+        points: 1,
         parent: getObjectId('CommentPresupuestos1'),
         topParent: getObjectId('Presupuestos'),
         child: [
@@ -258,6 +263,7 @@ const contributions = [
         upvoted: [
             getObjectId('Valtonyc')
         ],
+        points: 1,
         parent: getObjectId('Exilio'),
         topParent: getObjectId('Exilio'),
         child: [
@@ -286,6 +292,7 @@ const contributions = [
         upvoted: [
             getObjectId('Rubalcaba')
         ],
+        points: 1,
         parent: getObjectId('CommentExilio1'),
         topParent: getObjectId('Exilio'),
         child: [
@@ -302,6 +309,7 @@ const contributions = [
         upvoted: [
             getObjectId('Sanchez')
         ],
+        points: 1,
         parent: getObjectId('CommentExilio3'),
         topParent: getObjectId('Exilio')
     },
@@ -318,7 +326,7 @@ const contributions = [
         upvoted: [
             getObjectId('Aznar')
         ],
-        points: 33,
+        points: 1,
         child: [
             getObjectId('CommentGreatTimes1'),
             getObjectId('CommentGreatTimes3')
@@ -333,6 +341,7 @@ const contributions = [
         upvoted: [
             getObjectId('Rajoy')
         ],
+        points: 1,
         parent: getObjectId('GreatTimes'),
         topParent: getObjectId('GreatTimes'),
         child: [
@@ -348,6 +357,7 @@ const contributions = [
         upvoted: [
             getObjectId('Echenique')
         ],
+        points: 1,
         parent: getObjectId('CommentGreatTimes1'),
         topParent: getObjectId('GreatTimes')
     },
@@ -360,6 +370,7 @@ const contributions = [
         upvoted: [
             getObjectId('Junqueras')
         ],
+        points: 1,
         parent: getObjectId('GreatTimes'),
         topParent: getObjectId('GreatTimes'),
         child: [
@@ -375,6 +386,7 @@ const contributions = [
         upvoted: [
             getObjectId('Valtonyc')
         ],
+        points: 1,
         parent: getObjectId('CommentGreatTimes3'),
         topParent: getObjectId('GreatTimes')
     },
@@ -391,7 +403,7 @@ const contributions = [
         upvoted: [
             getObjectId('Echenique')
         ],
-        points: 27,
+        points: 1,
         child: [
             getObjectId('CommentIntermedio1'),
             getObjectId('CommentIntermedio2'),
@@ -406,6 +418,7 @@ const contributions = [
         upvoted: [
             getObjectId('Valtonyc')
         ],
+        points: 1,
         parent: getObjectId('Intermedio'),
         topParent: getObjectId('Intermedio')
     },
@@ -418,6 +431,7 @@ const contributions = [
         upvoted: [
             getObjectId('Valtonyc')
         ],
+        points: 1,
         parent: getObjectId('Intermedio'),
         topParent: getObjectId('Intermedio')
     },
@@ -430,6 +444,7 @@ const contributions = [
         upvoted: [
             getObjectId('Valtonyc')
         ],
+        points: 1,
         parent: getObjectId('Intermedio'),
         topParent: getObjectId('Intermedio'),
         child: [
@@ -445,6 +460,7 @@ const contributions = [
         upvoted: [
             getObjectId('Valtonyc')
         ],
+        points: 1,
         parent: getObjectId('CommentIntermedio3'),
         topParent: getObjectId('Intermedio')
     },
@@ -461,7 +477,7 @@ const contributions = [
         upvoted: [
             getObjectId('Westbrook')
         ],
-        points: 23,
+        points: 1,
         child: [
             getObjectId('CommentNBA1')
         ]
@@ -490,6 +506,7 @@ const contributions = [
         upvoted: [
             getObjectId('LeBron')
         ],
+        points: 1,
         parent: getObjectId('CommentNBA1'),
         topParent: getObjectId('NBA'),
         child: [
@@ -505,6 +522,7 @@ const contributions = [
         upvoted: [
             getObjectId('Curry')
         ],
+        points: 1,
         parent: getObjectId('CommentNBA2'),
         topParent: getObjectId('NBA'),
         child: [
@@ -548,6 +566,7 @@ const contributions = [
         upvoted: [
             getObjectId('LeBron')
         ],
+        points: 1,
         parent: getObjectId('CommentNBA5'),
         topParent: getObjectId('NBA')
     },
@@ -563,7 +582,7 @@ const contributions = [
         upvoted: [
             getObjectId('LeBron')
         ],
-        points: 11,
+        points: 1,
         child: [
             getObjectId('CommentTripleD1'),
             getObjectId('CommentTripleD4')
@@ -578,6 +597,7 @@ const contributions = [
         upvoted: [
             getObjectId('LeBron')
         ],
+        points: 1,
         parent: getObjectId('TripleD'),
         topParent: getObjectId('TripleD'),
         child: [
@@ -593,6 +613,7 @@ const contributions = [
         upvoted: [
             getObjectId('Curry')
         ],
+        points: 1,
         parent: getObjectId('CommentTripleD1'),
         topParent: getObjectId('TripleD'),
         child: [
@@ -608,6 +629,7 @@ const contributions = [
         upvoted: [
             getObjectId('Westbrook')
         ],
+        points: 1,
         parent: getObjectId('CommentTripleD2'),
         topParent: getObjectId('TripleD')
     },
@@ -620,6 +642,7 @@ const contributions = [
         upvoted: [
             getObjectId('LeBron')
         ],
+        points: 1,
         parent: getObjectId('TripleD'),
         topParent: getObjectId('TripleD'),
         child: [
@@ -635,6 +658,7 @@ const contributions = [
         upvoted: [
             getObjectId('Westbrook')
         ],
+        points: 1,
         parent: getObjectId('CommentTripleD4'),
         topParent: getObjectId('TripleD'),
         child: [
@@ -650,6 +674,7 @@ const contributions = [
         upvoted: [
             getObjectId('Curry')
         ],
+        points: 1,
         parent: getObjectId('CommentTripleD5'),
         topParent: getObjectId('TripleD')
     },
@@ -666,7 +691,7 @@ const contributions = [
         upvoted: [
             getObjectId('Gerard')
         ],
-        points: 0,
+        points: 1,
         child: [
             getObjectId('CommentIdiota1')
         ]
@@ -681,7 +706,7 @@ const contributions = [
         upvoted: [
             getObjectId('Gerard')
         ],
-        points: 0,
+        points: 1,
         child: [
             getObjectId('Territorio')
         ]
@@ -699,7 +724,7 @@ const contributions = [
             getObjectId('Rajoy'),
             getObjectId('Trump')
         ],
-        points: 0,
+        points: 4,
         child: [
 
         ]
@@ -714,7 +739,7 @@ const contributions = [
         upvoted: [
             getObjectId('Gerard')
         ],
-        points: 0,
+        points: 1,
         child: [
             getObjectId('CommentVisado1')
 
@@ -732,6 +757,7 @@ const contributions = [
         upvoted: [
             getObjectId('Gerard')
         ],
+        points: 1,
         parent: getObjectId('FakeNews'),
         topParent: getObjectId('FakeNews')
     },
@@ -746,6 +772,7 @@ const contributions = [
         upvoted: [
             getObjectId('Rajoy')
         ],
+        points: 1,
         parent: getObjectId('Idiota'),
         topParent: getObjectId('Idiota'),
         child: [
@@ -761,6 +788,7 @@ const contributions = [
         upvoted: [
             getObjectId('Freddy')
         ],
+        points: 1,
         parent: getObjectId('CommentIdiota1'),
         topParent: getObjectId('Idiota')
     },
