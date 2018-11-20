@@ -105,3 +105,29 @@ exports.unvote = function(req, res){
             res.json(contribution);
     });
 }
+
+
+exports.readContribution = function(req,res) {
+    Contribution.findById(req.params.id, (err,contribution) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+        res.json(contribution);
+
+        /* 
+        //per si no volem enviar totes les dades...
+        let data = {
+            title: contribution.title,
+            content: contribution.content,
+            publishDate: contribution.publishDate,
+            points: contribution.points,
+            upvoted: contribution.upvoted,
+            user: contribution.user,
+            contributionType: contribution.contributionType,
+            parent: contribution.parent,
+            child: contribution.child
+        }
+        res.json(data); 
+        */
+    });
+};

@@ -37,5 +37,6 @@ module.exports = function(app) {
 			middleware.verifyToken,
 		], 
 		contribution.unvote);
-
+	
+	app.get('/api/contributions/:id', contribution.readContribution);
 }
