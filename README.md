@@ -18,6 +18,9 @@ http://editor.swagger.io/
 
 ## Collaborative Online Open API Web editor (Open API 2.0/3.0) SwaggerHub
 https://app.swaggerhub.com/apis/Jolicost/ASW/1.0.0
+### Credentials
+user: FIBASW
+pass: fibasw1
 
 ## How to edit the API specification
 1. Pull the latest file from **documentation/swagger.yaml**
