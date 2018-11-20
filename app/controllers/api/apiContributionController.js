@@ -7,21 +7,108 @@ Contribution = mongoose.model('Contributions'),
 User  = mongoose.model('Users');
 var config = require('../../../config/config.js');
 
+function getDataFilter(data){
+    if (! data) return undefined;
+    else if (data.length == 10){
+        var operator = data.substr(0, 2);
+        var date = data.substr(2);
+        var dateObj = new Date(date.substr(0, 4), date.substr(4, 2), date.substr(6, 2), 1);
+        var returnObj = {};
+        //DBObject dbObj;
+        if (operator === 'eq'){
+            returnObj =  {
+                publishDate: {
+                    "$eq": dateObj
+                }
+            };
+        }
+        else if (operator === 'ne'){
+            returnObj =  {
+                publishDate: {
+                    "$ne": dateObj
+                }
+            };
+        }
+        else if (operator === 'gt'){
+            returnObj =  {
+                publishDate: {
+                    "$gt": dateObj
+                }
+            };
+        }
+        else if (operator === 'lt'){
+            returnObj =  {
+                publishDate: {
+                    "$lt": dateObj
+                }
+            };
+        }
+        else if (operator === 'ge'){
+            returnObj =  {
+                publishDate: {
+                    "$gte": dateObj
+                }
+            };
+        }
+        else if (operator === 'le'){
+            returnObj =  {
+                publishDate: {
+                    "$lte": dateObj
+                }
+            };
+        }
+        return returnObj;
+    }
+    else{
+        return undefined;
+    }
+}
+
+function validateType(typeStr){
+    if (["url", "ask", "comment", "reply"].includes(typeStr)) return {contributionType: typeStr};
+    else 
+        if ( typeStr === "main" || !typeStr ) 
+            return {
+                contributionType: {
+                    $in: ['url', 'ask']
+                }
+            };
+        else
+            return false;
+}
+
+
 exports.list = function(req,res) {
 
     /*Query parameters
         user=userId
-        type=type
-        sort=sort
+        type=type['url', 'ask', 'comment', 'reply', 'main']
+        date= date [eqyyyymmdd, neyyyymmdd, gtyyyymmdd, ltyyyymmdd, geyyyymmdd, leyyyymmdd]
+        sort=sort [date, points, title, user, type]
         upvoted=userId
-        something more?
     */
-    Contribution.find({}, function(err,contributions) {
-        if (err)
-            res.send(err);
-        else
-            res.json(contributions);
-    });
+    var user = req.query.user;
+    user = user ? {"user":user} : {};
+    var date = getDataFilter(req.query.date);
+    var upvoted = req.query.upvoted;
+    upvoted = upvoted ? {"upvoted": upvoted} : {};
+    var type = validateType(req.query.type);
+    if (type){
+        var result = Object.assign({},user, date, type, upvoted);
+        console.log(result);
+        Contribution.find(result).exec((err,contributions) => {
+            if (err)
+                res.send(err);
+            else
+                res.json(contributions);
+        });
+    }
+    else{
+        return res.status(400).send({
+            message: 'contributionType is not defined'
+        });
+    }
+    
 };
 
 exports.read = function(req,res) {
