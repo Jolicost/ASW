@@ -20,9 +20,6 @@ module.exports = function(app) {
 		user.update
 	);
     app.get('/api/users/:userId',
-    	[
-    		middleware.verifyToken,
-    	],
     	user.read
 	);
 	
