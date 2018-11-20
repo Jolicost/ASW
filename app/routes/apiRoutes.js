@@ -20,9 +20,6 @@ module.exports = function(app) {
 		user.update
 	);
     app.get('/api/users/:userId',
-    	[
-    		middleware.verifyToken,
-    	],
     	user.read
 	);
 	
@@ -37,5 +34,6 @@ module.exports = function(app) {
 			middleware.verifyToken,
 		], 
 		contribution.unvote);
-
+	
+	app.get('/api/contributions/:id', contribution.readContribution);
 }
