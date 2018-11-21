@@ -18,28 +18,15 @@ exports.list = function(req,res) {
 
 exports.read = function(req,res) {
     User.findById(req.params.userId, function(err,user) {
-        if (err) res.status(500).send(err);
-        /* Check if the requesting user is the same or not */
-        let data = {}
-        if (req.userId === req.params.userId) {
-            data = {
-                username: user.username,
-                createdAt: user.createdAt,
-                karma: user.karma,
-                about: user.about,
-                token: user.token
-            }
-        }
-        else {
-            data = {
-                username: user.username,
-                createdAt: user.createdAt,
-                karma: user.karma,
-                about: user.about,
-            }
-        }
+        if (err) return res.status(500).send(err);
+        else if (!user) return res.status(404).send("user not found");
 
-        res.json(data);
+        return res.json({
+            username: user.username,
+            createdAt: user.createdAt,
+            karma: user.karma,
+            about: user.about,
+        });
     });
 };
 
@@ -54,11 +41,11 @@ exports.create = function(req,res) {
 };
 
 exports.update = function(req,res) {
-    User.findOneAndUpdate({_id: req.params.userId}, req.body, {new: true}, function(err,user){
-        if (err)
-            res.send(err);
-        else
-            res.json(user);
+    User.findOneAndUpdate({_id: req.params.userId}, req.body, function(err,user){
+        if (err) res.send(err);
+        else if (!user) res.status(404).send("user not found");
+        else res.status(200).send("success")
+        return res;
     });
 };
 

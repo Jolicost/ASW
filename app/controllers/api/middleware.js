@@ -36,7 +36,8 @@ exports.verifyToken = function(req, res, next) {
 /* Checks if an user has permissions to write to a certain other user (given by the url parameter :userId)
  */
 exports.userWritePermissions = function(req, res, next) {
-    if (!req.userId) return res.status(403).send("Wrong request: user not specified");
+    if (!req.userId) return res.status(400).send("Bad request: user not specified");
+    // Aquest no hauria de passar mai
     if (!req.params.userId) return res.status(400).send("Bad request");
 
     let userId = req.userId;
