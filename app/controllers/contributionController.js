@@ -150,13 +150,13 @@ exports.upvotedComments = function(req, res){
 
 
 
-exports.submissions = async function(req,res) {
+exports.submissions = function(req,res) {
     var userId = req.query.id;
     if (userId == undefined) 
         res.send('No such user.');
     
     else {
-        var uname = await User.findById(userId, function(err, user) {
+        var uname = User.findById(userId, function(err, user) {
             uname = user.username
         });
         Contribution
