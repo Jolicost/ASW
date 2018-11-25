@@ -65,16 +65,50 @@ function getDataFilter(data){
 }
 
 function validateType(typeStr){
-    if (["url", "ask", "comment", "reply"].includes(typeStr)) return {contributionType: typeStr};
-    else 
-        if ( typeStr === "main" || !typeStr ) 
+    if (typeStr){
+        if (["url", "ask", "comment", "reply"].includes(typeStr.toLowerCase())) return {contributionType: typeStr};
+    }    
+    if ( typeStr === "main" || !typeStr ) 
+        return {
+            contributionType: {
+                $in: ['url', 'ask']
+            }
+        };
+    else
+        return false;
+}
+
+function validateSort(sortStr, sortMode){
+    var value  = 1;
+    if (sortMode){
+        if (sortMode.toUpperCase() === 'DESC'){
+            value = -1;
+        }
+    }
+    if (!sortStr){
+        return {
+            'points': value
+        };
+    }
+    else{
+        if (sortStr.toLowerCase() in ['date', 'points', 'title', 'user', 'type']){
+            var sortsDict = {
+                'date':'publishDate',
+                'points':'points',
+                'title':'title',
+                'user':'user',
+                'type':'contributionType',
+            }
+            var obj = {};
+            obj[sortsDict[sortStr]] = value;
+            return obj;
+        }
+        else{
             return {
-                contributionType: {
-                    $in: ['url', 'ask']
-                }
+                'points': value
             };
-        else
-            return false;
+        }
+    }
 }
 
 
@@ -85,6 +119,7 @@ exports.list = function(req,res) {
         type=type['url', 'ask', 'comment', 'reply', 'main']
         date= date [eqyyyymmdd, neyyyymmdd, gtyyyymmdd, ltyyyymmdd, geyyyymmdd, leyyyymmdd]
         sort=sort [date, points, title, user, type]
+        sortMode= [asc, desc]
         upvoted=userId
     */
     var user = req.query.user;
@@ -93,10 +128,12 @@ exports.list = function(req,res) {
     var upvoted = req.query.upvoted;
     upvoted = upvoted ? {"upvoted": upvoted} : {};
     var type = validateType(req.query.type);
+    var sort = validateSort(req.query.sort, req.query.sortMode);
+    console.log(sort)
     if (type){
         var result = Object.assign({},user, date, type, upvoted);
         console.log(result);
-        Contribution.find(result).exec((err,contributions) => {
+        Contribution.find(result).sort(sort).exec((err,contributions) => {
             if (err)
                 res.send(err);
             else
@@ -104,7 +141,7 @@ exports.list = function(req,res) {
         });
     }
     else{
-        return res.status(400).send({
+        return res.status(432).send({
             message: 'contributionType is not defined'
         });
     }
@@ -160,36 +197,121 @@ exports.deleteAll = function(req, res) {
 };
 
 exports.vote = function(req, res){
-    var data = {
-        $addToSet: {
-            upvoted: req.userId
-        },
-        $inc: {
-            points: 1
+    Contribution.findOne({_id: req.params.contributionId}, (err,cont1) => {
+        if (err) {
+            return res.status(500).send({
+                message: 'internal server error'
+            });
         }
-    };
-    Contribution.findOneAndUpdate({_id: req.params.contributionId}, data, {new: true}, function(err,contribution){
-        if (err)
-            res.send(err);
-        else
-            res.json(contribution);
+        else{
+            if (cont1){
+                Contribution.findOne({
+                    _id: req.params.contributionId, 
+                    upvoted:{
+                        $elemMatch:{
+                            $ne:req.userId
+                        }
+                    }
+                }, (err,cont2) => {
+                    if (err) {
+                        return res.status(500).send({
+                            message: 'internal server error'
+                        });
+                    }
+                    else{
+                        console.log(cont2);
+                        if (cont2){
+                            return res.status(432).send({
+                                message: 'user already voted the contribution'
+                            });
+                        }
+                        else{
+                            var data = {
+                                $addToSet: {
+                                    upvoted: req.userId
+                                },
+                                $inc: {
+                                    points: 1
+                                }
+                            };
+                            Contribution.findOneAndUpdate({_id: req.params.contributionId}, data, {}, function(err,contribution){
+                                if (err)
+                                    return res.status(404).send({
+                                        message: 'contribution not found'
+                                });
+                                else
+                                    res.json(contribution);
+                            });
+                        }
+                    }
+                });
+            }
+            else{
+                return res.status(404).send({
+                    message: 'contribution not found'
+                });
+            }
+        }
     });
 }
 
 exports.unvote = function(req, res){
-    var data = {
-        $pull: {
-            upvoted: req.userId
-        },
-        $inc: {
-            points: -1
+    console.log(req.params.contributionId);
+    Contribution.findOne({_id: req.params.contributionId}, (err,cont1) => {
+        if (err) {
+            return res.status(500).send({
+                message: 'internal server error'
+            });
         }
-    };
-    Contribution.findOneAndUpdate({_id: req.params.contributionId}, data, {new: true}, function(err,contribution){
-        if (err)
-            res.send(err);
-        else
-            res.json(contribution);
+        else{
+            if (cont1){
+                Contribution.findOne({
+                    _id: req.params.contributionId, 
+                    upvoted:{
+                        $elemMatch:{
+                            $eq:req.userId
+                        }
+                    }
+                }, (err,cont2) => {
+                    if (err) {
+                        return res.status(500).send({
+                            message: 'internal server error'
+                        });
+                    }
+                    else{
+                        console.log(cont2);
+                        if (!cont2){
+                            return res.status(432).send({
+                                message: 'user did not vote the contribution'
+                            });
+                        }
+                        else{
+                            var data = {
+                                $addToSet: {
+                                    upvoted: req.userId
+                                },
+                                $inc: {
+                                    points: 1
+                                }
+                            };
+                            Contribution.findOneAndUpdate({_id: req.params.contributionId}, data, {}, function(err,contribution){
+                                if (err)
+                                    return res.status(404).send({
+                                        message: 'contribution not found'
+                                });
+                                else
+                                    res.json(contribution);
+                            });
+                        }
+                    }
+                });
+            }
+            else{
+                return res.status(404).send({
+                    message: 'contribution not found'
+                });
+            }
+        }
     });
 }
 
