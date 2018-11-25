@@ -207,11 +207,7 @@ exports.vote = function(req, res){
             if (cont1){
                 Contribution.findOne({
                     _id: req.params.contributionId, 
-                    upvoted:{
-                        $elemMatch:{
-                            $ne:req.userId
-                        }
-                    }
+                    upvoted:req.userId
                 }, (err,cont2) => {
                     if (err) {
                         return res.status(500).send({
@@ -219,7 +215,6 @@ exports.vote = function(req, res){
                         });
                     }
                     else{
-                        console.log(cont2);
                         if (cont2){
                             return res.status(432).send({
                                 message: 'user already voted the contribution'
@@ -234,13 +229,13 @@ exports.vote = function(req, res){
                                     points: 1
                                 }
                             };
-                            Contribution.findOneAndUpdate({_id: req.params.contributionId}, data, {}, function(err,contribution){
+                            Contribution.findOneAndUpdate({_id: req.params.contributionId}, data, {new: true}, function(err,updateCont){
                                 if (err)
                                     return res.status(404).send({
                                         message: 'contribution not found'
                                 });
                                 else
-                                    res.json(contribution);
+                                    res.json(updateCont);
                             });
                         }
                     }
@@ -256,7 +251,6 @@ exports.vote = function(req, res){
 }
 
 exports.unvote = function(req, res){
-    console.log(req.params.contributionId);
     Contribution.findOne({_id: req.params.contributionId}, (err,cont1) => {
         if (err) {
             return res.status(500).send({
@@ -267,11 +261,7 @@ exports.unvote = function(req, res){
             if (cont1){
                 Contribution.findOne({
                     _id: req.params.contributionId, 
-                    upvoted:{
-                        $elemMatch:{
-                            $eq:req.userId
-                        }
-                    }
+                    upvoted:req.userId
                 }, (err,cont2) => {
                     if (err) {
                         return res.status(500).send({
@@ -279,7 +269,6 @@ exports.unvote = function(req, res){
                         });
                     }
                     else{
-                        console.log(cont2);
                         if (!cont2){
                             return res.status(432).send({
                                 message: 'user did not vote the contribution'
@@ -287,20 +276,20 @@ exports.unvote = function(req, res){
                         }
                         else{
                             var data = {
-                                $addToSet: {
-                                    upvoted: req.userId
-                                },
-                                $inc: {
-                                    points: 1
+                                $pull: {	   
+                                    upvoted: req.userId	
+                                },	            
+                                $inc: {	
+                                    points: -1
                                 }
                             };
-                            Contribution.findOneAndUpdate({_id: req.params.contributionId}, data, {}, function(err,contribution){
+                            Contribution.findOneAndUpdate({_id: req.params.contributionId}, data, {new: true}, function(err,updateCont){
                                 if (err)
                                     return res.status(404).send({
                                         message: 'contribution not found'
                                 });
                                 else
-                                    res.json(contribution);
+                                    res.json(updateCont);
                             });
                         }
                     }
