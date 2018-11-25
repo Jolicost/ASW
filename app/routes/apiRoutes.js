@@ -36,4 +36,11 @@ module.exports = function(app) {
 		contribution.unvote);
 	
 	app.get('/api/contributions/:id', contribution.readContribution);
+
+	app.post('/api/contributions', 
+		[
+			middleware.verifyToken, 
+			middleware.userWritePermissions
+		], 
+		contribution.create);
 }

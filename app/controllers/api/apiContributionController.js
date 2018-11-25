@@ -120,8 +120,67 @@ exports.read = function(req,res) {
     });
 };
 
-exports.create = function(req,res) {
+exports.create = function (req, res) {
+    var title = req.body.title.trim();
+    var url = req.body.url.trim();
+    var text = req.body.text.trim();
+
+    if (!title) return res.code(400).send("Bad request, not title provided");
+
+    if (url && text) return res.code(400).send("Bad request, title and url provided");
+
+    if (!url && !text) return res.code(400).send("Bad request, provide url or text");
+
+    if (url && !validUrl.isUri(url)) return res.code(400).send("Bad request, url not valid");
+
+    User.findOne({ _id: req.params.id }, (err, user) => {
+        if (err) return res.status(500).send("Internal server error");
+
+        if (!user) return res.status(500).send('Not such user');
+
+        if (url) {
+            Contribution.findOne({
+                contributionType: 'url',
+                content: url
+            })
+                .exec((err, result) => {
+                    if (result != null) return res.status("500").send("The url already exists");
+                    else {
+                        let ctr = new Contribution({
+                            title: title,
+                            content: url,
+                            user: user,
+                            contributionType: 'url',
+                            publishDate: Date.now()
+                        });
+                        ctr.save(error => res.status("201").send("Contribution created"));
+                    }
+                });
+        }
+        else if (text) {
+            let ctr = new Contribution({
+                title: title,
+                content: text,
+                user: user,
+                contributionType: 'ask',
+                publishDate: Date.now()
+            });
+            ctr.save(error => res.status("201").send("Contribution created"))
+        }
+    });
+};
+
+
+    /*var new_Contribution = new Contribution({
+        title: req.body.title,
+        content: req.body.content,
+        publishDate: req.body.publishDate,
+        user: req.params.userId,
+        contributionType: contribution.contributionType,
+    });*/
+
     var new_Contribution = new Contribution(req.body);
+
     new_Contribution.save(function(err,contribution) {
         if (err)
             res.send(err);
