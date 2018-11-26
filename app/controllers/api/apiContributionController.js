@@ -6,6 +6,8 @@ var mongoose = require('mongoose'),
 Contribution = mongoose.model('Contributions'),
 User  = mongoose.model('Users');
 var config = require('../../../config/config.js');
+var validUrl = require('valid-url');
+var async = require("async");
 
 function getDataFilter(data){
     if (! data) return undefined;
@@ -157,14 +159,63 @@ exports.read = function(req,res) {
     });
 };
 
-exports.create = function(req,res) {
-    var new_Contribution = new Contribution(req.body);
-    new_Contribution.save(function(err,contribution) {
-        if (err)
-            res.send(err);
-        else
-            res.json(contribution);
-    });
+exports.create = function (req, res) {
+    var title = req.body.title;
+    var url = req.body.url;
+    var text = req.body.text;
+    let user = req.user;
+
+    if (!title) return res.status(400).send("Bad request, no title provided");
+
+    if (url && text) return res.status(432).send("Bad request, title and url provided");
+
+    if (!url && !text) return res.status(434).send("Bad request, provide url or text");
+
+    if (url && !validUrl.isUri(url)) return res.status(433).send("Bad request, url not valid");
+
+    title = title.trim();
+
+    if (url) {
+        url = url.trim();
+    }
+
+    if (text) {
+        text = text.trim();
+    }
+
+    if (url) {
+        Contribution.findOne({
+            contributionType: 'url',
+            content: url
+        })
+        .exec((err, result) => {
+            if (result) {
+                return res.json(result);
+            }
+            else {
+                let ctr = new Contribution({
+                    title: title,
+                    content: url,
+                    user: user.id,
+                    contributionType: 'url'
+                });
+                ctr.save(function(err) {
+                    return res.json(ctr);
+                });
+            }
+        });
+    }
+    else if (text) {
+        let ctr = new Contribution({
+            title: title,
+            content: text,
+            user: user.id,
+            contributionType: 'ask'
+        });
+        ctr.save(function(err) {
+            return res.json(ctr);
+        });
+    }
 };
 
 exports.update = function(req,res) {
@@ -306,26 +357,53 @@ exports.unvote = function(req, res){
 
 
 exports.readContribution = function(req,res) {
-    Contribution.findById(req.params.id, (err,contribution) => {
-        if (err) {
-            res.status(500).send(err);
-        }
-        res.json(contribution);
-
-        /* 
-        //per si no volem enviar totes les dades...
-        let data = {
-            title: contribution.title,
-            content: contribution.content,
-            publishDate: contribution.publishDate,
-            points: contribution.points,
-            upvoted: contribution.upvoted,
-            user: contribution.user,
-            contributionType: contribution.contributionType,
-            parent: contribution.parent,
-            child: contribution.child
-        }
-        res.json(data); 
-        */
+    Contribution.findOne({_id: req.params.id }, function(err,contribution) {
+        if (err) return res.status(500).send(err);
+        else if (!contribution) res.status(404).send("contribution not found");
+        else return res.json(contribution);
     });
 };
+
+exports.comment = function(req, res) {
+    let contributionId = req.params.contributionId;
+    let text = req.body.text;
+    let user = req.user;
+
+    if (!text || !text.trim()) return res.status(400).send("comment missing");
+
+    Contribution.findOne({_id: contributionId}, function(err, contribution) {
+        if (!contribution) return res.status(404).send("contribution not found");
+
+        /* Resolve type */
+        let type = 'comment';
+        if (contribution.contributionType == 'comment' || contribution.contributionType == 'reply') {
+            type = 'reply';
+        }
+
+        /* Resolve parent */
+        let topParent = contribution.topParent;
+        if(!topParent) {
+            topParent = contribution._id;
+        }
+
+        let c = new Contribution({
+            content: text,
+            user: user._id,
+            contributionType: type,
+            parent: contribution._id,
+            topParent: topParent
+        });
+
+        c.save(function(err) {
+            if (err) return res.status(500).send();
+
+            Contribution.updateOne({_id: contribution._id}, {
+                $push: {child: c._id}
+            }, function(err){
+                if (err) return res.status(500).send();
+                return res.status(200).send("comment added");
+
+            });
+        });
+    });
+}
