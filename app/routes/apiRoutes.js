@@ -39,8 +39,8 @@ module.exports = function(app) {
 
 	app.post('/api/contributions', 
 		[
-			middleware.verifyToken, 
-			middleware.userWritePermissions
+			middleware.verifyToken,
+			middleware.obtainUser
 		], 
 		contribution.create);
 }

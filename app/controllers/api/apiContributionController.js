@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 Contribution = mongoose.model('Contributions'),
 User  = mongoose.model('Users');
 var config = require('../../../config/config.js');
+var validUrl = require('valid-url');
 
 function getDataFilter(data){
     if (! data) return undefined;
@@ -121,72 +122,62 @@ exports.read = function(req,res) {
 };
 
 exports.create = function (req, res) {
-    var title = req.body.title.trim();
-    var url = req.body.url.trim();
-    var text = req.body.text.trim();
+    var title = req.body.title;
+    var url = req.body.url;
+    var text = req.body.text;
+    let user = req.user;
 
-    if (!title) return res.code(400).send("Bad request, not title provided");
+    if (!title) return res.status(400).send("Bad request, no title provided");
 
-    if (url && text) return res.code(400).send("Bad request, title and url provided");
+    if (url && text) return res.status(432).send("Bad request, title and url provided");
 
-    if (!url && !text) return res.code(400).send("Bad request, provide url or text");
+    if (!url && !text) return res.status(434).send("Bad request, provide url or text");
 
-    if (url && !validUrl.isUri(url)) return res.code(400).send("Bad request, url not valid");
+    if (url && !validUrl.isUri(url)) return res.status(433).send("Bad request, url not valid");
 
-    User.findOne({ _id: req.params.id }, (err, user) => {
-        if (err) return res.status(500).send("Internal server error");
+    title = title.trim();
 
-        if (!user) return res.status(500).send('Not such user');
+    if (url) {
+        url = url.trim();
+    }
 
-        if (url) {
-            Contribution.findOne({
-                contributionType: 'url',
-                content: url
-            })
-                .exec((err, result) => {
-                    if (result != null) return res.status("500").send("The url already exists");
-                    else {
-                        let ctr = new Contribution({
-                            title: title,
-                            content: url,
-                            user: user,
-                            contributionType: 'url',
-                            publishDate: Date.now()
-                        });
-                        ctr.save(error => res.status("201").send("Contribution created"));
-                    }
+    if (text) {
+        text = text.trim();
+    }
+
+    if (url) {
+        Contribution.findOne({
+            contributionType: 'url',
+            content: url
+        })
+        .exec((err, result) => {
+            if (result) {
+                return res.json(result);
+            }
+            else {
+                let ctr = new Contribution({
+                    title: title,
+                    content: url,
+                    user: user.id,
+                    contributionType: 'url'
                 });
-        }
-        else if (text) {
-            let ctr = new Contribution({
-                title: title,
-                content: text,
-                user: user,
-                contributionType: 'ask',
-                publishDate: Date.now()
-            });
-            ctr.save(error => res.status("201").send("Contribution created"))
-        }
-    });
-};
-
-
-    /*var new_Contribution = new Contribution({
-        title: req.body.title,
-        content: req.body.content,
-        publishDate: req.body.publishDate,
-        user: req.params.userId,
-        contributionType: contribution.contributionType,
-    });*/
-
-    var new_Contribution = new Contribution(req.body);
-
-    new_Contribution.save(function(err,contribution) {
-        if (err)
-            res.send(err);
-        else
-            res.json(contribution);
-    });
+                ctr.save(function(err) {
+                    return res.json(ctr);
+                });
+            }
+        });
+    }
+    else if (text) {
+        let ctr = new Contribution({
+            title: title,
+            content: text,
+            user: user.id,
+            contributionType: 'ask'
+        });
+        ctr.save(function(err) {
+            return res.json(ctr);
+        });
+    }
 };
 
 exports.update = function(req,res) {
