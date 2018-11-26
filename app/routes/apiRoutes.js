@@ -43,4 +43,11 @@ module.exports = function(app) {
 			middleware.obtainUser
 		], 
 		contribution.create);
+
+	app.post('/api/contributions/:contributionId/comment',
+		[
+			middleware.verifyToken,
+			middleware.obtainUser
+		],
+		contribution.comment);
 }
