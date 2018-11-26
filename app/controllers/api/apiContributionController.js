@@ -7,7 +7,6 @@ Contribution = mongoose.model('Contributions'),
 User  = mongoose.model('Users');
 var config = require('../../../config/config.js');
 var validUrl = require('valid-url');
-var async = require("async");
 
 function getDataFilter(data){
     if (! data) return undefined;
@@ -150,15 +149,6 @@ exports.list = function(req,res) {
     
 };
 
-exports.read = function(req,res) {
-    Contribution.findById(req.params.contributionId, function(err,contribution) {
-        if (err)
-            res.send(err);
-        else
-            res.json(contribution);
-    });
-};
-
 exports.create = function (req, res) {
     var title = req.body.title;
     var url = req.body.url;
@@ -218,34 +208,6 @@ exports.create = function (req, res) {
     }
 };
 
-exports.update = function(req,res) {
-    Contribution.findOneAndUpdate({_id: req.params.contributionId}, req.body, {new: true}, function(err,contribution){
-        if (err)
-            res.send(err);
-        else
-            res.json(contribution);
-    });
-};
-
-exports.delete = function(req, res) {
-    Contribution.remove({
-        _id: req.params.contributionId
-    }, function(err, contribution){
-        if (err)
-            res.send(err);
-        else
-            res.json({message: 'Contribution deleted'});
-    });
-};
-
-exports.deleteAll = function(req, res) {
-    Contribution.deleteMany({} , function(err, contribution) {
-        if (err)
-            res.send(err);
-        else
-            res.json({message: 'All contributions deleted'});
-    });
-};
 
 exports.vote = function(req, res){
     Contribution.findOne({_id: req.params.contributionId}, (err,cont1) => {
@@ -401,7 +363,7 @@ exports.comment = function(req, res) {
                 $push: {child: c._id}
             }, function(err){
                 if (err) return res.status(500).send();
-                return res.status(200).send("comment added");
+                return res.json(c);
 
             });
         });
