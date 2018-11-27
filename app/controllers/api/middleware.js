@@ -33,6 +33,16 @@ exports.verifyToken = function(req, res, next) {
     });
 }
 
+exports.addUserIdNoValidate = function(req, res, next) {
+    var token = req.headers['x-access-token'];
+    jwt.verify(token,config.get('server.auth.secret'), function(err, decoded) {
+        if (!err) {
+            req.userId = decoded.id;
+        }
+        next();
+    });
+}
+
 /* Checks if an user has permissions to write to a certain other user (given by the url parameter :userId)
  */
 exports.userWritePermissions = function(req, res, next) {

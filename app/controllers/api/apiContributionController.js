@@ -75,15 +75,26 @@ function validateType(typeStr){
                 $in: ['url', 'ask']
             }
         };
+    else if (typeStr == 'other') 
+        return {
+            contributionType: {
+                $in: ['comment','reply']
+            }
+        }
     else
         return false;
 }
 
+function arrayContains(needle, arrhaystack)
+{
+    return (arrhaystack.indexOf(needle) > -1);
+}
+
 function validateSort(sortStr, sortMode){
-    var value  = 1;
+    var value  = -1;
     if (sortMode){
-        if (sortMode.toUpperCase() === 'DESC'){
-            value = -1;
+        if (sortMode.toUpperCase() === 'ASC'){
+            value = 1;
         }
     }
     if (!sortStr){
@@ -92,7 +103,7 @@ function validateSort(sortStr, sortMode){
         };
     }
     else{
-        if (sortStr.toLowerCase() in ['date', 'points', 'title', 'user', 'type']){
+        if (arrayContains(sortStr.toLowerCase(),['date', 'points', 'title', 'user', 'type'])){
             var sortsDict = {
                 'date':'publishDate',
                 'points':'points',
@@ -127,13 +138,14 @@ exports.list = function(req,res) {
     user = user ? {"user":user} : {};
     var date = getDataFilter(req.query.date);
     var upvoted = req.query.upvoted;
+    if (upvoted && (upvoted != req.userId || !req.userId)) {
+        return res.status(403).send("Not allowed to see this list");
+    }
     upvoted = upvoted ? {"upvoted": upvoted} : {};
     var type = validateType(req.query.type);
     var sort = validateSort(req.query.sort, req.query.sortMode);
-    console.log(sort)
     if (type){
         var result = Object.assign({},user, date, type, upvoted);
-        console.log(result);
         Contribution.find(result).sort(sort).exec((err,contributions) => {
             if (err)
                 res.send(err);

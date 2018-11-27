@@ -6,8 +6,10 @@ module.exports = function(app) {
     const mung = require('express-mung');
 
     // Contribution API Routes
-    app.route('/api/contributions')
-            .get(contribution.list);
+    app.get('/api/contributions',
+    	[middleware.addUserIdNoValidate],
+    	contribution.list
+    );
 
     app.put(
     	'/api/users/:userId',
