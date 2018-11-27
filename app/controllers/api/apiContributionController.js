@@ -155,7 +155,7 @@ exports.list = function(req,res) {
     }
     else{
         return res.status(432).send({
-            message: 'contributionType is not defined'
+            message: 'contributionType is out of range'
         });
     }
     

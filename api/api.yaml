@@ -1,0 +1,474 @@
+---
+swagger: "2.0"
+info:
+  description: "The following documentation is about the implementation of our [web](http://fibasw.herokuapp.com/)\
+    \ //     Joan Oliva Costas - Joan Francesc Burguera Burguera - Aldo Fuster Turpin\
+    \ - Alejandro González García"
+  version: "1.0.0"
+  title: "Documentation"
+  license:
+    name: "URL"
+    url: "http://fibasw.herokuapp.com/"
+host: "fibasw.herokuapp.com"
+basePath: "/api/"
+tags:
+- name: "Users"
+  description: "Operations about users"
+- name: "Contributions"
+  description: "Operations about contributions"
+- name: "Vote & Comment"
+  description: "Operations about vote, unvote and comment"
+schemes:
+- "https"
+paths:
+  /users/{userId}:
+    get:
+      tags:
+      - "Users"
+      summary: "Find user by Id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        description: "Acces token"
+        required: false
+        type: "string"
+      - name: "userId"
+        in: "path"
+        description: "User identifier"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "user found"
+          schema:
+            $ref: "#/definitions/User"
+        403:
+          description: "token not provided"
+        404:
+          description: "user not found"
+        500:
+          description: "internal server error"
+    put:
+      tags:
+      - "Users"
+      summary: "Update an existing user"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        description: "Acces token"
+        required: false
+        type: "string"
+      - name: "userId"
+        in: "path"
+        description: "User identifier"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "user"
+        description: "Data of the user to update"
+        required: false
+        schema:
+          $ref: "#/definitions/user"
+      responses:
+        200:
+          description: "update success"
+        400:
+          description: "bad request user not specified"
+        401:
+          description: "not authorized to edit the user"
+        403:
+          description: "token not provided"
+        404:
+          description: "editing user not found"
+        500:
+          description: "internal server error"
+  /contributions:
+    get:
+      tags:
+      - "Contributions"
+      summary: "Get all contributions"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        description: "Acces token"
+        required: false
+        type: "string"
+      - name: "type"
+        in: "query"
+        description: "Contribution type"
+        required: false
+        type: "string"
+        default: "main"
+      - name: "sort"
+        in: "query"
+        description: "Contributions sorted by this field (date, points, title, user,\
+          \ type {main,other,ask,url,comment,reply})"
+        required: false
+        type: "string"
+        default: "points"
+      - name: "sortMode"
+        in: "query"
+        description: "Define if sort is asc or desc"
+        required: false
+        type: "string"
+        default: "desc"
+      - name: "user"
+        in: "query"
+        description: "User identifier"
+        required: false
+        type: "string"
+      - name: "upvoted"
+        in: "query"
+        description: "User identifier who votes the contribution"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "contributions found"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Contribution"
+        403:
+          description: "not allowed to see the list"
+        432:
+          description: "contributionType is out of range"
+        500:
+          description: "internal server error"
+    post:
+      tags:
+      - "Contributions"
+      summary: "Add a contribution"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        description: "Acces token"
+        required: false
+        type: "string"
+      - in: "body"
+        name: "Contribution"
+        description: "Contribution to be added"
+        required: true
+        schema:
+          properties:
+            title:
+              type: "string"
+              example: "My first contribution"
+            url:
+              type: "string"
+              example: "https://www.myurl.com (only fill in url or text)"
+            text:
+              type: "string"
+              example: "Ask text [...] ? (only fill in url or text)"
+          type: "array"
+          items:
+            type: "string"
+      responses:
+        200:
+          description: "contribution added"
+        400:
+          description: "missing title"
+        403:
+          description: "token not provided"
+        404:
+          description: "user not found"
+        432:
+          description: "title and url provided"
+        433:
+          description: "url not valid"
+        434:
+          description: "url and text not provided (both)"
+  /contributions/{contributionId}:
+    get:
+      tags:
+      - "Contributions"
+      summary: "Find contribution by Id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        description: "Acces token"
+        required: false
+        type: "string"
+      - name: "contributionId"
+        in: "path"
+        description: "Contribution identifier"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "contribution found"
+          schema:
+            $ref: "#/definitions/Contribution"
+        403:
+          description: "token not provided"
+        404:
+          description: "contribution not found"
+        500:
+          description: "internal server error"
+  /contributions/{contributionId}/vote:
+    put:
+      tags:
+      - "Vote & Comment"
+      summary: "Vote a contribution"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        description: "Acces token"
+        required: false
+        type: "string"
+      - name: "contributionId"
+        in: "path"
+        description: "Contribution identifier"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "voted contribution by user"
+          schema:
+            $ref: "#/definitions/Contribution"
+        403:
+          description: "token not provided"
+        404:
+          description: "contribution not found"
+        432:
+          description: "user already voted the contribution"
+        500:
+          description: "internal server error"
+  /contributions/{contributionId}/unvote:
+    put:
+      tags:
+      - "Vote & Comment"
+      summary: "Unvote a contribution"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        description: "Acces token"
+        required: false
+        type: "string"
+      - name: "contributionId"
+        in: "path"
+        description: "Contribution identifier"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "unvoted contribution by user"
+          schema:
+            $ref: "#/definitions/Contribution"
+        403:
+          description: "token not provided"
+        404:
+          description: "contribution not found"
+        432:
+          description: "user did not vote the contribution"
+        500:
+          description: "internal server error"
+  /contributions/{contributionId}/comment:
+    post:
+      tags:
+      - "Vote & Comment"
+      summary: "Comment a contribution"
+      parameters:
+      - name: "x-access-token"
+        in: "header"
+        description: "Acces token"
+        required: false
+        type: "string"
+      - name: "contributionId"
+        in: "path"
+        description: "Contribution"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "comment"
+        description: "Comment to be added"
+        required: false
+        schema:
+          $ref: "#/definitions/comment"
+      responses:
+        200:
+          description: "comment published"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "missing comment"
+        403:
+          description: "token not provided"
+        404:
+          description: "contribution not found"
+        500:
+          description: "internal server error"
+definitions:
+  User:
+    type: "object"
+    required:
+    - "_id"
+    - "username"
+    properties:
+      _id:
+        type: "string"
+        example: "6809ffdc4c927e7f7d477225"
+      username:
+        type: "string"
+        example: "Federico_Garcia_Lorca"
+      password:
+        type: "string"
+        example: "fedepordali"
+      email:
+        type: "string"
+        example: "example@example.com"
+      createdAt:
+        type: "string"
+        format: "date-time"
+        example: "1900-01-01T00:00:00.000Z"
+      karma:
+        type: "number"
+        example: 5.0
+      about:
+        type: "string"
+        example: "my first about"
+      token:
+        type: "string"
+      auth:
+        $ref: "#/definitions/User_auth"
+    example:
+      createdAt: "1900-01-01T00:00:00.000Z"
+      karma: 5.0
+      password: "fedepordali"
+      auth:
+        github:
+          _id: "_id"
+      about: "my first about"
+      _id: "6809ffdc4c927e7f7d477225"
+      email: "example@example.com"
+      username: "Federico_Garcia_Lorca"
+      token: "token"
+  Contribution:
+    type: "object"
+    required:
+    - "_id"
+    - "contributionType"
+    - "user"
+    properties:
+      _id:
+        type: "string"
+      title:
+        type: "string"
+        example: "FakeNews"
+      content:
+        type: "string"
+        example: "Content Fake News"
+      publishDate:
+        type: "string"
+        format: "date-time"
+      points:
+        type: "number"
+        example: 10.0
+      upvoted:
+        type: "array"
+        items:
+          $ref: "#/definitions/User"
+      user:
+        $ref: "#/definitions/User"
+      contributionType:
+        type: "string"
+        example: "url"
+      parent:
+        $ref: "#/definitions/Contribution"
+      topParent:
+        $ref: "#/definitions/Contribution"
+      child:
+        type: "array"
+        items:
+          $ref: "#/definitions/Contribution"
+    example:
+      contributionType: "url"
+      upvoted:
+      - createdAt: "1900-01-01T00:00:00.000Z"
+        karma: 5.0
+        password: "fedepordali"
+        auth:
+          github:
+            _id: "_id"
+        about: "my first about"
+        _id: "6809ffdc4c927e7f7d477225"
+        email: "example@example.com"
+        username: "Federico_Garcia_Lorca"
+        token: "token"
+      - createdAt: "1900-01-01T00:00:00.000Z"
+        karma: 5.0
+        password: "fedepordali"
+        auth:
+          github:
+            _id: "_id"
+        about: "my first about"
+        _id: "6809ffdc4c927e7f7d477225"
+        email: "example@example.com"
+        username: "Federico_Garcia_Lorca"
+        token: "token"
+      publishDate: "2000-01-23T04:56:07.000+00:00"
+      _id: "_id"
+      title: "FakeNews"
+      user:
+        createdAt: "1900-01-01T00:00:00.000Z"
+        karma: 5.0
+        password: "fedepordali"
+        auth:
+          github:
+            _id: "_id"
+        about: "my first about"
+        _id: "6809ffdc4c927e7f7d477225"
+        email: "example@example.com"
+        username: "Federico_Garcia_Lorca"
+        token: "token"
+      content: "Content Fake News"
+      points: 10.0
+      child:
+      - null
+      - null
+  user:
+    type: "object"
+    required:
+    - "about"
+    properties:
+      about:
+        type: "string"
+        example: "my own about"
+  comment:
+    type: "object"
+    required:
+    - "text"
+    properties:
+      text:
+        type: "string"
+        example: "my comment"
+  User_auth_github:
+    required:
+    - "_id"
+    properties:
+      _id:
+        type: "string"
+    example:
+      _id: "_id"
+  User_auth:
+    properties:
+      github:
+        $ref: "#/definitions/User_auth_github"
+    example:
+      github:
+        _id: "_id"
+parameters:
+  AccessToken:
+    name: "x-access-token"
+    in: "header"
+    description: "Acces token"
+    required: false
+    type: "string"
