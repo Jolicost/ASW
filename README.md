@@ -13,19 +13,14 @@ https://fibasw.herokuapp.com/
 ## Open API Documentation
 https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
 
-## Open API Web editor (Open API 2.0) 
+## Open API Web editor (Open API 2.0) Use this during demo
 http://editor.swagger.io/
 
 ## Collaborative Online Open API Web editor (Open API 2.0/3.0) SwaggerHub
 https://app.swaggerhub.com/apis/Jolicost/ASW/1.0.0
-### Credentials
-user: FIBASW
-pass: fibasw1
 
 ## How to edit the API specification
-1. Pull the latest file from **documentation/swagger.yaml**
-1. Edit this file as you wish with online editors or local editors
-1. Push the file when you are done
+1. Edit directly from the swaggerhub page. Use provided credentials for bypassing user limitation restriction
 
 ### You will need at least:
 
