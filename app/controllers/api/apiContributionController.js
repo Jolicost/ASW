@@ -1,7 +1,7 @@
 'use strict';
 /* Author: Joan Oliva
 * Basic API rest for contributions model */
-var mongoose = require('mongoose'),
+var mongoose = require('mongoose').set('debug',true),
 // dependencies seprated by commas. Be aware
 Contribution = mongoose.model('Contributions'),
 User  = mongoose.model('Users');
@@ -15,6 +15,7 @@ function getDataFilter(data){
         var date = data.substr(2);
         var dateObj = new Date(date.substr(0, 4), date.substr(4, 2), date.substr(6, 2), 1);
         var returnObj = {};
+        console.log(operator,dateObj);
         //DBObject dbObj;
         if (operator === 'eq'){
             returnObj =  {
@@ -146,6 +147,7 @@ exports.list = function(req,res) {
     var sort = validateSort(req.query.sort, req.query.sortMode);
     if (type){
         var result = Object.assign({},user, date, type, upvoted);
+        console.log(result);
         Contribution.find(result).sort(sort).exec((err,contributions) => {
             if (err)
                 res.send(err);
