@@ -3,6 +3,7 @@ module.exports = function(app) {
     var contribution = require('../controllers/api/apiContributionController');
     var user = require('../controllers/api/apiUserController');
     var middleware = require('../controllers/api/middleware');
+    var session = require('../controllers/api/sessionController.js')
     const mung = require('express-mung');
 
     // Contribution API Routes
@@ -52,4 +53,13 @@ module.exports = function(app) {
 			middleware.obtainUser
 		],
 		contribution.comment);
+
+	app.post('/api/login', [
+
+		], session.login);
+
+	app.post('/api/login/github', [
+
+
+		], session.githubLogin);
 }
