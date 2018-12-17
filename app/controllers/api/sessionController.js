@@ -96,3 +96,17 @@ exports.signToken = function(user,cb)
         cb(null,token);
     });
 }
+
+exports.verify = function(req, res) {
+    let user = req.user;
+
+    exports.signToken(user, function(err, token) {
+        if (err) return res.send(err);
+        else return res.json({
+            _id: user._id,
+            username: user.username,
+            token: token
+        });
+    }); 
+
+}

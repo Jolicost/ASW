@@ -62,4 +62,10 @@ module.exports = function(app) {
 
 
 		], session.githubLogin);
+
+	app.get('/api/verify', 
+		[
+			middleware.verifyToken,
+			middleware.obtainUser
+		], session.verify)
 }
