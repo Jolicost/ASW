@@ -69,6 +69,11 @@ var ContributionSchema = new Schema({
         default: "url"
     },
 
+    comments: {
+        type: Number,
+        default: 0
+    },
+
     /* Immediate parent. Used for comments hierarchy */
     parent: {
         type: Schema.Types.ObjectId, 

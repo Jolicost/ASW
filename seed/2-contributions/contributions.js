@@ -51,6 +51,7 @@ const contributions = [
             getObjectId('Napoleon')
         ],
         points: 2,
+        comments: 1,
         child: [
             getObjectId('CommentFakeNews1')
 
@@ -67,6 +68,7 @@ const contributions = [
             getObjectId('Gerard')
         ],
         points: 1,
+        comments: 0,
         child: [
 
         ]
@@ -85,6 +87,7 @@ const contributions = [
             getObjectId('Junqueras')
         ],
         points: 1,
+        comments: 2,
         child: [
             getObjectId('CommentCatalunya1'),
             getObjectId('CommentCatalunya2')
@@ -115,6 +118,7 @@ const contributions = [
         points: 1,
         parent: getObjectId('Catalunya'),
         topParent: getObjectId('Catalunya'),
+        comments: 1,
         child: [
             getObjectId('CommentCatalunya3')
         ]
@@ -130,6 +134,7 @@ const contributions = [
         ],
         parent: getObjectId('CommentCatalunya2'),
         topParent: getObjectId('Catalunya'),
+        comments: 1,
         child: [
             getObjectId('CommentCatalunya4')
         ]
