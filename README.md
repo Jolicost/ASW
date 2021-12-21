@@ -1,14 +1,5 @@
-# ASW LAB 2018T
-
-## Students
-
-* Oliva Costas, Joan
-* Burguera Burguera, Joan Francesc
-* González García, Alejandro
-* Fuster Turpin, Aldo
-
-## Deployment URL
-https://fibasw.herokuapp.com/
+# Hkr news recreation
+Hkr news recreation is a simple recreation of the famous portal hackernews written in Node.js. The server implements an API which is called from a browser in order to browse the site and obtain the data.
 
 ## Open API Documentation
 https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md
@@ -33,3 +24,13 @@ Install packages using "npm install" while on the root folder
 Available scripts:
 1. npm run start: starts server without any further options
 1. npm run debug: starts nodemon (watches changes and autoreloads the application)
+
+## Developers
+
+* Oliva Costas, Joan
+* Burguera Burguera, Joan Francesc
+* González García, Alejandro
+* Fuster Turpin, Aldo
+
+
+
